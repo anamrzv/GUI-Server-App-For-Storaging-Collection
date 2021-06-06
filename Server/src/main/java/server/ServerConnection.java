@@ -3,7 +3,6 @@ package server;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import commands.SpecialSave;
 import database.DataBaseManager;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,7 @@ import java.util.concurrent.Future;
 @Slf4j
 public class ServerConnection {
 
+
     private static boolean listenerIsAlive = true;
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     private static CollectionsKeeper collectionsKeeper = null;
@@ -35,9 +35,9 @@ public class ServerConnection {
 
     public static void main(String[] args) {
         dataBase = new DataBaseManager();
-        try{
+        try {
             dataBase.connectToDB();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Подсоединение отклонено. Убедитесь, что создан туннель к базе данных с локальной машины");
         }
         ServerListener serverListener;
@@ -45,8 +45,7 @@ public class ServerConnection {
         try {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 System.out.println("Экстренное закрытие сервера.");
-                SpecialSave save = new SpecialSave(collectionsKeeper);
-                save.execute();
+                log.info("Emergency closing of server");
             }));
 
             if (args.length != 0) {
@@ -54,13 +53,16 @@ public class ServerConnection {
                     port = Integer.parseInt(args[0]);
                 } catch (Exception e) {
                     System.out.println("Порт должен быть числом");
+                    log.error("Port is not a number");
                     System.exit(-1);
                 }
                 if (port <= 0) {
                     System.out.println("Порт не может быть отрицательным.");
+                    log.error("Port is negative");
                     System.exit(-1);
                 } else if (port > 65535) {
                     System.out.println("Порт должен лежать в пределах 1-65535");
+                    log.error("Port has incorrect value");
                     System.out.println(-1);
                 }
             }
@@ -72,6 +74,7 @@ public class ServerConnection {
             serverListener.start();
         } catch (IOException e) {
             System.out.println("Ошибка при создании сервера");
+            log.error("Error while creating server");
         }
     }
 
@@ -85,10 +88,10 @@ public class ServerConnection {
             ssChannel.configureBlocking(false);
             try {
                 ssChannel.socket().bind(new InetSocketAddress(port));
-                log.info("Port bounded");
+                log.info("Port " + port + " bounded");
             } catch (IOException e) {
                 System.out.println("Невозможно прослушать порт. Выберите другой и перезапустите сервер.");
-                log.error("Can't listen port");
+                log.error("Can't listen port " + port);
                 System.exit(-1);
             }
         }
@@ -102,7 +105,7 @@ public class ServerConnection {
                     try {
                         SocketChannel socketChannel = ssChannel.accept();
                         if (socketChannel != null) {
-                            System.out.printf("New connection created: %s%n", socketChannel.getRemoteAddress());
+                            System.out.printf("Установлено новое подключение: %s%n", socketChannel.getRemoteAddress());
                             log.info("New connection created: {}", socketChannel.getRemoteAddress());
                             socketChannel.configureBlocking(false);
                             connectionCount += 1;
@@ -111,10 +114,7 @@ public class ServerConnection {
                                 if (collectionsKeeper == null) {
                                     System.out.println("Ошибка при загрузке коллекции из базы данных");
                                     log.error("Collection was not downloaded from 'people database'");
-                                }
-                                else {
-                                    SpecialSave save = new SpecialSave(collectionsKeeper);
-                                    save.execute();
+                                } else {
                                     log.info("Collection downloaded from 'people database' successfully");
                                 }
                             }
@@ -165,7 +165,7 @@ public class ServerConnection {
                             ExecutorService executor = Executors.newCachedThreadPool();
                             Future<ServerResponse> future = executor.submit(new HandleClientRequest(OBJECT_MAPPER.readValue(buffer.array(), Message.class)));
                             while (!future.isDone()) {
-                                System.out.println("Calculating...");
+                                log.info("Calculating...");
                                 try {
                                     Thread.sleep(300);
                                 } catch (InterruptedException e) {
@@ -175,6 +175,7 @@ public class ServerConnection {
                             log.info("Got {}", OBJECT_MAPPER.readValue(buffer.array(), Message.class));
                             ServerResponse serverResponse = future.get();
                             sChannel.write(ByteBuffer.wrap(OBJECT_MAPPER.writeValueAsBytes(serverResponse)));
+                            log.info("Answer sent");
                             if (serverResponse.getMessage() != null && serverResponse.getMessage().equals("Disconnected successfully")) {
                                 log.info("Client {} disconnected", sChannel.getRemoteAddress());
                                 System.out.println("Клиент " + sChannel.getRemoteAddress() + " отсоединен");
@@ -189,8 +190,7 @@ public class ServerConnection {
                     try {
                         e.printStackTrace();
                         System.out.println("Соединение с клиентом" + sChannel.getRemoteAddress() + " экстренно прекращено");
-                        SpecialSave save = new SpecialSave(collectionsKeeper);
-                        save.execute();
+                        log.info("Emergency disconnection from client " + sChannel.getRemoteAddress());
                         sChannel.close();
                     } catch (IOException ioException) {
                         System.out.println("Ошибка при закрытии клиента");
@@ -204,7 +204,7 @@ public class ServerConnection {
      * Обработка сообщения от клиента
      */
     static class HandleClientRequest implements Callable<ServerResponse> {
-        private Message message;
+        private final Message message;
 
         public HandleClientRequest(Message message) {
             this.message = message;
@@ -213,14 +213,13 @@ public class ServerConnection {
         public ServerResponse call() { //обработка запроса
             CommandHandler command;
             if (message == null) {
-                return ServerResponse.builder().error("The client sent incorrect data").build();
+                log.error("The client sent incorrect data: empty");
+                return ServerResponse.builder().error("Был передан неправильный (пустой) запрос").build();
             }
             if (message.getCommandName().equalsIgnoreCase("exit")) {
-                SpecialSave save = new SpecialSave(collectionsKeeper);
-                String error = save.execute();
                 connectionCount -= 1;
-                return ServerResponse.builder().error(error).message("Disconnected successfully").build();
-            } else if (message.getCommandName().equals("add")||message.getCommandName().equals("add_if_max")||message.getCommandName().equals("add_if_min")) {
+                return ServerResponse.builder().message("Отключение от сервера проведено успешно").build();
+            } else if (message.getCommandName().equals("add") || message.getCommandName().equals("add_if_max") || message.getCommandName().equals("add_if_min")) {
                 command = new CommandHandler(message.getCommandName(), message.getPerson(), message.getCommandArgs(), collectionsKeeper);
             } else if (message.getCommandName().equals("update")) {
                 command = new CommandHandler(message.getCommandName(), message.getPerson(), message.getCommandArgs(), collectionsKeeper);

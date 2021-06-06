@@ -40,10 +40,6 @@ public abstract class Command {
         return null;
     }
 
-    public ServerResponse execute(DataBaseManager manager){
-        return null;
-    }
-
     public ServerResponse execute(DataBaseManager manager, List<String> args){
         return null;
     }

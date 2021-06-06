@@ -47,14 +47,15 @@ public class InputHandler {
                 String cmd = getCommandName(input);
                 List<String> args = getArguments(input);
                 if (names.contains(cmd)) {
-                    if (cmd.equals("add")) {
-                        return createPerson(args, "add");
-                    } else if (cmd.equals("update")) {
-                        return updatePerson(args);
-                    } else if (cmd.equals("add_if_max")) {
-                        return createPerson(args, "add_if_max");
-                    } else if (cmd.equals("add_if_min")) {
-                        return createPerson(args, "add_if_min");
+                    switch (cmd) {
+                        case "add":
+                            return createPerson(args, "add");
+                        case "update":
+                            return updatePerson(args);
+                        case "add_if_max":
+                            return createPerson(args, "add_if_max");
+                        case "add_if_min":
+                            return createPerson(args, "add_if_min");
                     }
                     return new Message(cmd, args);
                 } else {

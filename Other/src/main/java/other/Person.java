@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -56,6 +57,7 @@ public class Person implements Comparable<Person>, Serializable {
      */
     private Coordinates coordinates;
 
+    private LocalDate creationDate;
     /**
      * Метод - геттер номера паспорта
      *
@@ -121,6 +123,7 @@ public class Person implements Comparable<Person>, Serializable {
                 ", weight=" + weight +
                 ", passportID='" + passportID + '\'' +
                 ", hairColor=" + hairColor +
+                ", creationDate=" + creationDate +
                 ", location=" + location +
                 ", coordinates=" + coordinates +
                 '}';

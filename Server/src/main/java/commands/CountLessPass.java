@@ -30,7 +30,7 @@ public class CountLessPass extends Command {
     @Override
     public ServerResponse execute(List<String> args) {
         Long id;
-        if (args.size() == 2 || args.size() != 3) {
+        if (args.size() != 3) {
             return ServerResponse.builder().error("У команды count_less_than_passport_id должен быть один аргумент - ID паспорта. Введите команду снова.").command("count_less_than_passport_id").build();
         }
         try {

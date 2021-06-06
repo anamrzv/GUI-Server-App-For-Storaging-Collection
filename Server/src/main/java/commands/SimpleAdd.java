@@ -14,7 +14,6 @@ import java.util.List;
 public class SimpleAdd extends Command {
 
     private final LinkedList<Person> people = dc.getPeople();
-    private DataBaseManager manager;
 
     /**
      * Конструктор - создание нового объекта
@@ -32,7 +31,6 @@ public class SimpleAdd extends Command {
      */
 
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
-        this.manager = manager;
         String result = manager.addPersonToDB(person, "add", args);
         if (result.equals("Объект успешно добавлен")) {
             LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();

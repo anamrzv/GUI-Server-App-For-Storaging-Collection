@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class Clear extends Command {
 
-    private DataBaseManager manager;
-
     /**
      * Конструктор - создание нового объекта
      *
@@ -32,7 +30,6 @@ public class Clear extends Command {
      */
     @Override
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
-        this.manager = manager;
         LinkedList<Person> people = dc.getPeople();
         if (args.size() == 2) {
             List<Person> deletedPeople = manager.deleteByLoginFromDB(args);

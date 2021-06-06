@@ -16,7 +16,6 @@ import java.util.List;
 public class AddIfMax extends Command {
 
     private final LinkedList<Person> people = dc.getPeople();
-    private DataBaseManager manager;
 
     /**
      * Конструктор - создание нового объекта
@@ -34,7 +33,6 @@ public class AddIfMax extends Command {
      */
     @Override
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
-        this.manager = manager;
         String result;
         if (people.size() == 0){
             result = manager.addPersonToDB(person, "add", args);
@@ -53,7 +51,9 @@ public class AddIfMax extends Command {
             } else {
                 result = manager.addPersonToDB(person, "add", args);
                 if (result.equals("Объект успешно добавлен")){
-                    people.add(person);
+                    LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
+                    people.clear();
+                    people.addAll(newCollection);
                     return ServerResponse.builder().message("Объект добавлен в коллекцию, т.к. его длина в формате json больше наибольшей или совпадает с ней.").command("add_if_max").build();
                 } else return ServerResponse.builder().error(result).command("add_if_max").build();
             }

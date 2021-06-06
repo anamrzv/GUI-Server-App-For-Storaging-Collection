@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class RemoveByID extends Command {
 
-    private DataBaseManager manager;
-
     /**
      * Конструктор - создание нового объекта
      *
@@ -33,7 +31,6 @@ public class RemoveByID extends Command {
      */
     @Override
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
-        this.manager = manager;
         if (args.size() != 2) {
             if (args.size() != 3) {
                 return ServerResponse.builder().error("У команды remove_by_id должен быть ровно один аргумент - ID персоны. Введите команду снова.").command("remove_by_id").build();

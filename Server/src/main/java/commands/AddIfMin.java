@@ -16,7 +16,6 @@ import java.util.List;
 public class AddIfMin extends Command {
 
     private final LinkedList<Person> people = dc.getPeople();
-    private DataBaseManager manager;
 
     /**
      * Конструктор - создание нового объекта
@@ -35,7 +34,6 @@ public class AddIfMin extends Command {
      */
     @Override
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
-        this.manager=manager;
         String result;
         if (people.size() == 0) {
             result = manager.addPersonToDB(person, "add", args);

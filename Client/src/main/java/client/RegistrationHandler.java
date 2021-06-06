@@ -23,8 +23,8 @@ public class RegistrationHandler {
     public Message startRegistration() {
         br = new BufferedReader(new InputStreamReader(System.in));
         do {
-            String input = "";
-            System.out.println("Для работы с коллекцией войдите в систему (введите 1) или зарегистрируйтесь (введите 2).\n 1.Войти\n 2.Зарегестрироваться");
+            String input;
+            System.out.print("Для работы с коллекцией войдите в систему (введите 1) или зарегистрируйтесь (введите 2).\n 1.Войти\n 2.Зарегестрироваться\n>");
             try {
                 input = br.readLine();
                 if (Integer.parseInt(input.trim()) == 1) {
@@ -60,7 +60,7 @@ public class RegistrationHandler {
         do {
             System.out.print(">");
             Console console = System.console();
-            String password = "";
+            String password;
             if (console != null) {
                 char[] symbols = console.readPassword();
                 password = String.valueOf(symbols);
@@ -85,12 +85,12 @@ public class RegistrationHandler {
     }
 
     private Message register() {
-        String login = "";
-        Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{4,}");
+        String login;
+        Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{4,20}");
         System.out.println("Вы выбрали опцию 'регистрация'");
         do {
             try {
-                System.out.println("Пожалуйста, введите логин.\nЛогин должен содержать минимум 4 символа и может содержать латинские буквы, цифры, знаки подчеркивания и точки");
+                System.out.println("Пожалуйста, введите логин.\nЛогин должен содержать от 4 до 20 символов и может содержать латинские буквы, цифры, знаки подчеркивания и точки");
                 login = br.readLine().trim();
                 Matcher matcher = pattern.matcher(login);
                 if (matcher.matches()) {
@@ -103,7 +103,7 @@ public class RegistrationHandler {
                         } catch (IOException e) {
                             System.out.println("Ошибка при чтении данных на этапе выбора опции пароля. Попробуйте снова");
                         }
-                        Pattern pattern1 = Pattern.compile("[\\d]{1}");
+                        Pattern pattern1 = Pattern.compile("[\\d]");
                         Matcher matcher1 = pattern1.matcher(input);
                         if (matcher1.matches() && Integer.parseInt(input.trim()) == 0) {
                             //System.out.println("Регистрация завершена. Вы можете войти в систему.");
@@ -127,12 +127,12 @@ public class RegistrationHandler {
     }
 
     private void inputPassword() {
-        String password = "";
-        Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{3,}");
+        String password;
+        Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{3,20}");
         System.out.println("Вы выбрали опцию 'добавить пароль'");
         do {
             try {
-                System.out.println("Пожалуйста, введите пароль.\nПароль должен содержать минимум 3 символа и может содержать латинские буквы, цифры, знаки подчеркивания и точки");
+                System.out.println("Пожалуйста, введите пароль.\nПароль должен содержать от 3 до 20 символов и может содержать латинские буквы, цифры, знаки подчеркивания и точки");
                 Console console = System.console();
                 if (console != null) {
                     char[] symbols = console.readPassword();

@@ -39,7 +39,12 @@ public class UpdatePerson {
             System.out.println("У команды update должно быть два аргумента - необходимое id и слово Person/строка формата json.");
             return null;
         } else {
-            id = Long.parseLong(args.get(0));
+            try{
+                id = Long.parseLong(args.get(0));
+            }catch(NumberFormatException e){
+                System.out.println("Второй аргумент должен быть числом. Повторите ввод.");
+                return null;
+            }
             for (Person p : people) {
                 if (p.getId() == id) {
                     updatePers = p;
