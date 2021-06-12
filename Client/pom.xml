@@ -20,6 +20,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17-ea+11</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.2.3</version>
@@ -54,6 +67,7 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.12.3</version>
         </dependency>
+
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>Other</artifactId>

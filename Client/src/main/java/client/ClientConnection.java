@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import gui.GUIMain;
+import gui.controllers.StartController;
 import other.CollectionsKeeper;
 import other.Message;
 import other.ServerResponse;
@@ -26,10 +28,17 @@ public class ClientConnection {
     private static InputStream in;
     private static Message loginInfo;
     private static boolean isLogged;
+    private StartController startController;
+    private String[] args;
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-    public static void main(String[] args) {
+    public ClientConnection(StartController startController, String[] args) {
+        this.startController = startController;
+        this.args = args;
+    }
+
+    public void start() {
         int port = 6667;
         try {
             try {
@@ -64,10 +73,10 @@ public class ClientConnection {
                             int serverAnswer = in.read(buffer.array());
                             if (serverAnswer > 0) {
                                 CollectionsKeeper ck = OBJECT_MAPPER.readValue(buffer.array(), CollectionsKeeper.class);
-                                ih = new InputHandler(ck);
+                                //ih = new InputHandler(ck);
                             }
                             buffer.flip();
-                            RegistrationHandler registration = new RegistrationHandler();
+                            /*RegistrationHandler registration = new RegistrationHandler();
                             while (!isLogged) {
                                 loginInfo = registration.startRegistration();
                                 out.write(OBJECT_MAPPER.writeValueAsBytes(loginInfo));
@@ -75,7 +84,7 @@ public class ClientConnection {
                                 buffer.clear();
                                 handleRequest(buffer);
                                 buffer.flip();
-                            }
+                            }*/
                         } catch (Exception e) {
                             System.out.println("Ошибка при получении сообщения от сервера");
                             e.printStackTrace();
@@ -92,15 +101,15 @@ public class ClientConnection {
                         System.out.println("Клиентский сокет не был создан");
                     }
                 }
-                while (clientSocket.isConnected()) {
+                /*while (clientSocket.isConnected()) {
                     try {
                         Message message = ih.setStart();
                         String login = loginInfo.getCommandArgs().get(0);
                         String password = loginInfo.getCommandArgs().get(1);
                         if (message == null) continue;
                         List<String> cargs = message.getCommandArgs();
-                        cargs.add(0,password);
-                        cargs.add(0,login);
+                        cargs.add(0, password);
+                        cargs.add(0, login);
                         message.setCommandArgs(cargs);
                         //message.getCommandArgs().add(0,login);
                         out.write(OBJECT_MAPPER.writeValueAsBytes(message));
@@ -130,7 +139,7 @@ public class ClientConnection {
                         e.printStackTrace();
                         System.out.println("Команда не может быть обработана.");
                     }
-                }
+                }*/
             } catch (PortUnreachableException e) {
                 System.out.println("Не удалось получить данные по указанному порту/сервер не доступен");
             } catch (UnknownHostException e) {
@@ -160,7 +169,7 @@ public class ClientConnection {
             ServerResponse sr = OBJECT_MAPPER.readValue(buffer.array(), ServerResponse.class);
             if (sr.getError() == null) {
                 System.out.println(sr.getMessage());
-                if (sr.getCommand()!=null && sr.getCommand().equals("login")) isLogged=true;
+                if (sr.getCommand() != null && sr.getCommand().equals("login")) isLogged = true;
             } else System.out.println(sr.getError());
         }
     }
