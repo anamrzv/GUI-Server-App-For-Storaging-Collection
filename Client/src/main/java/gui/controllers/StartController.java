@@ -22,6 +22,7 @@ import other.Message;
 public class StartController {
 
     private ClientHandler clientHandler;
+
     private String[] args = GUIMain.port;
 
     @FXML
@@ -44,6 +45,7 @@ public class StartController {
 
     @FXML
     void initialize() {
+        clientHandler = ClientHandler.getInstance(args);
 
         //Get login and password
         loginButton.setOnAction(event -> {
@@ -70,12 +72,10 @@ public class StartController {
     }
 
     private void loginUser(String login, String password) {
-        clientHandler = new ClientHandler(this, args);
-        clientHandler.connect();
+        boolean noError = false;
         if (login.length() < 4) {
             showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе логина", "Слишком короткий логин");
         } else {
-            System.out.println("логин подошел круто");
             clientHandler.setLogin(login);
             if (password.length() < 3 && password.length() > 0)
                 showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе пароля", "Слишком короткий пароль");
@@ -83,34 +83,47 @@ public class StartController {
                 Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{3,}");
                 Matcher matcher = pattern.matcher(password);
                 if (matcher.matches()) {
-                    System.out.println("круто");
                     clientHandler.setPassword(password);
                     clientHandler.sendMessage(Message.builder().commandName("login").build());
+                    noError = true;
                 } else
                     showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе пароля", "Пароль содержит недопустимые символы");
             } else {
-                System.out.println("пустой пароль норм");
                 clientHandler.setPassword(password);
                 clientHandler.sendMessage(Message.builder().commandName("login").build());
+                noError = true;
             }
         }
-        String answer="";
-        while (answer.isEmpty()){
-            try{
-                answer = clientHandler.getAnswer();
-            }catch (IOException e){
-                e.printStackTrace();
+        if (noError) {
+            String answer = "";
+            while (answer.isEmpty()) {
+                try {
+                    answer = clientHandler.getAnswer();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            if (answer.equals("success")) {
+                showAlert(Alert.AlertType.INFORMATION, "Вход", "Вход", "Вы успешно вошли в систему");
+                loginButton.getScene().getWindow().hide();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/main.fxml"));
+                try {
+                    loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Parent root = loader.getRoot();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            } else showAlert(Alert.AlertType.ERROR, "Вход отклонен", "Вход отклонён", "Повторите вход");
         }
-        if (answer.equals("success")) showAlert(Alert.AlertType.INFORMATION, "Вход", "Вход", "Вы успешно вошли в систему");
-    }
-
-    public void setClientHandler(ClientHandler clientHandler) {
-        this.clientHandler = clientHandler;
     }
 
     /**
      * Show alert window with message
+     *
      * @param alertType
      * @param title
      * @param header

@@ -25,6 +25,4 @@ public class GUIMain extends Application {
         primaryStage.show();
     }
 
-
-
 }

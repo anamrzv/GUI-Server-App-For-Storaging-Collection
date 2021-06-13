@@ -23,20 +23,28 @@ import java.util.List;
 @Setter
 public class ClientHandler {
 
+    public static ClientHandler instance;
+
     private Socket clientSocket;
     private OutputStream out;
     private InputStream in;
-    private StartController startController;
     private String[] args;
     private String login;
     private String password;
-    private boolean isSignedIn;
+
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-    public ClientHandler(StartController controller, String[] args) {
-        this.startController = controller;
+    private ClientHandler(String[] args) {
         this.args = args;
+        connect();
+    }
+
+    public static ClientHandler getInstance(String[] args){
+        if (instance==null) {
+            instance = new ClientHandler(args);
+        }
+        return instance;
     }
 
     public void connect() {
@@ -77,7 +85,7 @@ public class ClientHandler {
 
 
     public void sendMessage(Message message) {
-        while (clientSocket.isConnected()) {
+        if (clientSocket.isConnected()) {
             try {
                 List<String> userInfoList = new LinkedList<>();
                 userInfoList.add(login);
@@ -99,16 +107,11 @@ public class ClientHandler {
         if (serverAnswer > 0) {
             ServerResponse sr = OBJECT_MAPPER.readValue(buffer.array(), ServerResponse.class);
             if (sr.getError() == null) {
-                isSignedIn = true;
                 return "success";
-            } else return "error";
+            } else return sr.getError();
         }
         buffer.flip();
         return "";
-    }
-
-    public boolean getSignedIn() {
-        return isSignedIn;
     }
 
 }

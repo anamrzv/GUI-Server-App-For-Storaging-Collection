@@ -148,10 +148,10 @@ public class ServerConnection {
         @Override
         public void run() {
             sChannel.configureBlocking(false);
-            if (sChannel.isOpen()) {
+            /*if (sChannel.isOpen()) {
                 sChannel.write(ByteBuffer.wrap(OBJECT_MAPPER.writeValueAsBytes(collectionsKeeper)));
                 log.info("CollectionsKeeper sent");
-            }
+            }*/
             while (sChannel.isOpen()) {
                 try {
                     ByteBuffer buffer = ByteBuffer.allocate(5120);
@@ -173,6 +173,7 @@ public class ServerConnection {
                                 }
                             }
                             log.info("Got {}", OBJECT_MAPPER.readValue(buffer.array(), Message.class));
+                            System.out.println("Got "+OBJECT_MAPPER.readValue(buffer.array(), Message.class));
                             ServerResponse serverResponse = future.get();
                             sChannel.write(ByteBuffer.wrap(OBJECT_MAPPER.writeValueAsBytes(serverResponse)));
                             log.info("Answer sent");
