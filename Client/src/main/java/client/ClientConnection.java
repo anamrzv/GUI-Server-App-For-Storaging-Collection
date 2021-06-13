@@ -101,7 +101,7 @@ public class ClientConnection {
                         System.out.println("Клиентский сокет не был создан");
                     }
                 }
-                /*while (clientSocket.isConnected()) {
+                while (clientSocket.isConnected()) {
                     try {
                         Message message = ih.setStart();
                         String login = loginInfo.getCommandArgs().get(0);
@@ -139,7 +139,7 @@ public class ClientConnection {
                         e.printStackTrace();
                         System.out.println("Команда не может быть обработана.");
                     }
-                }*/
+                }
             } catch (PortUnreachableException e) {
                 System.out.println("Не удалось получить данные по указанному порту/сервер не доступен");
             } catch (UnknownHostException e) {

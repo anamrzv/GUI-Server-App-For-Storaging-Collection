@@ -34,7 +34,6 @@ public class ClientHandler {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-
     public ClientHandler(StartController controller, String[] args) {
         this.startController = controller;
         this.args = args;
@@ -56,35 +55,28 @@ public class ClientHandler {
                 System.out.println("Порт должен лежать в пределах 1-65535");
                 System.out.println(-1);
             }
-
-            try {
-                clientSocket = new Socket("localhost", port);
-                out = clientSocket.getOutputStream();
-                in = clientSocket.getInputStream();
-                System.out.println("Клиент создан");
-            } catch (PortUnreachableException e) {
-                System.out.println("Не удалось получить данные по указанному порту/сервер не доступен");
-                System.exit(-1);
-            } catch (UnknownHostException e) {
-                System.out.println("Неизвестный хост");
-                System.exit(-1);
-            } catch (IOException e) {
-                System.out.println("Ошибка при подключении к серверу. Выберите другой порт.");
-                System.exit(-1);
-            } finally {
-                try {
-                    clientSocket.close();
-                    in.close();
-                    out.close();
-                    System.out.println("Клиент закрыт");
-                } catch (NullPointerException | IOException e) {
-                    System.out.println("Клиентский сокет не был создан");
-                }
-            }
+        }
+        try {
+            clientSocket = new Socket("localhost", port);
+            out = clientSocket.getOutputStream();
+            in = clientSocket.getInputStream();
+            System.out.println("Клиент создан");
+        } catch (PortUnreachableException e) {
+            System.out.println("Не удалось получить данные по указанному порту/сервер не доступен");
+            System.exit(-1);
+        } catch (UnknownHostException e) {
+            System.out.println("Неизвестный хост");
+            System.exit(-1);
+        } catch (IOException e) {
+            System.out.println("Ошибка при подключении к серверу. Выберите другой порт.");
+            System.exit(-1);
+        } catch (Exception e) {
+            System.out.println("Ошибка при создании сокета");
         }
     }
 
-    public void sendMessage(Message message){
+
+    public void sendMessage(Message message) {
         while (clientSocket.isConnected()) {
             try {
                 List<String> userInfoList = new LinkedList<>();
@@ -115,7 +107,7 @@ public class ClientHandler {
         return "";
     }
 
-    public boolean getSignedIn(){
+    public boolean getSignedIn() {
         return isSignedIn;
     }
 

@@ -44,12 +44,15 @@ public class StartController {
 
     @FXML
     void initialize() {
+
+        //Get login and password
         loginButton.setOnAction(event -> {
             String login = loginField.getText().trim();
             String password = passwordField.getText().trim();
             loginUser(login, password);
         });
 
+        //If registration button is clicked, switch to registration window
         signinButton.setOnAction(event -> {
             signinButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
@@ -106,6 +109,13 @@ public class StartController {
         this.clientHandler = clientHandler;
     }
 
+    /**
+     * Show alert window with message
+     * @param alertType
+     * @param title
+     * @param header
+     * @param content
+     */
     private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
