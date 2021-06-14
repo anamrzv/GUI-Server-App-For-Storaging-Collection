@@ -59,12 +59,12 @@
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="infoButton" layoutX="71.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="66.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="info">
+            <Button fx:id="infoButton" layoutX="72.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="66.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="info">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="headButton" layoutX="162.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="66.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="head">
+            <Button fx:id="headButton" layoutX="161.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="66.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="head">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
@@ -74,17 +74,17 @@
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="countPassportButton" layoutX="499.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="count less than passport">
+            <Button fx:id="countPassportButton" layoutX="492.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="count less than passport">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="helpButton" layoutX="400.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="73.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="help">
+            <Button fx:id="helpButton" layoutX="397.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="73.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="help">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="scriptButton" layoutX="704.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="execute script">
+            <Button fx:id="scriptButton" layoutX="693.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="execute script">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>

@@ -2,6 +2,7 @@ package gui.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import gui.GUIMain;
@@ -82,35 +83,19 @@ public class CommandButtonsController {
         userInfoLable.setText("Пользователь: "+clientHandler.getLogin());
 
         helpButton.setOnAction(event->{
-            clientHandler.sendCommand("help");
-            ServerResponse answer = null;
-            while (answer == null) {
-                try {
-                    answer = clientHandler.getAnswer();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (answer.getError()==null){
-                showAlert(Alert.AlertType.INFORMATION, "Справка", answer.getMessage(), "");
-            } else showAlert(Alert.AlertType.ERROR, "Справка", "Ошибка", "");
-
+            getResultByClientHandler("help");
         });
 
         infoButton.setOnAction(event->{
-            clientHandler.sendCommand("info");
-            ServerResponse answer = null;
-            while (answer == null) {
-                try {
-                    answer = clientHandler.getAnswer();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (answer.getError()==null){
-                showAlert(Alert.AlertType.INFORMATION, "Информация", answer.getMessage(), "");
-            } else showAlert(Alert.AlertType.ERROR, "Справка", "Ошибка", "");
+            getResultByClientHandler("info");
+        });
 
+        weightButton.setOnAction(event->{
+            getResultByClientHandler("sum_of_weight");
+        });
+
+        headButton.setOnAction(event->{
+            getResultByClientHandler("head");
         });
 
         toTableButton.setOnAction(event->{
@@ -138,5 +123,20 @@ public class CommandButtonsController {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private void getResultByClientHandler(String commandName){
+        clientHandler.sendCommand(commandName);
+        ServerResponse answer = null;
+        while (answer == null) {
+            try {
+                answer = clientHandler.getAnswer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (answer.getError()==null){
+            showAlert(Alert.AlertType.INFORMATION, commandName.toUpperCase(), answer.getMessage(), "");
+        } else showAlert(Alert.AlertType.ERROR, commandName.toUpperCase(), "Ошибка", "");
     }
 }
