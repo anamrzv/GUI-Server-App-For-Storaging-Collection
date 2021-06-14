@@ -36,7 +36,7 @@ public class Help extends Command {
             Map<String, Command> commands = ch.getCommands();
             commands.values()
                     .forEach(c -> response += c.getDescription() + "\n");
-            response += "add {json_element} : добавить новый элемент в коллекцию";
+            //response += "add {json_element} : добавить новый элемент в коллекцию";
             return ServerResponse.builder().message(response).command("help").build();
         } else {
             return ServerResponse.builder().error("У команды help нет аргументов. Введите команду снова.").command("help").build();

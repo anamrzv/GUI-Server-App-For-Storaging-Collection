@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
  */
 public class Show extends Command {
 
-    private String response = "Коллекция People:";
-
     /**
      * Конструктор - создание нового объекта
      *
@@ -33,23 +31,16 @@ public class Show extends Command {
      */
     @Override
     public ServerResponse execute(List<String> args) {
-        if (args.size() == 2) {
-            LinkedList<Person> people = dc.getPeople();
-            if (people.size() == 0)
-                return ServerResponse.builder().message("Коллекция People пуста.").command("show").build();
-            else {
-                PersonSizeComparator comparator = new PersonSizeComparator();
-                people.stream()
-                        .sorted(comparator)
-                        .forEach(p -> response += "\n" + p);
-                people = people.stream()
-                        .sorted(comparator)
-                        .collect(Collectors.toCollection(LinkedList::new));
-            }
-            return ServerResponse.builder().message(response).command("show").build();
-        } else {
-            return ServerResponse.builder().error("У команды show нет аргументов. Введите команду снова.").command("show").build();
+        List<Person> sortedPeople;
+        LinkedList<Person> people = dc.getPeople();
+        if (people.size() == 0)
+            return ServerResponse.builder().personList(null).command("show").build();
+        else {
+            sortedPeople = people.stream()
+                    .sorted()
+                    .collect(Collectors.toList());
         }
+        return ServerResponse.builder().personList(sortedPeople).command("show").build();
     }
 
     /**

@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import newclient.ClientHandler;
 import other.Message;
+import other.ServerResponse;
 
 public class StartController {
 
@@ -95,15 +96,15 @@ public class StartController {
             }
         }
         if (noError) {
-            String answer = "";
-            while (answer.isEmpty()) {
+            ServerResponse answer = null;
+            while (answer == null) {
                 try {
                     answer = clientHandler.getAnswer();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (answer.equals("success")) {
+            if (answer.getError() == null) {
                 showAlert(Alert.AlertType.INFORMATION, "Вход", "Вход", "Вы успешно вошли в систему");
                 loginButton.getScene().getWindow().hide();
                 FXMLLoader loader = new FXMLLoader();

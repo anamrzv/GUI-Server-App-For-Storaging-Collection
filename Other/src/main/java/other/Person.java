@@ -67,6 +67,30 @@ public class Person implements Comparable<Person>, Serializable {
         return Long.parseLong(passportID);
     }
 
+    public float getCoordinateX(){
+        return coordinates.getX();
+    }
+
+    public double getCoordinateY(){
+        return coordinates.getY();
+    }
+
+    public String getLocationName(){
+        return location.getName();
+    }
+
+    public int getLocationX(){
+        return location.getX();
+    }
+
+    public float getLocationY(){
+        return location.getY();
+    }
+
+    public double getLocationZ(){
+        return location.getZ();
+    }
+
     /**
      * Метод - сравнение по умоланию по длине id
      *

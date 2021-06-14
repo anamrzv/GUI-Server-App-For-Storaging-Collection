@@ -77,6 +77,6 @@ public class AddIfMax extends Command {
      */
     @Override
     public String getDescription() {
-        return "add_if_max {element} : добавить новый элемент в коллекцию, если его id превышает значение id наибольшего элемента этой коллекции";
+        return "add_if_max : добавить новый элемент в коллекцию, если его id превышает значение id наибольшего элемента этой коллекции";
     }
 }

@@ -20,7 +20,7 @@ public class GUIMain extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/start.fxml"));
         primaryStage.setTitle("Authorisation");
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

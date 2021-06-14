@@ -1,13 +1,14 @@
 package newclient;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import gui.controllers.MainController;
-import gui.controllers.StartController;
+import lombok.Getter;
 import lombok.Setter;
 import other.Message;
+import other.Person;
 import other.ServerResponse;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Setter
+@Getter
 public class ClientHandler {
 
     public static ClientHandler instance;
@@ -31,6 +33,7 @@ public class ClientHandler {
     private String[] args;
     private String login;
     private String password;
+    private List<Person> people;
 
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -40,8 +43,8 @@ public class ClientHandler {
         connect();
     }
 
-    public static ClientHandler getInstance(String[] args){
-        if (instance==null) {
+    public static ClientHandler getInstance(String[] args) {
+        if (instance == null) {
             instance = new ClientHandler(args);
         }
         return instance;
@@ -100,18 +103,51 @@ public class ClientHandler {
         }
     }
 
-    public String getAnswer() throws IOException {
+    public ServerResponse getAnswer() throws IOException {
         ByteBuffer buffer = ByteBuffer.allocate(5120);
         buffer.clear();
         int serverAnswer = in.read(buffer.array());
         if (serverAnswer > 0) {
             ServerResponse sr = OBJECT_MAPPER.readValue(buffer.array(), ServerResponse.class);
-            if (sr.getError() == null) {
-                return "success";
-            } else return sr.getError();
+            return sr;
         }
         buffer.flip();
-        return "";
+        return null;
     }
 
+    public String getPeopleAnswer() throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(5120);
+        int serverAnswer = 0;
+        do {
+            buffer.clear();
+            serverAnswer = in.read(buffer.array());
+            if (serverAnswer > 0) {
+                ServerResponse sr = OBJECT_MAPPER.readValue(buffer.array(), ServerResponse.class);
+                people = sr.getPersonList();
+                if (people != null) return "full";
+                else return "empty";
+            }
+        } while (serverAnswer <= 0);
+        return null;
+    }
+
+
+    public void sendCommand(String commandName) {
+        if (clientSocket.isConnected()) {
+            List<String> userInfoList = new LinkedList<>();
+            userInfoList.add(login);
+            userInfoList.add(password);
+            Message message = Message.builder().commandName(commandName).build();
+            message.setCommandArgs(userInfoList);
+            try {
+                out.write(OBJECT_MAPPER.writeValueAsBytes(message));
+                out.flush();
+            } catch (JsonProcessingException e) {
+                System.out.println("Ошибка при обработке запроса");
+            } catch (IOException e) {
+                System.out.println("Ошибка при обработке запроса");
+            }
+
+        }
+    }
 }

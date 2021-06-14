@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,4 +18,5 @@ public class ServerResponse implements Serializable {
     private String command;
     private String error;
     private String message;
+    private List<Person> personList;
 }

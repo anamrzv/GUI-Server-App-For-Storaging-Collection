@@ -77,6 +77,6 @@ public class AddIfMin extends Command {
      */
     @Override
     public String getDescription() {
-        return "add_if_min {element} :добавить новый элемент в коллекцию, если его id меньше, чем у наименьшего id  этой коллекции";
+        return "add_if_min :добавить новый элемент в коллекцию, если его id меньше, чем у наименьшего id  этой коллекции";
     }
 }

@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import newclient.ClientHandler;
 import other.Message;
+import other.ServerResponse;
 
 public class SignController {
 
@@ -41,12 +42,34 @@ public class SignController {
     private Button newSignButton;
 
     @FXML
+    private Button toLoginButton;
+
+    @FXML
     void initialize() {
         newSignButton.setOnAction(event -> {
             String login = newLogin.getText().trim();
             String password = newPassword.getText().trim();
             registerUser(login, password);
         });
+
+        toLoginButton.setOnAction(event -> {
+            loadPage(toLoginButton);
+        });
+    }
+
+    private void loadPage(Button toLoginButton) {
+        toLoginButton.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/start.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     private void registerUser(String login, String password) {
@@ -71,30 +94,19 @@ public class SignController {
                 clientHandler.sendMessage(Message.builder().commandName("register").build());
             }
         }
-        String answer="";
-        while (answer.isEmpty()){
-            try{
-                answer = clientHandler.getAnswer();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-        if (answer.equals("success")) {
-            showAlert(Alert.AlertType.INFORMATION, "Регистрация", "Регистрация", "Вы успешно зарегестрированы");
-            newSignButton.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/start.fxml"));
+        ServerResponse answer = null;
+        while (answer == null) {
             try {
-                loader.load();
+                answer = clientHandler.getAnswer();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+        }
+        if (answer.getError()!=null){
+            showAlert(Alert.AlertType.INFORMATION, "Регистрация", "Регистрация", "Вы успешно зарегестрированы");
+            loadPage(newSignButton);
         } else {
-            showAlert(Alert.AlertType.ERROR, "Регистрация", "Регистрация отклонена", answer);
+            showAlert(Alert.AlertType.ERROR, "Регистрация", "Регистрация отклонена", answer.getError());
         }
     }
 
