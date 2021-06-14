@@ -20,11 +20,9 @@ import newclient.ClientHandler;
 import other.Message;
 import other.ServerResponse;
 
-public class SignController {
+public class SignController extends Controller {
 
     private ClientHandler clientHandler;
-
-    private String[] args = GUIMain.port;
 
     @FXML
     private ResourceBundle resources;
@@ -53,23 +51,8 @@ public class SignController {
         });
 
         toLoginButton.setOnAction(event -> {
-            loadPage(toLoginButton);
+            switchToWindow("/start.fxml", toLoginButton);
         });
-    }
-
-    private void loadPage(Button toLoginButton) {
-        toLoginButton.getScene().getWindow().hide();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/start.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 
     private void registerUser(String login, String password) {
@@ -86,12 +69,12 @@ public class SignController {
                 Matcher matcher = pattern.matcher(password);
                 if (matcher.matches()) {
                     clientHandler.setPassword(password);
-                    clientHandler.sendMessage(Message.builder().commandName("register").build());
+                    clientHandler.sendCommand("register");
                 } else
                     showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе пароля", "Пароль содержит недопустимые символы");
             } else {
                 clientHandler.setPassword(password);
-                clientHandler.sendMessage(Message.builder().commandName("register").build());
+                clientHandler.sendCommand("register");
             }
         }
         ServerResponse answer = null;
@@ -102,20 +85,12 @@ public class SignController {
                 e.printStackTrace();
             }
         }
-        if (answer.getError()!=null){
+        if (answer.getError() != null) {
             showAlert(Alert.AlertType.INFORMATION, "Регистрация", "Регистрация", "Вы успешно зарегестрированы");
-            loadPage(newSignButton);
+            switchToWindow("/start.fxml", newSignButton);
         } else {
             showAlert(Alert.AlertType.ERROR, "Регистрация", "Регистрация отклонена", answer.getError());
         }
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 
     public void setClientHandler(ClientHandler clientHandler) {

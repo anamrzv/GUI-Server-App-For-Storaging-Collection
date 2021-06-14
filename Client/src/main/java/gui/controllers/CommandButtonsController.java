@@ -17,11 +17,9 @@ import javafx.stage.Stage;
 import newclient.ClientHandler;
 import other.ServerResponse;
 
-public class CommandButtonsController {
+public class CommandButtonsController extends Controller{
 
     private ClientHandler clientHandler;
-
-    private String[] args = GUIMain.port;
 
     @FXML
     private ResourceBundle resources;
@@ -98,31 +96,20 @@ public class CommandButtonsController {
             getResultByClientHandler("head");
         });
 
-        toTableButton.setOnAction(event->{
-            toTableButton.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/main.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+        removePassportButton.setOnAction(event->{
+            getResultByClientHandler("");
         });
 
 
 
-    }
+        toTableButton.setOnAction(event->{
+            switchToWindow("/main.fxml", toTableButton);
+        });
 
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
+        countPassportButton.setOnAction(event->{
+            switchToWindow("/count_passport.fxml", countPassportButton);
+        });
+
     }
 
     private void getResultByClientHandler(String commandName){

@@ -22,11 +22,9 @@ import newclient.ClientHandler;
 import other.Color;
 import other.Person;
 
-public class MainController {
+public class MainController extends Controller{
 
     private ClientHandler clientHandler;
-
-    private String[] args = GUIMain.port;
 
     @FXML
     private TableView<Person> peopleTable = new TableView<>();
@@ -73,18 +71,7 @@ public class MainController {
         peopleTable.setEditable(true);
 
         toCommandsButton.setOnAction(event ->{
-            toCommandsButton.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/commands.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            switchToWindow("/commands.fxml", toCommandsButton);
         });
     }
 

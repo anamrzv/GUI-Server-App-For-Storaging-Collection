@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import gui.GUIMain;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,14 +16,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import newclient.ClientHandler;
-import other.Message;
 import other.ServerResponse;
 
-public class StartController {
+public class StartController extends Controller{
 
     private ClientHandler clientHandler;
-
-    private String[] args = GUIMain.port;
 
     @FXML
     private ResourceBundle resources;
@@ -57,18 +53,7 @@ public class StartController {
 
         //If registration button is clicked, switch to registration window
         signinButton.setOnAction(event -> {
-            signinButton.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/signin.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            switchToWindow("/signin.fxml", signinButton);
         });
     }
 
@@ -85,13 +70,13 @@ public class StartController {
                 Matcher matcher = pattern.matcher(password);
                 if (matcher.matches()) {
                     clientHandler.setPassword(password);
-                    clientHandler.sendMessage(Message.builder().commandName("login").build());
+                    clientHandler.sendCommand("login");
                     noError = true;
                 } else
                     showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе пароля", "Пароль содержит недопустимые символы");
             } else {
                 clientHandler.setPassword(password);
-                clientHandler.sendMessage(Message.builder().commandName("login").build());
+                clientHandler.sendCommand("login");
                 noError = true;
             }
         }
@@ -120,21 +105,5 @@ public class StartController {
                 stage.showAndWait();
             } else showAlert(Alert.AlertType.ERROR, "Вход отклонен", "Вход отклонён", "Повторите вход");
         }
-    }
-
-    /**
-     * Show alert window with message
-     *
-     * @param alertType
-     * @param title
-     * @param header
-     * @param content
-     */
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 }
