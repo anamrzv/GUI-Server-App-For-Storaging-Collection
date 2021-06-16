@@ -35,6 +35,7 @@ public class ClientHandler {
     private String password;
     private List<Person> people;
     private List<String> commandArguments;
+    private Person person;
 
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -89,9 +90,6 @@ public class ClientHandler {
 
     public void sendCommand(String commandName) {
         if (clientSocket.isConnected()) {
-            //List<String> userInfoList = new LinkedList<>();
-            //userInfoList.add(login);
-            //userInfoList.add(password);
             Message message = Message.builder().commandName(commandName).build();
             if (commandArguments == null) {
                 commandArguments = new LinkedList<>();
@@ -99,11 +97,14 @@ public class ClientHandler {
             commandArguments.add(0, password);
             commandArguments.add(0, login);
             message.setCommandArgs(commandArguments);
-
+            if (commandName.equals("add")||commandName.equals("add_if_max")||commandName.equals("add_if_min")){
+                message.setPerson(person);
+            }
             try {
                 out.write(OBJECT_MAPPER.writeValueAsBytes(message));
                 out.flush();
                 commandArguments = null;
+                person = null;
             } catch (JsonProcessingException e) {
                 System.out.println("Ошибка при обработке запроса");
             } catch (IOException e) {

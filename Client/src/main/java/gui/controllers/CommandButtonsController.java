@@ -97,10 +97,8 @@ public class CommandButtonsController extends Controller{
         });
 
         removePassportButton.setOnAction(event->{
-            getResultByClientHandler("");
+            switchToWindow("/remove_passport.fxml", removePassportButton);
         });
-
-
 
         toTableButton.setOnAction(event->{
             switchToWindow("/main.fxml", toTableButton);
@@ -108,6 +106,18 @@ public class CommandButtonsController extends Controller{
 
         countPassportButton.setOnAction(event->{
             switchToWindow("/count_passport.fxml", countPassportButton);
+        });
+
+        removeIdButton.setOnAction(event->{
+            switchToWindow("/remove_id.fxml", removeIdButton);
+        });
+
+        clearButton.setOnAction(event->{
+            getResultByClientHandler("clear");
+        });
+
+        addButton.setOnAction(event->{
+            switchToWindow("/add.fxml", addButton);
         });
 
     }

@@ -6,31 +6,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="503.0" prefWidth="869.0" style="-fx-background-color: #2e3348;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CountPassportController">
+<AnchorPane prefHeight="503.0" prefWidth="869.0" style="-fx-background-color: #2e3348;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RemoveIdController">
     <children>
         <AnchorPane layoutX="-1.0" layoutY="80.0" prefHeight="422.0" prefWidth="869.0" style="-fx-background-color: #fafafa;">
-         <children>
-            <TextField fx:id="passportIDField" layoutX="254.0" layoutY="175.0" prefHeight="42.0" prefWidth="362.0" promptText="Номер паспорта">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </TextField>
-            <Label layoutX="317.0" layoutY="50.0" prefHeight="51.0" prefWidth="236.0" text="Введите номер паспорта. ">
-               <font>
-                  <Font name="Microsoft JhengHei Light" size="19.0" />
-               </font>
-            </Label>
-            <Label layoutX="97.0" layoutY="101.0" prefHeight="51.0" prefWidth="675.0" text="Будут посчитаны все люди, у которых номер паспорта меньше заданного.">
-               <font>
-                  <Font name="Microsoft JhengHei Light" size="19.0" />
-               </font>
-            </Label>
-            <Button fx:id="readyButton" layoutX="338.0" layoutY="254.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="194.0" text="Готово">
-               <font>
-                  <Font name="Microsoft YaHei Light" size="16.0" />
-               </font>
-            </Button>
-         </children>
+            <children>
+                <TextField fx:id="IDField" layoutX="254.0" layoutY="175.0" prefHeight="42.0" prefWidth="362.0" promptText="ID">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextField>
+                <Label layoutX="380.0" layoutY="49.0" prefHeight="51.0" prefWidth="109.0" text="Введите ID. ">
+                    <font>
+                        <Font name="Microsoft JhengHei Light" size="19.0" />
+                    </font>
+                </Label>
+                <Label layoutX="163.0" layoutY="100.0" prefHeight="51.0" prefWidth="542.0" text="Будет удален человек, у которого ID совпадает с заданным.">
+                    <font>
+                        <Font name="Microsoft JhengHei Light" size="19.0" />
+                    </font>
+                </Label>
+                <Button fx:id="readyButton" layoutX="338.0" layoutY="254.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="194.0" text="Готово">
+                    <font>
+                        <Font name="Microsoft YaHei Light" size="16.0" />
+                    </font>
+                </Button>
+            </children>
         </AnchorPane>
         <Label layoutX="331.0" layoutY="14.0" text="People DB" textFill="WHITE">
             <font>

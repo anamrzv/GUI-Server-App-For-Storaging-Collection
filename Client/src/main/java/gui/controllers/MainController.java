@@ -22,7 +22,7 @@ import newclient.ClientHandler;
 import other.Color;
 import other.Person;
 
-public class MainController extends Controller{
+public class MainController extends Controller {
 
     private ClientHandler clientHandler;
 
@@ -33,7 +33,7 @@ public class MainController extends Controller{
     @FXML
     private URL location;
     @FXML
-    private TableColumn<Person,String> nameColumn;
+    private TableColumn<Person, String> nameColumn;
     @FXML
     private TableColumn<Person, Long> heightColumn;
     @FXML
@@ -66,11 +66,11 @@ public class MainController extends Controller{
     @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: "+clientHandler.getLogin());
+        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
         fillTable();
         peopleTable.setEditable(true);
 
-        toCommandsButton.setOnAction(event ->{
+        toCommandsButton.setOnAction(event -> {
             switchToWindow("/commands.fxml", toCommandsButton);
         });
     }
@@ -78,7 +78,7 @@ public class MainController extends Controller{
     private void fillTable() {
         ObservableList<Person> observableList = FXCollections.observableArrayList();
         clientHandler.sendCommand("show");
-        String answer="";
+        String answer = "";
         while (answer.isEmpty()) {
             try {
                 answer = clientHandler.getPeopleAnswer();
@@ -101,8 +101,6 @@ public class MainController extends Controller{
         locXColumn.setCellValueFactory(new PropertyValueFactory<>("locationX"));
         locYColumn.setCellValueFactory(new PropertyValueFactory<>("locationY"));
         locZColumn.setCellValueFactory(new PropertyValueFactory<>("locationZ"));
-        //peopleTable.getColumns().addAll(nameColumn, heightColumn, weightColumn, passportColumn, hairColumn, locationNameColumn, locXColumn, locYColumn, locZColumn, coordXColumn, coordYColumn, dateColumn, idColumn);
-        //table.setItems(observableList);
         peopleTable.getItems().addAll(observableList);
     }
 }
