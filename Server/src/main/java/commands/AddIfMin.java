@@ -44,9 +44,7 @@ public class AddIfMin extends Command {
                 return ServerResponse.builder().message("Объект добавлен в коллекцию, т.к. коллекция была пуста.").command("add_if_min").build();
             } else return ServerResponse.builder().error(result).command("add_if_min").build();
         } else {
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
-            if (gson.toJson(person).length() > gson.toJson(people.getFirst()).length()) {
+            if (person.toString().length() > people.getFirst().toString().length()) {
                 return ServerResponse.builder().error("Объект не добавлен в коллекцию, т.к. его длина в формате json больше наименьшей").command("add_if_min").build();
             } else {
                 result = manager.addPersonToDB(person, "add", args);

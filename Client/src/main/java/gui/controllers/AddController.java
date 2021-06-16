@@ -73,6 +73,9 @@ public class AddController extends Controller {
     @FXML
     private Button toMapButton;
 
+    @FXML
+    private ComboBox<String> kindOfAddBox;
+
     Map<Integer, Location> readyLocations = new HashMap<>();
 
     private ObservableList<String> locations = FXCollections.observableArrayList();
@@ -81,6 +84,10 @@ public class AddController extends Controller {
     void initialize() throws IOException {
         clientHandler = ClientHandler.getInstance(args);
         userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
+
+        ObservableList<String> addOptions = FXCollections.observableArrayList("Простое добавление", "Добавить, если больше", "Добавить, если меньше");
+        kindOfAddBox.setItems(addOptions);
+        kindOfAddBox.setValue("Простое добавление");
 
         ObservableList<String> colors = FXCollections.observableArrayList("YELLOW", "WHITE", "BROWN", "ORANGE");
         hairField.setItems(colors);
@@ -109,12 +116,17 @@ public class AddController extends Controller {
             String xLoc = xLocationField.getText().trim();
             String yLoc = yLocationField.getText().trim();
             String zLoc = zLocationY.getText().trim();
-            Creation creation = new Creation(name, height ,weight, passport,hair, x, y, location, nameLoc, xLoc, yLoc, zLoc);
+            Creation creation = new Creation(name, height, weight, passport, hair, x, y, location, nameLoc, xLoc, yLoc, zLoc);
             ServerResponse response = creation.createNewPerson(readyLocations);
-            if (response.getError()!=null) showAlert(Alert.AlertType.ERROR, "Create new person St.1", response.getError(), "");
+            if (response.getError() != null)
+                showAlert(Alert.AlertType.ERROR, "Create new person", response.getError(), "");
             else {
                 clientHandler.setPerson(response.getPersonList().get(0));
-                clientHandler.sendCommand("add");
+                String commandName = "";
+                if (kindOfAddBox.getValue().equals("Простое добавление")) commandName = "add";
+                else if (kindOfAddBox.getValue().equals("Добавить, если больше")) commandName = "add_if_max";
+                else if (kindOfAddBox.getValue().equals("Добавить, если меньше")) commandName = "add_if_min";
+                clientHandler.sendCommand(commandName);
                 ServerResponse answer = null;
                 while (answer == null) {
                     try {
@@ -123,9 +135,9 @@ public class AddController extends Controller {
                         e.printStackTrace();
                     }
                 }
-                if (answer.getError()==null){
+                if (answer.getError() == null) {
                     showAlert(Alert.AlertType.INFORMATION, "Create new person", answer.getMessage(), "");
-                } else showAlert(Alert.AlertType.ERROR, "Create new person St.2", "Ошибка", "");
+                } else showAlert(Alert.AlertType.ERROR, "Create new person", answer.getError(), "");
             }
         });
 

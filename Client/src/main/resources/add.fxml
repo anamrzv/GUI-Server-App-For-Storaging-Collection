@@ -21,7 +21,7 @@
                         <Font name="Microsoft JhengHei Light" size="19.0" />
                     </font>
                 </Label>
-                <Button fx:id="readyButton" layoutX="386.0" layoutY="351.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" text="Создать">
+                <Button fx:id="readyButton" layoutX="522.0" layoutY="350.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: #bcc2c4; -fx-border-color: grey;" text="Создать">
                     <font>
                         <Font name="Microsoft YaHei Light" size="16.0" />
                     </font>
@@ -128,7 +128,7 @@
                   <Font name="Microsoft JhengHei Light" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="538.0" layoutY="81.0" prefHeight="51.0" prefWidth="78.0" text="Название*:">
+            <Label layoutX="538.0" layoutY="81.0" prefHeight="51.0" prefWidth="78.0" text="Название:">
                <font>
                   <Font name="Microsoft JhengHei Light" size="15.0" />
                </font>
@@ -146,6 +146,12 @@
             <Label layoutX="538.0" layoutY="269.0" prefHeight="51.0" prefWidth="78.0" text="Z*:">
                <font>
                   <Font name="Microsoft JhengHei Light" size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="kindOfAddBox" layoutX="208.0" layoutY="356.0" prefHeight="27.0" prefWidth="188.0" style="-fx-background-color: #b2cbd4; -fx-border-color: grey;" visibleRowCount="4" />
+            <Label layoutX="31.0" layoutY="344.0" prefHeight="51.0" prefWidth="178.0" text="Особенности добавления:">
+               <font>
+                  <Font name="Microsoft JhengHei Light" size="13.0" />
                </font>
             </Label>
             </children>

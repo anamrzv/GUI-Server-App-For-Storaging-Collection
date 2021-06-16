@@ -48,32 +48,22 @@ public class Creation {
         this.readyLocations = readyLocations;
         newPerson = new Person();
         inputName();
-        System.out.println(newPerson);
         if (answer != null) return answer;
         inputHeight();
-        System.out.println(newPerson);
         if (answer != null) return answer;
         inputWeight();
-        System.out.println(newPerson);
         if (answer != null) return answer;
         inputPassport();
-        System.out.println(newPerson);
         if (answer != null) return answer;
         inputHairColor();
-        System.out.println(newPerson);
         if (answer != null) return answer;
         inputLocation();
-        System.out.println(newPerson);
         if (answer != null) return answer;
         inputCoordinates();
-        System.out.println(newPerson);
         if (answer != null) return answer;
-        System.out.println(newPerson);
         List<Person> toAddPerson = new LinkedList<>();
         toAddPerson.add(newPerson);
-        System.out.println(toAddPerson);
         answer = ServerResponse.builder().personList(toAddPerson).build();
-        System.out.println(answer);
         return answer;
     }
 

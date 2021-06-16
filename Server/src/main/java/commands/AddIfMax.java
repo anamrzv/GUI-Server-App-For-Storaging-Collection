@@ -3,10 +3,12 @@ package commands;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import database.DataBaseManager;
+import other.LocalDateAdapter;
 import other.Person;
 import other.ServerResponse;
 import other.CollectionsKeeper;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,17 +46,15 @@ public class AddIfMax extends Command {
             } else return ServerResponse.builder().error(result).command("add_if_max").build();
         }
         else {
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
-            if (gson.toJson(person).length() < gson.toJson(people.getLast()).length()) {
-                return ServerResponse.builder().error("Объект не может быть добавлен в коллекцию, т.к. его длина в формате json меньше наибольшей").command("add_if_max").build();
+            if (person.toString().length() < people.getLast().toString().length()) {
+                return ServerResponse.builder().error("Объект не может быть добавлен в коллекцию, т.к. его длина в формате строки меньше наибольшей").command("add_if_max").build();
             } else {
                 result = manager.addPersonToDB(person, "add", args);
                 if (result.equals("Объект успешно добавлен")){
                     LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
                     people.clear();
                     people.addAll(newCollection);
-                    return ServerResponse.builder().message("Объект добавлен в коллекцию, т.к. его длина в формате json больше наибольшей или совпадает с ней.").command("add_if_max").build();
+                    return ServerResponse.builder().message("Объект добавлен в коллекцию, т.к. его длина в формате строки больше наибольшей или совпадает с ней.").command("add_if_max").build();
                 } else return ServerResponse.builder().error(result).command("add_if_max").build();
             }
         }
