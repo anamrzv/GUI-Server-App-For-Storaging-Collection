@@ -2,20 +2,23 @@ package gui.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import newclient.ClientHandler;
 import newclient.Creation;
-import other.Color;
 import other.Location;
 import other.Person;
 import other.ServerResponse;
 
-public class AddController extends Controller {
+public class UpdateController extends Controller {
 
     private ClientHandler clientHandler;
 
@@ -65,6 +68,9 @@ public class AddController extends Controller {
     private ComboBox<String> locationField;
 
     @FXML
+    private TextField idField;
+
+    @FXML
     private Label userInfoLable;
 
     @FXML
@@ -73,9 +79,6 @@ public class AddController extends Controller {
     @FXML
     private Button toMapButton;
 
-    @FXML
-    private ComboBox<String> kindOfAddBox;
-
     private Map<Integer, Location> readyLocations = new HashMap<>();
 
     private ObservableList<String> locations = FXCollections.observableArrayList();
@@ -83,17 +86,66 @@ public class AddController extends Controller {
     @FXML
     void initialize() throws IOException {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
 
-        ObservableList<String> addOptions = FXCollections.observableArrayList("Простое добавление", "Добавить, если больше", "Добавить, если меньше");
-        kindOfAddBox.setItems(addOptions);
-        kindOfAddBox.setValue("Простое добавление");
+        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
 
         ObservableList<String> colors = FXCollections.observableArrayList("YELLOW", "WHITE", "BROWN", "ORANGE");
         hairField.setItems(colors);
 
         createLocationsList();
         locationField.setItems(locations);
+
+        idField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String index = idField.getText().trim();
+                clientHandler.sendCommand("show");
+                String answer = "";
+                while (answer.isEmpty()) {
+                    try {
+                        answer = clientHandler.getPeopleAnswer();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for (Person p : clientHandler.getPeople()) {
+                    if (p.getId().toString().equals(index)) {
+                        nameFiled.setText(p.getName());
+                        heightField.setText(Long.toString(p.getHeight()));
+                        weightField.setText(Long.toString(p.getWeight()));
+                        passportField.setText(p.getPassportID());
+                        hairField.setValue(p.getHairColor().getDescription());
+                        coordXField.setText(Float.toString(p.getCoordinateX()));
+                        coordYField.setText(Double.toString(p.getCoordinateY()));
+                        locationField.setValue(p.getLocationName());
+                    }
+                }
+            }
+        });
+
+        readyButton.setOnAction(event->{
+            ServerResponse response= readFromWindow();
+            if (response.getError() != null)
+                showAlert(Alert.AlertType.ERROR, "Update person", response.getError(), "");
+            else {
+                Person personWithID = response.getPersonList().get(0);
+                personWithID.setId(Long.parseLong(idField.getText()));
+                clientHandler.setPerson(personWithID);
+                clientHandler.sendCommand("update");
+                ServerResponse answer = null;
+                while (answer == null) {
+                    try {
+                        answer = clientHandler.getAnswer();
+                        System.out.println(answer);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (answer.getError() == null) {
+                    showAlert(Alert.AlertType.INFORMATION, "Update person", answer.getMessage(), "");
+                } else showAlert(Alert.AlertType.ERROR, "Update person", answer.getError(), "");
+            }
+        });
+
 
         toMapButton.setOnAction(event -> {
             switchToWindow("/map.fxml", toMapButton);
@@ -102,32 +154,6 @@ public class AddController extends Controller {
         toCommandsButton.setOnAction(event -> {
             switchToWindow("/commands.fxml", toCommandsButton);
         });
-
-        readyButton.setOnAction(event -> {
-            ServerResponse response = readFromWindow();
-            if (response.getError() != null)
-                showAlert(Alert.AlertType.ERROR, "Create new person", response.getError(), "");
-            else {
-                clientHandler.setPerson(response.getPersonList().get(0));
-                String commandName = "";
-                if (kindOfAddBox.getValue().equals("Простое добавление")) commandName = "add";
-                else if (kindOfAddBox.getValue().equals("Добавить, если больше")) commandName = "add_if_max";
-                else if (kindOfAddBox.getValue().equals("Добавить, если меньше")) commandName = "add_if_min";
-                clientHandler.sendCommand(commandName);
-                ServerResponse answer = null;
-                while (answer == null) {
-                    try {
-                        answer = clientHandler.getAnswer();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (answer.getError() == null) {
-                    showAlert(Alert.AlertType.INFORMATION, "Create new person", answer.getMessage(), "");
-                } else showAlert(Alert.AlertType.ERROR, "Create new person", answer.getError(), "");
-            }
-        });
-
     }
 
     public ServerResponse readFromWindow(){
@@ -148,37 +174,7 @@ public class AddController extends Controller {
     }
 
     public void createLocationsList() throws IOException {
-        createLocationsList(clientHandler, readyLocations, locations);
+        AddController.createLocationsList(clientHandler, readyLocations, locations);
     }
 
-    static void createLocationsList(ClientHandler clientHandler, Map<Integer, Location> readyLocations, ObservableList<String> locations) {
-        clientHandler.sendCommand("show");
-        String answer = "";
-        while (answer.isEmpty()) {
-            try {
-                answer = clientHandler.getPeopleAnswer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        List<Person> readyPeople = clientHandler.getPeople();
-        boolean alreadyLocation = false;
-        for (Person p : readyPeople) {
-            Location currentLocation = p.getLocation();
-            for (Location l : readyLocations.values()) {
-                if (currentLocation.equals(l)) {
-                    alreadyLocation = true;
-                    break;
-                }
-            }
-            if (!alreadyLocation) {
-                readyLocations.put(readyLocations.size() + 1, currentLocation);
-                alreadyLocation = false;
-            }
-        }
-        for (Location l : readyLocations.values()) {
-            locations.add(l.getName());
-        }
-        locations.add("Новая локация");
-    }
 }

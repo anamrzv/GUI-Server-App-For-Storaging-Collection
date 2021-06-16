@@ -1,10 +1,7 @@
 package newclient;
 
-import lombok.AllArgsConstructor;
 import other.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +61,8 @@ public class Creation {
         List<Person> toAddPerson = new LinkedList<>();
         toAddPerson.add(newPerson);
         answer = ServerResponse.builder().personList(toAddPerson).build();
+        System.out.println(newPerson);
+        System.out.println(answer);
         return answer;
     }
 

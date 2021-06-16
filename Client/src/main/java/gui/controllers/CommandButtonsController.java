@@ -31,12 +31,6 @@ public class CommandButtonsController extends Controller{
     private Button addButton;
 
     @FXML
-    private Button addMaxButton;
-
-    @FXML
-    private Button addMinButton;
-
-    @FXML
     private Button updateButton;
 
     @FXML
@@ -120,6 +114,13 @@ public class CommandButtonsController extends Controller{
             switchToWindow("/add.fxml", addButton);
         });
 
+        updateButton.setOnAction(event->{
+            switchToWindow("/update.fxml", updateButton);
+        });
+
+        scriptButton.setOnAction(event->{
+            switchToWindow("/script.fxml", scriptButton);
+        });
     }
 
     private void getResultByClientHandler(String commandName){

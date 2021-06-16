@@ -97,7 +97,7 @@ public class ClientHandler {
             commandArguments.add(0, password);
             commandArguments.add(0, login);
             message.setCommandArgs(commandArguments);
-            if (commandName.equals("add")||commandName.equals("add_if_max")||commandName.equals("add_if_min")){
+            if (commandName.equals("add")||commandName.equals("add_if_max")||commandName.equals("add_if_min")||commandName.equals("update")){
                 message.setPerson(person);
             }
             try {
@@ -141,7 +141,4 @@ public class ClientHandler {
         } while (serverAnswer <= 0);
         return null;
     }
-
-
-
 }
