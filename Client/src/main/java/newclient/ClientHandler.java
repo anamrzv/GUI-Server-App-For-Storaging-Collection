@@ -74,6 +74,8 @@ public class ClientHandler {
             out = clientSocket.getOutputStream();
             in = clientSocket.getInputStream();
             System.out.println("Клиент создан");
+            sendCommand("show");
+            getPeopleAnswer();
         } catch (PortUnreachableException e) {
             System.out.println("Не удалось получить данные по указанному порту/сервер не доступен");
             System.exit(-1);
@@ -135,8 +137,6 @@ public class ClientHandler {
             if (serverAnswer > 0) {
                 ServerResponse sr = OBJECT_MAPPER.readValue(buffer.array(), ServerResponse.class);
                 people = sr.getPersonList();
-                if (people != null) return "full";
-                else return "empty";
             }
         } while (serverAnswer <= 0);
         return null;

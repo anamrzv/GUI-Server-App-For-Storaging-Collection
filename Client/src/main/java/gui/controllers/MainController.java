@@ -5,19 +5,14 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import gui.GUIMain;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import newclient.ClientHandler;
 import other.Color;
 import other.Person;
@@ -25,6 +20,8 @@ import other.Person;
 public class MainController extends Controller {
 
     private ClientHandler clientHandler;
+
+    private ObservableList<Person> observableList = FXCollections.observableArrayList();
 
     @FXML
     private TableView<Person> peopleTable = new TableView<>();
@@ -62,6 +59,11 @@ public class MainController extends Controller {
     private Label userInfoLable;
     @FXML
     private Button toCommandsButton;
+    @FXML
+    private Button toFilterButton;
+
+    @FXML
+    private Button resetTableButton;
 
     @FXML
     void initialize() {
@@ -73,21 +75,27 @@ public class MainController extends Controller {
         toCommandsButton.setOnAction(event -> {
             switchToWindow("/commands.fxml", toCommandsButton);
         });
-    }
 
-    private void fillTable() {
-        ObservableList<Person> observableList = FXCollections.observableArrayList();
-        clientHandler.sendCommand("show");
-        String answer = "";
-        while (answer.isEmpty()) {
+        toFilterButton.setOnAction(event->{
+            switchToWindow("/filter.fxml", toFilterButton);
+        });
+
+        resetTableButton.setOnAction(event->{
+            clientHandler.sendCommand("show");
             try {
-                answer = clientHandler.getPeopleAnswer();
+                clientHandler.getPeopleAnswer();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        if (answer.equals("full")) observableList.addAll(clientHandler.getPeople());
-        System.out.println(clientHandler.getPeople());
+            observableList.addAll(clientHandler.getPeople());
+            switchToWindow("/main.fxml", resetTableButton);
+        });
+
+    }
+
+    private void fillTable() {
+        observableList.addAll(clientHandler.getPeople());
+
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         coordXColumn.setCellValueFactory(new PropertyValueFactory<>("coordinateX"));

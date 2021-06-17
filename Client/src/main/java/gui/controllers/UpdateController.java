@@ -146,7 +146,6 @@ public class UpdateController extends Controller {
             }
         });
 
-
         toMapButton.setOnAction(event -> {
             switchToWindow("/map.fxml", toMapButton);
         });
