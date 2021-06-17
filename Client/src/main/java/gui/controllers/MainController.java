@@ -3,15 +3,13 @@ package gui.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import newclient.ClientHandler;
 import other.Color;
@@ -24,7 +22,7 @@ public class MainController extends Controller {
     private ObservableList<Person> observableList = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Person> peopleTable = new TableView<>();
+    private TableView<Person> peopleTable;
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -76,11 +74,11 @@ public class MainController extends Controller {
             switchToWindow("/commands.fxml", toCommandsButton);
         });
 
-        toFilterButton.setOnAction(event->{
+        toFilterButton.setOnAction(event -> {
             switchToWindow("/filter.fxml", toFilterButton);
         });
 
-        resetTableButton.setOnAction(event->{
+        resetTableButton.setOnAction(event -> {
             clientHandler.sendCommand("show");
             try {
                 clientHandler.getPeopleAnswer();
@@ -91,6 +89,23 @@ public class MainController extends Controller {
             switchToWindow("/main.fxml", resetTableButton);
         });
 
+        peopleTable.setRowFactory(tv -> {
+            TableRow<Person> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Person chosenPerson = row.getItem();
+                    showDataPopup(chosenPerson.getId());
+                }
+            });
+            return row;
+        });
+
+    }
+
+    private void showDataPopup(long id) {
+        clientHandler.setIdForUpdate(id);
+        clientHandler.setIdIsSet(true);
+        switchToWindow("/update.fxml", resetTableButton);
     }
 
     private void fillTable() {

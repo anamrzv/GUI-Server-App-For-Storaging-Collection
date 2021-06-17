@@ -147,20 +147,7 @@ public class AddController extends Controller {
         return creation.createNewPerson(readyLocations);
     }
 
-    public void createLocationsList() throws IOException {
-        createLocationsList(clientHandler, readyLocations, locations);
-    }
-
-    static void createLocationsList(ClientHandler clientHandler, Map<Integer, Location> readyLocations, ObservableList<String> locations) {
-        clientHandler.sendCommand("show");
-        String answer = "";
-        while (answer.isEmpty()) {
-            try {
-                answer = clientHandler.getPeopleAnswer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    private void createLocationsList() throws IOException {
         List<Person> readyPeople = clientHandler.getPeople();
         boolean alreadyLocation = false;
         for (Person p : readyPeople) {

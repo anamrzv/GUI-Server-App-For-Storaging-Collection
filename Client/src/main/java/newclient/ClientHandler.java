@@ -36,7 +36,8 @@ public class ClientHandler {
     private List<Person> people;
     private List<String> commandArguments;
     private Person person;
-
+    private long idForUpdate;
+    private boolean idIsSet = false;
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 

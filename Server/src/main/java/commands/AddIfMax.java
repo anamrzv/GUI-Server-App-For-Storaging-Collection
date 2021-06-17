@@ -3,7 +3,6 @@ package commands;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import database.DataBaseManager;
-import other.LocalDateAdapter;
 import other.Person;
 import other.ServerResponse;
 import other.CollectionsKeeper;

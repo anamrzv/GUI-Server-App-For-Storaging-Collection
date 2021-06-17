@@ -5,6 +5,7 @@ import other.Person;
 import other.PersonSizeComparator;
 import other.ServerResponse;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class Show extends Command {
             return ServerResponse.builder().personList(null).command("show").build();
         else {
             sortedPeople = people.stream()
-                    .sorted()
+                    .sorted(Comparator.comparing(Person::getId))
                     .collect(Collectors.toList());
         }
         return ServerResponse.builder().personList(sortedPeople).command("show").build();

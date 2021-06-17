@@ -87,6 +87,12 @@ public class UpdateController extends Controller {
     void initialize() throws IOException {
         clientHandler = ClientHandler.getInstance(args);
 
+        if (clientHandler.isIdIsSet() == true) {
+            idField.setText(Long.toString(clientHandler.getIdForUpdate()));
+            updateFields();
+            clientHandler.setIdIsSet(false);
+        }
+
         userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
 
         ObservableList<String> colors = FXCollections.observableArrayList("YELLOW", "WHITE", "BROWN", "ORANGE");
@@ -97,28 +103,7 @@ public class UpdateController extends Controller {
 
         idField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                String index = idField.getText().trim();
-                clientHandler.sendCommand("show");
-                String answer = "";
-                while (answer.isEmpty()) {
-                    try {
-                        answer = clientHandler.getPeopleAnswer();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                for (Person p : clientHandler.getPeople()) {
-                    if (p.getId().toString().equals(index)) {
-                        nameFiled.setText(p.getName());
-                        heightField.setText(Long.toString(p.getHeight()));
-                        weightField.setText(Long.toString(p.getWeight()));
-                        passportField.setText(p.getPassportID());
-                        hairField.setValue(p.getHairColor().getDescription());
-                        coordXField.setText(Float.toString(p.getCoordinateX()));
-                        coordYField.setText(Double.toString(p.getCoordinateY()));
-                        locationField.setValue(p.getLocationName());
-                    }
-                }
+                updateFields();
             }
         });
 
@@ -155,6 +140,22 @@ public class UpdateController extends Controller {
         });
     }
 
+    private void updateFields() {
+        String index = idField.getText().trim();
+        for (Person p : clientHandler.getPeople()) {
+            if (p.getId().toString().equals(index)) {
+                nameFiled.setText(p.getName());
+                heightField.setText(Long.toString(p.getHeight()));
+                weightField.setText(Long.toString(p.getWeight()));
+                passportField.setText(p.getPassportID());
+                hairField.setValue(p.getHairColor().getDescription());
+                coordXField.setText(Float.toString(p.getCoordinateX()));
+                coordYField.setText(Double.toString(p.getCoordinateY()));
+                locationField.setValue(p.getLocationName());
+            }
+        }
+    }
+
     public ServerResponse readFromWindow(){
         String name = nameFiled.getText().trim();
         String height = heightField.getText().trim();
@@ -172,8 +173,26 @@ public class UpdateController extends Controller {
         return creation.createNewPerson(readyLocations);
     }
 
-    public void createLocationsList() throws IOException {
-        AddController.createLocationsList(clientHandler, readyLocations, locations);
+    private void createLocationsList() {
+        List<Person> readyPeople = clientHandler.getPeople();
+        boolean alreadyLocation = false;
+        for (Person p : readyPeople) {
+            Location currentLocation = p.getLocation();
+            for (Location l : readyLocations.values()) {
+                if (currentLocation.equals(l)) {
+                    alreadyLocation = true;
+                    break;
+                }
+            }
+            if (!alreadyLocation) {
+                readyLocations.put(readyLocations.size() + 1, currentLocation);
+                alreadyLocation = false;
+            }
+        }
+        for (Location l : readyLocations.values()) {
+            locations.add(l.getName());
+        }
+        locations.add("Новая локация");
     }
 
 }
