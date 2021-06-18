@@ -79,6 +79,9 @@ public class UpdateController extends Controller {
     @FXML
     private Button toMapButton;
 
+    @FXML
+    private Button toTableButton;
+
     private Map<Integer, Location> readyLocations = new HashMap<>();
 
     private ObservableList<String> locations = FXCollections.observableArrayList();
@@ -138,6 +141,11 @@ public class UpdateController extends Controller {
         toCommandsButton.setOnAction(event -> {
             switchToWindow("/commands.fxml", toCommandsButton);
         });
+
+        toTableButton.setOnAction(event->{
+            switchToWindow("/main.fxml", toTableButton);
+        });
+
     }
 
     private void updateFields() {

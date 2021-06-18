@@ -59,9 +59,10 @@ public class MainController extends Controller {
     private Button toCommandsButton;
     @FXML
     private Button toFilterButton;
-
     @FXML
     private Button resetTableButton;
+    @FXML
+    private Button toMapButton;
 
     @FXML
     void initialize() {
@@ -76,6 +77,10 @@ public class MainController extends Controller {
 
         toFilterButton.setOnAction(event -> {
             switchToWindow("/filter.fxml", toFilterButton);
+        });
+
+        toMapButton.setOnAction(event->{
+            switchToWindow("/map.fxml", toMapButton);
         });
 
         resetTableButton.setOnAction(event -> {

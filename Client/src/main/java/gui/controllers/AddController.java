@@ -74,6 +74,9 @@ public class AddController extends Controller {
     private Button toMapButton;
 
     @FXML
+    private Button toTableButton;
+
+    @FXML
     private ComboBox<String> kindOfAddBox;
 
     private Map<Integer, Location> readyLocations = new HashMap<>();
@@ -97,6 +100,10 @@ public class AddController extends Controller {
 
         toMapButton.setOnAction(event -> {
             switchToWindow("/map.fxml", toMapButton);
+        });
+
+        toTableButton.setOnAction(event->{
+            switchToWindow("/main.fxml", toTableButton);
         });
 
         toCommandsButton.setOnAction(event -> {

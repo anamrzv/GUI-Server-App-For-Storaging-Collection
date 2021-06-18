@@ -170,15 +170,20 @@
                 </Label>
             </children>
         </AnchorPane>
-        <Button fx:id="toCommandsButton" layoutX="635.0" layoutY="27.0" mnemonicParsing="false" text="К списку команд">
+        <Button fx:id="toCommandsButton" layoutX="663.0" layoutY="27.0" mnemonicParsing="false" text="К списку команд">
             <font>
                 <Font name="Microsoft YaHei Light" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="toMapButton" layoutX="781.0" layoutY="27.0" mnemonicParsing="false" text="Карта">
+        <Button fx:id="toMapButton" layoutX="794.0" layoutY="27.0" mnemonicParsing="false" text="Карта">
             <font>
                 <Font name="Microsoft YaHei Light" size="12.0" />
             </font>
         </Button>
+      <Button fx:id="toTableButton" layoutX="570.0" layoutY="27.0" mnemonicParsing="false" text="К таблице">
+         <font>
+            <Font name="Microsoft YaHei Light" size="12.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>
