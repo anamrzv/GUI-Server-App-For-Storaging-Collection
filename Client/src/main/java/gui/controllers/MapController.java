@@ -5,7 +5,9 @@ import java.util.*;
 
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -33,7 +35,7 @@ public class MapController extends Controller {
     private Button toCommandsButton;
 
     @FXML
-    private Button toFilterButton;
+    private Button toTableButton;
 
     private HashMap<String, Color> users = new HashMap<>();
 
@@ -51,6 +53,14 @@ public class MapController extends Controller {
         for (Person p : people){
             setupPerson(p);
         }
+
+        toCommandsButton.setOnAction(event->{
+            switchToWindow("/commands.fxml", toCommandsButton);
+        });
+
+        toTableButton.setOnAction(event->{
+            switchToWindow("/main.fxml", toTableButton);
+        });
 
     }
 
@@ -85,7 +95,7 @@ public class MapController extends Controller {
         circle.setStroke(users.get(person.getCreator()));
         circle.setFill(users.get(person.getCreator()).deriveColor(1,1,1,0.7));
         circle.setOnMousePressed(event->{
-            showInfo();
+            showInfo(event.getSource());
         });
         circlePeople.put(circle, person);
 
@@ -99,8 +109,35 @@ public class MapController extends Controller {
         circle.setLayoutY(newY);
     }
 
-    private void showInfo(){
+    private void showInfo(Object source){
+        Circle selectedCircle = ((Circle) (source));
+        Person selectedPerson = circlePeople.get(selectedCircle);
+        long id = selectedPerson.getId();
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information about the object");
+        alert.setHeaderText(selectedPerson.toString());
+
+        ButtonType close = new ButtonType("exit"); //LANGUAGES
+        ButtonType update = new ButtonType("update");
+        ButtonType delete = new ButtonType("removeID");
+
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(delete, update, close);
+
+        Optional<ButtonType> option = alert.showAndWait();
+        if (option.get() == close){
+            alert.close();
+        } else if (option.get() == update){
+            clientHandler.setIdForUpdate(id);
+            clientHandler.setIdIsSet(true);
+            switchToWindow("/update.fxml", toCommandsButton);
+        } else if (option.get() == delete){
+            List<String> args = new LinkedList<>();
+            args.add(Long.toString(id));
+            clientHandler.setCommandArguments(args);
+            clientHandler.sendCommand("remove_by_id");
+        }
     }
 
 }

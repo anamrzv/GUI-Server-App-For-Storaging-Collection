@@ -32,7 +32,7 @@
                 <Font name="Microsoft YaHei Light" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="toFilterButton" layoutX="701.0" layoutY="27.0" mnemonicParsing="false" text="К таблице">
+        <Button fx:id="toTableButton" layoutX="701.0" layoutY="27.0" mnemonicParsing="false" text="К таблице">
             <font>
                 <Font name="Microsoft YaHei Light" size="12.0" />
             </font>

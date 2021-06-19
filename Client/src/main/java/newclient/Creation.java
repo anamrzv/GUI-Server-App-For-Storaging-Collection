@@ -85,7 +85,7 @@ public class Creation {
         try {
             if (!height.isEmpty()) {
                 long hLong = Long.parseLong(height);
-                if (hLong <= 0) {
+                if (hLong < 0) {
                     answer = ServerResponse.builder().error("Рост не может быть меньше нуля, пожалуйста, введите рост еще раз.").build();
                 } else {
                     newPerson.setHeight(hLong);
@@ -100,7 +100,7 @@ public class Creation {
         try {
             if (!weight.isEmpty()) {
                 long wLong = Long.parseLong(weight);
-                if (wLong <= 0) {
+                if (wLong < 0) {
                     answer = ServerResponse.builder().error("Вес не может быть меньше нуля, пожалуйста, введите вес еще раз.").build();
                 } else {
                     newPerson.setWeight(wLong);

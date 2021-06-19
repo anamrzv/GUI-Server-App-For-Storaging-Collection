@@ -110,8 +110,8 @@ public class UpdateController extends Controller {
             }
         });
 
-        readyButton.setOnAction(event->{
-            ServerResponse response= readFromWindow();
+        readyButton.setOnAction(event -> {
+            ServerResponse response = readFromWindow();
             if (response.getError() != null)
                 showAlert(Alert.AlertType.ERROR, "Update person", response.getError(), "");
             else {
@@ -129,6 +129,12 @@ public class UpdateController extends Controller {
                     }
                 }
                 if (answer.getError() == null) {
+                    clientHandler.sendCommand("show");
+                    try {
+                        clientHandler.getPeopleAnswer();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     showAlert(Alert.AlertType.INFORMATION, "Update person", answer.getMessage(), "");
                 } else showAlert(Alert.AlertType.ERROR, "Update person", answer.getError(), "");
             }
@@ -142,7 +148,7 @@ public class UpdateController extends Controller {
             switchToWindow("/commands.fxml", toCommandsButton);
         });
 
-        toTableButton.setOnAction(event->{
+        toTableButton.setOnAction(event -> {
             switchToWindow("/main.fxml", toTableButton);
         });
 
@@ -164,7 +170,7 @@ public class UpdateController extends Controller {
         }
     }
 
-    public ServerResponse readFromWindow(){
+    public ServerResponse readFromWindow() {
         String name = nameFiled.getText().trim();
         String height = heightField.getText().trim();
         String weight = weightField.getText().trim();
