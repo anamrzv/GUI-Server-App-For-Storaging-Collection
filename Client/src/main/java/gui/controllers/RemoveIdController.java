@@ -61,7 +61,13 @@ public class RemoveIdController extends Controller {
             }
             if (answer.getError() == null) {
                 showAlert(Alert.AlertType.INFORMATION, "Remove person with this id", answer.getMessage(), "");
-            } else showAlert(Alert.AlertType.ERROR, "Remove person this passport", answer.getError(), "");
+                clientHandler.sendCommand("show");
+                try {
+                    clientHandler.getPeopleAnswer();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else showAlert(Alert.AlertType.ERROR, "Remove person with this id", answer.getError(), "");
         });
 
         toMapButton.setOnAction(event->{

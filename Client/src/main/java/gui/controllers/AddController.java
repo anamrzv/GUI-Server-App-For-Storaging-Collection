@@ -130,6 +130,12 @@ public class AddController extends Controller {
                     }
                 }
                 if (answer.getError() == null) {
+                    clientHandler.sendCommand("show");
+                    try {
+                        clientHandler.getPeopleAnswer();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     showAlert(Alert.AlertType.INFORMATION, "Create new person", answer.getMessage(), "");
                 } else showAlert(Alert.AlertType.ERROR, "Create new person", answer.getError(), "");
             }

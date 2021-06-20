@@ -1,8 +1,10 @@
 package gui.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,9 +13,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.*;
+import javafx.util.Duration;
 import newclient.ClientHandler;
 import other.Person;
+import other.ServerResponse;
 
 public class MapController extends Controller {
 
@@ -100,6 +104,42 @@ public class MapController extends Controller {
         circlePeople.put(circle, person);
 
         paneForDrawing.getChildren().add(circle);
+
+        /*
+        pathTransition.setDuration(Duration.millis(1000));
+        pathTransition.setNode(circle);
+        Path path = new Path();
+        path.getElements().add (new MoveTo(0f, 0f));
+        path.getElements().add((new CubicCurveTo(100f, 110f, 100f, 50f, 50, 25f)));
+        pathTransition.setPath(path);
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setToX(-100);
+        translateTransition.setToY(-90);
+        translateTransition.setAutoReverse(true);
+        translateTransition.setCycleCount(2);
+        translateTransition.play();*/
+
+        ParallelTransition pt = new ParallelTransition();
+
+        ScaleTransition scaleTransition = new ScaleTransition();
+        scaleTransition.setDuration(Duration.millis(1000));
+        scaleTransition.setNode(circle);
+        scaleTransition.setByY(1.1);
+        scaleTransition.setByX(1.1);
+        scaleTransition.setCycleCount(2);
+        scaleTransition.setAutoReverse(true);
+
+        FadeTransition fade = new FadeTransition();
+        fade.setDuration(Duration.millis(1000));
+
+        fade.setFromValue(0.1);
+        fade.setToValue(10);
+
+        fade.setCycleCount(1);
+        fade.setNode(circle);
+        pt.getChildren().add(scaleTransition);
+        pt.getChildren().add(fade);
+        pt.play();
     }
 
     private void setCoordinates(Circle circle, float x, double y){
@@ -118,9 +158,9 @@ public class MapController extends Controller {
         alert.setTitle("Information about the object");
         alert.setHeaderText(selectedPerson.toString());
 
-        ButtonType close = new ButtonType("exit"); //LANGUAGES
-        ButtonType update = new ButtonType("update");
-        ButtonType delete = new ButtonType("removeID");
+        ButtonType close = new ButtonType("Exit"); //LANGUAGES
+        ButtonType update = new ButtonType("Update");
+        ButtonType delete = new ButtonType("Remove");
 
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(delete, update, close);
@@ -137,6 +177,34 @@ public class MapController extends Controller {
             args.add(Long.toString(id));
             clientHandler.setCommandArguments(args);
             clientHandler.sendCommand("remove_by_id");
+            ServerResponse answer = null;
+            while (answer == null) {
+                try {
+                    answer = clientHandler.getAnswer();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (answer.getError() == null) {
+                ScaleTransition scaleTransition = new ScaleTransition();
+                scaleTransition.setDuration(Duration.millis(1000));
+                scaleTransition.setNode(selectedCircle);
+                scaleTransition.setByY(-1.1);
+                scaleTransition.setByX(-1.1);
+                scaleTransition.setCycleCount(1);
+                scaleTransition.play();
+                scaleTransition.setOnFinished(finish->{
+                    paneForDrawing.getChildren().remove(selectedCircle);
+                    circlePeople.remove(selectedCircle);
+                });
+
+                clientHandler.sendCommand("show");
+                try {
+                    clientHandler.getPeopleAnswer();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else showAlert(Alert.AlertType.ERROR, "Remove person this id", answer.getError(), "");
         }
     }
 

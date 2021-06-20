@@ -150,12 +150,13 @@ public class DataBaseManager {
             float coordX = result.getFloat("coordinatesx");
             double coordY = result.getDouble("coordinatesy");
             long id = result.getLong("id");
+            String creator = result.getString("owner");
             LocalDate creationDate = result.getDate("date").toLocalDate();
             Location location = new Location();
             location.setLocation(locationX, locationY, locationZ, locationName);
             Coordinates coordinates = new Coordinates();
             coordinates.setCoordinatesFirst(coordX, coordY);
-            return new Person(id, name, height, weight, passportID, hairColor, location, coordinates, creationDate);
+            return new Person(id, name, height, weight, passportID, hairColor, location, coordinates, creationDate, creator);
         } catch (SQLException e) {
             System.out.println("Ошибка при чтении коллекции с базы данных people.");
             return null;
