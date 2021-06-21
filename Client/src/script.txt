@@ -1,1 +1,0 @@
-add {name='dddddd',height=150,weight=0,passportID='55555555555555555',hairColor=WHITE,creationDate=null,location={x=2,y=3.0,z=1.0,name='st-p'},coordinates={x=54.0,y=1.0}}
