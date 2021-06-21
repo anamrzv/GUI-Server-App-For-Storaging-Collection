@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import newclient.ClientHandler;
 import other.Message;
@@ -43,7 +40,20 @@ public class SignController extends Controller {
     private Button toLoginButton;
 
     @FXML
+    private Label registrationLabel;
+
+    @FXML
+    private Label rulesLabel;
+
+    @FXML
     void initialize() {
+        clientHandler = ClientHandler.getInstance(args);
+        rulesLabel.setText(clientHandler.getCurrentBundle().getString("rules"));
+        registrationLabel.setText(clientHandler.getCurrentBundle().getString("registration"));
+        newLogin.setPromptText(clientHandler.getCurrentBundle().getString("loginRules"));
+        newPassword.setPromptText(clientHandler.getCurrentBundle().getString("passwordRules"));
+        toLoginButton.setText(clientHandler.getCurrentBundle().getString("to authorisation"));
+
         newSignButton.setOnAction(event -> {
             String login = newLogin.getText().trim();
             String password = newPassword.getText().trim();
@@ -56,8 +66,6 @@ public class SignController extends Controller {
     }
 
     private void registerUser(String login, String password) {
-        clientHandler = ClientHandler.getInstance(args);
-
         if (login.length() < 4) {
             showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе логина", "Слишком короткий логин");
         } else {

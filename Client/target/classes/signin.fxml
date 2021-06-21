@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #2e3348;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.SignController">
+    <children>
+        <AnchorPane layoutY="86.0" prefHeight="314.0" prefWidth="700.0" style="-fx-background-color: #fafafa;">
+            <children>
+                <TextField fx:id="newLogin" layoutX="197.0" layoutY="99.0" prefHeight="44.0" prefWidth="306.0" promptText="Логин* (от 4 символов)" style="-fx-background-color: #fafafa; -fx-border-color: silver;">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextField>
+                <PasswordField fx:id="newPassword" layoutX="197.0" layoutY="168.0" prefHeight="44.0" prefWidth="306.0" promptText=" Пароль (от 3 символов)" style="-fx-background-color: #fafafa; -fx-border-color: silver;">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </PasswordField>
+                <Label fx:id="registrationLabel" layoutX="271.0" layoutY="14.0" text="Регистрация" textFill="#2e3348">
+                    <font>
+                        <Font name="Microsoft YaHei Light" size="27.0" />
+                    </font>
+                </Label>
+              <Button fx:id="newSignButton" layoutX="254.0" layoutY="239.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="192.0" text="Зарегистрироваться">
+                  <font>
+                      <Font name="Microsoft YaHei Light" size="16.0" />
+                  </font>
+              </Button>
+            <Label fx:id="rulesLabel" layoutX="121.0" layoutY="60.0" text="Используйте латинские буквы, цифры, точку, нижнее подчеркивание" textFill="#2e3348">
+               <font>
+                  <Font name="Microsoft YaHei Light" size="14.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+        <Label layoutX="247.0" layoutY="14.0" text="People DB" textFill="WHITE">
+            <font>
+                <Font name="Modern No. 20" size="47.0" />
+            </font>
+        </Label>
+      <Button fx:id="toLoginButton" layoutX="508.0" layoutY="22.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="158.0" text="К авторизации">
+         <font>
+            <Font name="Microsoft YaHei Light" size="16.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>

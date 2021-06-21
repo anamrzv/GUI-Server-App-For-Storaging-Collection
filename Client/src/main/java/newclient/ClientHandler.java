@@ -20,6 +20,7 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Setter
 @Getter
@@ -30,14 +31,19 @@ public class ClientHandler {
     private Socket clientSocket;
     private OutputStream out;
     private InputStream in;
+
     private String[] args;
     private String login;
     private String password;
+
     private List<Person> people;
     private List<String> commandArguments;
     private Person person;
+
     private long idForUpdate;
     private boolean idIsSet = false;
+
+    private ResourceBundle currentBundle;
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 

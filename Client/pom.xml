@@ -78,6 +78,11 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -86,7 +91,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>client.ClientConnection</mainClass>
+                            <mainClass>client.ClientHandler</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

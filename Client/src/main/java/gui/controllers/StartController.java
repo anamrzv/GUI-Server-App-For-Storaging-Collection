@@ -2,18 +2,18 @@ package gui.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import newclient.ClientHandler;
 import other.ServerResponse;
@@ -41,6 +41,12 @@ public class StartController extends Controller{
     private Button signinButton;
 
     @FXML
+    private ComboBox<String> languageBox;
+
+    @FXML
+    private Label autorisationLabel;
+
+    @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
 
@@ -55,6 +61,29 @@ public class StartController extends Controller{
         signinButton.setOnAction(event -> {
             switchToWindow("/signin.fxml", signinButton);
         });
+
+        ObservableList<String> languages = FXCollections.observableArrayList("Русский", "English", "Slovenčina", "Shqiptare");
+        languageBox.setItems(languages);
+        languageBox.setValue("Русский");
+        clientHandler.setCurrentBundle(ResourceBundle.getBundle("bundles.Language", Locale.forLanguageTag("ru-RU")));
+
+        languageBox.setOnAction(event->{
+            String language = languageBox.getValue().trim();
+            if (language.equals("English")) clientHandler.setCurrentBundle(ResourceBundle.getBundle("bundles.Language", Locale.forLanguageTag("en-CA")));
+            else if (language.equals("Slovenčina")) clientHandler.setCurrentBundle(ResourceBundle.getBundle("bundles.Language", Locale.forLanguageTag("sl-SL")));
+            else if (language.equals("Shqiptare")) clientHandler.setCurrentBundle(ResourceBundle.getBundle("bundles.Language", Locale.forLanguageTag("sq-AL")));
+            else clientHandler.setCurrentBundle(ResourceBundle.getBundle("bundles.Language", Locale.forLanguageTag("ru-RU")));
+            changeLanguage();
+        });
+
+    }
+
+    private void changeLanguage() {
+        autorisationLabel.setText(clientHandler.getCurrentBundle().getString("authorisation"));
+        loginField.setPromptText(clientHandler.getCurrentBundle().getString("login"));
+        passwordField.setPromptText(clientHandler.getCurrentBundle().getString("password"));
+        loginButton.setText(clientHandler.getCurrentBundle().getString("log in"));
+        signinButton.setText(clientHandler.getCurrentBundle().getString("sign in"));
     }
 
     private void loginUser(String login, String password) {

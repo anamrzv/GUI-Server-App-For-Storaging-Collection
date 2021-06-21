@@ -3,7 +3,6 @@ package gui.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -67,6 +66,9 @@ public class MainController extends Controller {
     @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
+
+
+
         userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
         fillTable();
         peopleTable.setEditable(true);
