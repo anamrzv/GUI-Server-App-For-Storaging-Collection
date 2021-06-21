@@ -57,12 +57,11 @@ public class Person implements Comparable<Person>, Serializable {
      */
     private Coordinates coordinates;
 
+
     private LocalDate creationDate;
-    /**
-     * Метод - геттер номера паспорта
-     *
-     * @return Long номер
-     */
+
+    private String creator;
+
     public Long getPassportAsLong() {
         return Long.parseLong(passportID);
     }
@@ -119,6 +118,8 @@ public class Person implements Comparable<Person>, Serializable {
                 name.equals(person.name) &&
                 passportID.equals(person.passportID) &&
                 hairColor == person.hairColor &&
+                creator.equals(person.getCreator()) &&
+                creationDate == person.getCreationDate() &&
                 location.equals(person.location) &&
                 coordinates.equals(person.coordinates);
     }
@@ -130,7 +131,7 @@ public class Person implements Comparable<Person>, Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, height, weight, passportID, hairColor, location, coordinates);
+        return Objects.hash(name, height, weight, passportID, hairColor, location, coordinates, creationDate, creator);
     }
 
     /**
