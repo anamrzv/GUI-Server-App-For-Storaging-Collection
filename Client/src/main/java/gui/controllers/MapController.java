@@ -48,7 +48,9 @@ public class MapController extends Controller {
     @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
+        translateButton(toTableButton, "to table", clientHandler);
+        translateButton(toCommandsButton, "to commands list", clientHandler);
 
         setChangeSizeListeners();
         circlePeople.clear();
@@ -104,20 +106,6 @@ public class MapController extends Controller {
         circlePeople.put(circle, person);
 
         paneForDrawing.getChildren().add(circle);
-
-        /*
-        pathTransition.setDuration(Duration.millis(1000));
-        pathTransition.setNode(circle);
-        Path path = new Path();
-        path.getElements().add (new MoveTo(0f, 0f));
-        path.getElements().add((new CubicCurveTo(100f, 110f, 100f, 50f, 50, 25f)));
-        pathTransition.setPath(path);
-        TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setToX(-100);
-        translateTransition.setToY(-90);
-        translateTransition.setAutoReverse(true);
-        translateTransition.setCycleCount(2);
-        translateTransition.play();*/
 
         ParallelTransition pt = new ParallelTransition();
 

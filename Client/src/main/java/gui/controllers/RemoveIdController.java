@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -40,9 +41,22 @@ public class RemoveIdController extends Controller {
     private Button toMapButton;
 
     @FXML
+    private Label label;
+
+    @FXML
+    private Label labelTwo;
+
+    @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
+        translateButton(toMapButton, "map", clientHandler);
+        translateButton(toCommandsButton, "to commands list", clientHandler);
+        translateLabel(label, "input id", clientHandler);
+        translateLabel(labelTwo, "rules of remove", clientHandler);
+        translateButton(readyButton, "ready", clientHandler);
+        label.setAlignment(Pos.CENTER);
+        labelTwo.setAlignment(Pos.CENTER);
 
         readyButton.setOnAction(event -> {
             String ID = IDField.getText().trim();

@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import gui.GUIMain;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
 import newclient.ClientHandler;
 import other.ServerResponse;
 
-public class CommandButtonsController extends Controller{
+public class CommandButtonsController extends Controller {
 
     private ClientHandler clientHandler;
 
@@ -70,60 +71,94 @@ public class CommandButtonsController extends Controller{
     private Button mapButton;
 
     @FXML
+    private Label addLabel;
+
+    @FXML
+    private Label removeLabel;
+
+    @FXML
+    private Label otherLabel;
+
+    @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: "+clientHandler.getLogin());
 
-        helpButton.setOnAction(event->{
+        translateButton(addButton, "add", clientHandler);
+        translateButton(updateButton, "update", clientHandler);
+        translateButton(removeIdButton, "removeID", clientHandler);
+        translateButton(removePassportButton, "removePass", clientHandler);
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
+        translateButton(clearButton, "clear", clientHandler);
+        translateButton(countPassportButton, "countPass", clientHandler);
+        translateButton(weightButton, "weightSum", clientHandler);
+        translateButton(mapButton, "map", clientHandler);
+        translateButton(scriptButton, "script", clientHandler);
+        translateButton(toTableButton, "to table", clientHandler);
+        translateButton(helpButton, "help", clientHandler);
+        translateButton(headButton, "head", clientHandler);
+        translateButton(infoButton, "info", clientHandler);
+        translateLabel(addLabel, "addLabel", clientHandler);
+        translateLabel(removeLabel, "removeLabel", clientHandler);
+        translateLabel(otherLabel, "otherLabel", clientHandler);
+        addLabel.setAlignment(Pos.CENTER);
+        removeLabel.setAlignment(Pos.CENTER);
+        otherLabel.setAlignment(Pos.CENTER);
+
+
+        helpButton.setOnAction(event -> {
             getResultByClientHandler("help");
         });
 
-        infoButton.setOnAction(event->{
+        infoButton.setOnAction(event -> {
             getResultByClientHandler("info");
         });
 
-        weightButton.setOnAction(event->{
+        weightButton.setOnAction(event -> {
             getResultByClientHandler("sum_of_weight");
         });
 
-        headButton.setOnAction(event->{
+        headButton.setOnAction(event -> {
             getResultByClientHandler("head");
         });
 
-        removePassportButton.setOnAction(event->{
+        removePassportButton.setOnAction(event -> {
             switchToWindow("/remove_passport.fxml", removePassportButton);
         });
 
-        toTableButton.setOnAction(event->{
+        toTableButton.setOnAction(event -> {
             switchToWindow("/main.fxml", toTableButton);
         });
 
-        countPassportButton.setOnAction(event->{
+        countPassportButton.setOnAction(event -> {
             switchToWindow("/count_passport.fxml", countPassportButton);
         });
 
-        removeIdButton.setOnAction(event->{
+        removeIdButton.setOnAction(event -> {
             switchToWindow("/remove_id.fxml", removeIdButton);
         });
 
-        clearButton.setOnAction(event->{
+        clearButton.setOnAction(event -> {
             getResultByClientHandler("clear");
         });
 
-        addButton.setOnAction(event->{
+        addButton.setOnAction(event -> {
             switchToWindow("/add.fxml", addButton);
         });
 
-        updateButton.setOnAction(event->{
+        updateButton.setOnAction(event -> {
             switchToWindow("/update.fxml", updateButton);
         });
 
-        scriptButton.setOnAction(event->{
+        scriptButton.setOnAction(event -> {
             switchToWindow("/script.fxml", scriptButton);
+        });
+
+        mapButton.setOnAction(event -> {
+            switchToWindow("/map.fxml", mapButton);
         });
     }
 
-    private void getResultByClientHandler(String commandName){
+    private void getResultByClientHandler(String commandName) {
         clientHandler.sendCommand(commandName);
         ServerResponse answer = null;
         while (answer == null) {
@@ -133,7 +168,7 @@ public class CommandButtonsController extends Controller{
                 e.printStackTrace();
             }
         }
-        if (answer.getError()==null){
+        if (answer.getError() == null) {
             showAlert(Alert.AlertType.INFORMATION, commandName.toUpperCase(), answer.getMessage(), "");
         } else showAlert(Alert.AlertType.ERROR, commandName.toUpperCase(), "Ошибка", "");
     }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import newclient.ClientHandler;
 import other.ServerResponse;
@@ -37,9 +38,17 @@ public class ScriptController extends Controller {
     private Button toMapButton;
 
     @FXML
+    private Label label;
+
+    @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
+        translateButton(toMapButton, "map", clientHandler);
+        translateButton(toCommandsButton, "to commands list", clientHandler);
+        translateLabel(label, "script rules", clientHandler);
+        translateButton(readyButton, "execute", clientHandler);
+        label.setAlignment(Pos.CENTER);
 
         readyButton.setOnAction(event->{
             String pathToScript = textField.getText();

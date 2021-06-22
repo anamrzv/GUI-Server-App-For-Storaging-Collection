@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import gui.GUIMain;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,6 +30,15 @@ public class CountPassportController extends Controller{
     private TextField passportIDField;
 
     @FXML
+    private Label inputPassportLabel;
+
+    @FXML
+    private Label countPassportLabel;
+
+    @FXML
+    private Button readyButton;
+
+    @FXML
     private Label userInfoLable;
 
     @FXML
@@ -37,13 +47,19 @@ public class CountPassportController extends Controller{
     @FXML
     private Button toMapButton;
 
-    @FXML
-    private Button readyButton;
 
     @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
+        translateLabel(inputPassportLabel, "input passport", clientHandler);
+        translateLabel(countPassportLabel, "rules of count", clientHandler);
+        passportIDField.setPromptText(clientHandler.getEncodedBundleString("num of passport"));
+        translateButton(readyButton, "ready", clientHandler);
+        translateButton(toCommandsButton, "to commands list", clientHandler);
+        translateButton(toMapButton,"map", clientHandler);
+        inputPassportLabel.setAlignment(Pos.CENTER);
+        countPassportLabel.setAlignment(Pos.CENTER);
 
         readyButton.setOnAction(event->{
             String passportID = passportIDField.getText().trim();

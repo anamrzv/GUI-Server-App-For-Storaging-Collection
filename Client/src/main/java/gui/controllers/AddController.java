@@ -7,6 +7,7 @@ import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import newclient.ClientHandler;
 import newclient.Creation;
@@ -20,13 +21,10 @@ public class AddController extends Controller {
     private ClientHandler clientHandler;
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
     private TextField nameFiled;
+
+    @FXML
+    private Label firstLabel;
 
     @FXML
     private Button readyButton;
@@ -59,10 +57,61 @@ public class AddController extends Controller {
     private TextField xLocationField;
 
     @FXML
+    private Label secondLabel;
+
+    @FXML
+    private Label nameL;
+
+    @FXML
+    private Label heightL;
+
+    @FXML
+    private Label weightL;
+
+    @FXML
+    private Label passportL;
+
+    @FXML
     private ComboBox<String> hairField;
 
     @FXML
+    private Label hairL;
+
+    @FXML
+    private Label locationL;
+
+    @FXML
     private ComboBox<String> locationField;
+
+    @FXML
+    private Label xL;
+
+    @FXML
+    private Label yL;
+
+    @FXML
+    private Label thirdLabel;
+
+    @FXML
+    private Label fourthLabel;
+
+    @FXML
+    private Label locnameL;
+
+    @FXML
+    private Label locxL;
+
+    @FXML
+    private Label locyL;
+
+    @FXML
+    private Label locZL;
+
+    @FXML
+    private ComboBox<String> kindOfAddBox;
+
+    @FXML
+    private Label fifthLabel;
 
     @FXML
     private Label userInfoLable;
@@ -76,8 +125,6 @@ public class AddController extends Controller {
     @FXML
     private Button toTableButton;
 
-    @FXML
-    private ComboBox<String> kindOfAddBox;
 
     private Map<Integer, Location> readyLocations = new HashMap<>();
 
@@ -86,11 +133,31 @@ public class AddController extends Controller {
     @FXML
     void initialize() throws IOException {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
+        translateButton(toTableButton, "to table", clientHandler);
+        translateButton(toMapButton, "map", clientHandler);
+        translateButton(toCommandsButton, "to commands list", clientHandler);
+        translateLabel(firstLabel, "firstLabel", clientHandler);
+        translateLabel(secondLabel, "secondLabel", clientHandler);
+        translateLabel(thirdLabel, "thirdLabel", clientHandler);
+        translateLabel(fourthLabel, "fourthLabel", clientHandler);
+        translateLabel(fifthLabel, "fifthLabel", clientHandler);
+        translateLabel(nameL, "name", clientHandler);
+        translateLabel(heightL, "height", clientHandler);
+        translateLabel(weightL, "weight", clientHandler);
+        translateLabel(passportL, "passport", clientHandler);
+        translateLabel(hairL, "hair", clientHandler);
+        translateLabel(xL, "x", clientHandler);
+        translateLabel(yL, "y", clientHandler);
+        translateLabel(locationL, "location", clientHandler);
+        translateLabel(locnameL, "title", clientHandler);
+        translateButton(readyButton, "create", clientHandler);
+        firstLabel.setAlignment(Pos.CENTER);
+        secondLabel.setAlignment(Pos.CENTER);
 
-        ObservableList<String> addOptions = FXCollections.observableArrayList("Простое добавление", "Добавить, если больше", "Добавить, если меньше");
+        ObservableList<String> addOptions = FXCollections.observableArrayList(clientHandler.getEncodedBundleString("simple add"), clientHandler.getEncodedBundleString("add if max"), clientHandler.getEncodedBundleString("add if min"));
         kindOfAddBox.setItems(addOptions);
-        kindOfAddBox.setValue("Простое добавление");
+        kindOfAddBox.setValue(clientHandler.getEncodedBundleString("simple add"));
 
         ObservableList<String> colors = FXCollections.observableArrayList("YELLOW", "WHITE", "BROWN", "ORANGE");
         hairField.setItems(colors);
@@ -102,7 +169,7 @@ public class AddController extends Controller {
             switchToWindow("/map.fxml", toMapButton);
         });
 
-        toTableButton.setOnAction(event->{
+        toTableButton.setOnAction(event -> {
             switchToWindow("/main.fxml", toTableButton);
         });
 
@@ -117,9 +184,9 @@ public class AddController extends Controller {
             else {
                 clientHandler.setPerson(response.getPersonList().get(0));
                 String commandName = "";
-                if (kindOfAddBox.getValue().equals("Простое добавление")) commandName = "add";
-                else if (kindOfAddBox.getValue().equals("Добавить, если больше")) commandName = "add_if_max";
-                else if (kindOfAddBox.getValue().equals("Добавить, если меньше")) commandName = "add_if_min";
+                if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("simple add"))) commandName = "add";
+                else if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("add if max"))) commandName = "add_if_max";
+                else if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("add if min"))) commandName = "add_if_min";
                 clientHandler.sendCommand(commandName);
                 ServerResponse answer = null;
                 while (answer == null) {
@@ -143,7 +210,7 @@ public class AddController extends Controller {
 
     }
 
-    public ServerResponse readFromWindow(){
+    public ServerResponse readFromWindow() {
         String name = nameFiled.getText().trim();
         String height = heightField.getText().trim();
         String weight = weightField.getText().trim();

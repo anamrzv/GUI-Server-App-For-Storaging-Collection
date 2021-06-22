@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import newclient.ClientHandler;
 import other.Person;
@@ -51,9 +52,20 @@ public class FilterController extends Controller {
     private Button toTableButton;
 
     @FXML
+    private Label label;
+
+    @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
+        translateLabel(label, "set up filter", clientHandler);
+        translateButton(toTableButton, "to table", clientHandler);
+        translateButton(toMapButton, "map", clientHandler);
+        translateButton(toCommandsButton, "to commands list", clientHandler);
+        translateButton(lessButton, "less", clientHandler);
+        translateButton(moreButton, "more", clientHandler);
+        argumentField.setPromptText(clientHandler.getEncodedBundleString("argument"));
+        label.setAlignment(Pos.CENTER);
 
         ObservableList<String> options = FXCollections.observableArrayList("Name", "Height", "Weight", "Passport", "Hair Color", "Location", "Loc. X", "Loc. Y", "Loc. Z", "Coord. X", "Coord. Y", "Date", "ID");
         kindOfFieldBox.setItems(options);

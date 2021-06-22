@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import gui.GUIMain;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -48,11 +49,14 @@ public class SignController extends Controller {
     @FXML
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
-        rulesLabel.setText(clientHandler.getCurrentBundle().getString("rules"));
-        registrationLabel.setText(clientHandler.getCurrentBundle().getString("registration"));
-        newLogin.setPromptText(clientHandler.getCurrentBundle().getString("loginRules"));
-        newPassword.setPromptText(clientHandler.getCurrentBundle().getString("passwordRules"));
-        toLoginButton.setText(clientHandler.getCurrentBundle().getString("to authorisation"));
+        rulesLabel.setText(clientHandler.getEncodedBundleString("rules"));
+        registrationLabel.setText(clientHandler.getEncodedBundleString("registration"));
+        newLogin.setPromptText(clientHandler.getEncodedBundleString("loginRules"));
+        newPassword.setPromptText(clientHandler.getEncodedBundleString("passwordRules"));
+        toLoginButton.setText(clientHandler.getEncodedBundleString("to authorisation"));
+        newSignButton.setText(clientHandler.getEncodedBundleString("sign in"));
+        registrationLabel.setAlignment(Pos.CENTER);
+        rulesLabel.setAlignment(Pos.CENTER);
 
         newSignButton.setOnAction(event -> {
             String login = newLogin.getText().trim();

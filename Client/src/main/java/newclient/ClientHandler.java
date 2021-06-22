@@ -18,6 +18,7 @@ import java.net.PortUnreachableException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -148,4 +149,12 @@ public class ClientHandler {
         } while (serverAnswer <= 0);
         return null;
     }
+
+    public String getEncodedBundleString(String key) {
+        if (currentBundle == null) {
+            throw new RuntimeException("Bundle is not specified");
+        }
+        return new String(currentBundle.getString(key).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+    }
+
 }

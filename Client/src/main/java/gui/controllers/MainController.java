@@ -67,9 +67,12 @@ public class MainController extends Controller {
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
 
+        toFilterButton.setText(clientHandler.getCurrentBundle().getString("filter"));
+        resetTableButton.setText(clientHandler.getCurrentBundle().getString("reset"));
+        toMapButton.setText(clientHandler.getCurrentBundle().getString("map"));
+        toCommandsButton.setText(clientHandler.getCurrentBundle().getString("to commands list"));
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user")+clientHandler.getLogin());
 
-
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
         fillTable();
         peopleTable.setEditable(true);
 

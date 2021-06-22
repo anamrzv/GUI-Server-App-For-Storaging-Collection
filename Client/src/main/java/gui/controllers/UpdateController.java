@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import newclient.ClientHandler;
@@ -30,6 +31,9 @@ public class UpdateController extends Controller {
 
     @FXML
     private TextField nameFiled;
+
+    @FXML
+    private Label firstLabel;
 
     @FXML
     private Button readyButton;
@@ -62,16 +66,55 @@ public class UpdateController extends Controller {
     private TextField xLocationField;
 
     @FXML
+    private Label secondLabel;
+
+    @FXML
+    private Label nameL;
+
+    @FXML
+    private Label heightL;
+
+    @FXML
+    private Label weightL;
+
+    @FXML
+    private Label passportL;
+
+    @FXML
     private ComboBox<String> hairField;
+
+    @FXML
+    private Label hairL;
+
+    @FXML
+    private Label locationL;
 
     @FXML
     private ComboBox<String> locationField;
 
     @FXML
+    private Label xL;
+
+    @FXML
+    private Label yL;
+
+    @FXML
+    private Label thirdLabel;
+
+    @FXML
+    private Label fourthLabel;
+
+    @FXML
     private TextField idField;
 
     @FXML
+    private Label fifthLabel;
+
+    @FXML
     private Label userInfoLable;
+
+    @FXML
+    private Label locnameL;
 
     @FXML
     private Button toCommandsButton;
@@ -89,14 +132,33 @@ public class UpdateController extends Controller {
     @FXML
     void initialize() throws IOException {
         clientHandler = ClientHandler.getInstance(args);
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
+        translateButton(toTableButton, "to table", clientHandler);
+        translateButton(toMapButton, "map", clientHandler);
+        translateButton(toCommandsButton, "to commands list", clientHandler);
+        translateLabel(nameL, "name", clientHandler);
+        translateLabel(heightL, "height", clientHandler);
+        translateLabel(weightL, "weight", clientHandler);
+        translateLabel(passportL, "passport", clientHandler);
+        translateLabel(hairL, "hair", clientHandler);
+        translateLabel(xL, "x", clientHandler);
+        translateLabel(yL, "y", clientHandler);
+        translateLabel(locationL, "location", clientHandler);
+        translateLabel(locnameL, "title", clientHandler);
+        translateButton(readyButton, "update", clientHandler);
+        translateLabel(thirdLabel, "thirdLabel", clientHandler);
+        translateLabel(fourthLabel, "fourthLabel", clientHandler);
+        translateLabel(firstLabel, "input id", clientHandler);
+        translateLabel(secondLabel, "update rules", clientHandler);
+        translateLabel(fifthLabel, "fifth label update", clientHandler);
+        firstLabel.setAlignment(Pos.CENTER);
+        secondLabel.setAlignment(Pos.CENTER);
 
         if (clientHandler.isIdIsSet() == true) {
             idField.setText(Long.toString(clientHandler.getIdForUpdate()));
             updateFields();
             clientHandler.setIdIsSet(false);
         }
-
-        userInfoLable.setText("Пользователь: " + clientHandler.getLogin());
 
         ObservableList<String> colors = FXCollections.observableArrayList("YELLOW", "WHITE", "BROWN", "ORANGE");
         hairField.setItems(colors);
