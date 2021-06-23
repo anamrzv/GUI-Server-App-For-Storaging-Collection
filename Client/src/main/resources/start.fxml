@@ -44,6 +44,6 @@
                 <Font name="Microsoft YaHei Light" size="16.0" />
             </font>
         </Button>
-        <ComboBox fx:id="languageBox" layoutX="14.0" layoutY="18.0" prefHeight="26.0" prefWidth="116.0" promptText="Язык" style="-fx-background-color: #fafafa;" />
+        <ComboBox fx:id="languageBox" layoutX="14.0" layoutY="18.0" prefHeight="26.0" prefWidth="116.0" promptText="---" style="-fx-background-color: #fafafa;" />
     </children>
 </AnchorPane>

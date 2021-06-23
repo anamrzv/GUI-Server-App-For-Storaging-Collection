@@ -65,7 +65,9 @@ public class StartController extends Controller {
 
         ObservableList<String> languages = FXCollections.observableArrayList("Русский", "English", "Slovenčina", "Shqiptare");
         languageBox.setItems(languages);
-        clientHandler.setCurrentBundle(ResourceBundle.getBundle("gui.bundles.Language", Locale.forLanguageTag("ru-RU")));
+        if (clientHandler.getCurrentBundle()==null) {
+            clientHandler.setCurrentBundle(ResourceBundle.getBundle("gui.bundles.Language", Locale.forLanguageTag("ru-RU")));
+        } else changeLanguage();
 
         languageBox.setOnAction(event -> {
             String language = languageBox.getValue().trim();
@@ -135,6 +137,7 @@ public class StartController extends Controller {
                 Parent root = loader.getRoot();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+                stage.setResizable(false);
                 stage.showAndWait();
             } else
                 showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString("log in error"), "");

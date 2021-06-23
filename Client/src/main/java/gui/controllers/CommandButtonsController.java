@@ -169,10 +169,10 @@ public class CommandButtonsController extends Controller {
             }
         }
         if (answer.getError() == null) {
-            if (answer.getCommand().equals("sum_of_weight")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , answer.getMessage()+clientHandler.getEncodedBundleString("weight answer"), "");
+            if (answer.getCommand().equals("sum_of_weight")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("weightSum") , answer.getMessage()+" "+clientHandler.getEncodedBundleString("weight answer"), "");
             else if (answer.getCommand().equals("head")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , clientHandler.getEncodedBundleString("head answer")+answer.getMessage(), "");
             else if (answer.getCommand().equals("info")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , clientHandler.getEncodedBundleString("info answer")+answer.getMessage(), "");
-            else if (answer.getCommand().equals("help")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , clientHandler.getEncodedBundleString("help answer")+answer.getMessage(), "");
+            else if (answer.getCommand().equals("help")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , clientHandler.getEncodedBundleString("help answer"), "");
             else showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , answer.getMessage(), "");
         } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString(commandName), clientHandler.getEncodedBundleString(answer.getError()), "");
     }

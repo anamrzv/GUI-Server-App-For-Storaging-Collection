@@ -97,7 +97,7 @@ public class SignController extends Controller {
                 e.printStackTrace();
             }
         }
-        if (answer.getError() != null) {
+        if (answer.getError() == null) {
             showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "success register"), "");
             switchToWindow("/start.fxml", newSignButton);
         } else {

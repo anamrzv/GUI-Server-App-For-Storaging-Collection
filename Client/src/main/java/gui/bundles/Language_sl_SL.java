@@ -113,6 +113,7 @@ public class Language_sl_SL extends ListResourceBundle {
             {"coordinates error empty","Musia byť vyplnené všetky súradnice osôb, zadajte čísla."},
             {"coordinates error input","Neplatný vstupný formát. Znova zadajte súradnice osoby. Skontrolujte, či v zadanom reťazci nie sú žiadne písmená."},
             {"creator error", "Objekt nie je možné aktualizovať, pretože nie ste jeho tvorcom."},
+            {"success update","Objekt bol úspešne obnoviť"},
 
             //alerts login and sign in
             {"login error short","Prihlásenie je príliš krátke"},
@@ -150,13 +151,13 @@ public class Language_sl_SL extends ListResourceBundle {
 
             //other
             {"passport count answer", "- počet ľudí s nižšou hodnotou pasu"},
-            {"error", ""},
+            {"error", "Chyba"},
             {"weight answer", "- súčet hodnôt váhového poľa všetkých prvkov kolekcie"},
             {"clear success", "Položky, ktoré ste vytvorili, boli úspešne odstránené zo zbierky."},
             {"clear error", "Položky neboli odstránené, pretože sa vyskytla chyba pri mazaní z databázy"},
             {"head empty", "Zbierka je prázdna, prvý prvok nie je možné zobraziť"},
             {"head answer", "Prvý prvok predvolenej triedenej (abecedne) zbierky: \n"},
-            {"info answer", "Typ položky: Osoba\nTyp zbierky: LinkedList\nPočet položiek:"},
+            {"info answer", "Typ položky: Osoba\nTyp zbierky: LinkedList\nPočet položiek: "},
 
             //help
             {"help answer","Príkazy, ktoré máte k dispozícii:\n" +

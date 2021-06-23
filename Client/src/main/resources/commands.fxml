@@ -5,83 +5,83 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="503.0" prefWidth="869.0" style="-fx-background-color: #2e3348;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CommandButtonsController">
+<AnchorPane prefHeight="565.0" prefWidth="927.0" style="-fx-background-color: #2e3348;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CommandButtonsController">
     <children>
-        <AnchorPane layoutX="-1.0" layoutY="84.0" prefHeight="418.0" prefWidth="869.0" style="-fx-background-color: #fafafa;">
+        <AnchorPane layoutX="-2.0" layoutY="84.0" prefHeight="484.0" prefWidth="927.0" style="-fx-background-color: #fafafa;">
          <children>
-            <Label fx:id="addLabel" layoutX="325.0" layoutY="25.0" text="Добавление элемента">
+            <Label fx:id="addLabel" layoutX="361.0" layoutY="27.0" text="Добавление элемента">
                <font>
                   <Font name="Microsoft YaHei Light" size="21.0" />
                </font>
             </Label>
-            <Label fx:id="removeLabel" layoutX="338.0" layoutY="147.0" text="Удаление элемента">
+            <Label fx:id="removeLabel" layoutX="368.0" layoutY="149.0" text="Удаление элемента">
                <font>
                   <Font name="Microsoft YaHei Light" size="21.0" />
                </font>
             </Label>
-            <Label fx:id="otherLabel" layoutX="352.0" layoutY="271.0" text="Другие команды">
+            <Label fx:id="otherLabel" layoutX="382.0" layoutY="276.0" text="Другие команды">
                <font>
                   <Font name="Microsoft YaHei Light" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="addButton" layoutX="327.0" layoutY="82.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="90.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="add">
+            <Button fx:id="addButton" layoutX="327.0" layoutY="82.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="add">
                <font>
                   <Font name="Microsoft JhengHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="updateButton" layoutX="447.0" layoutY="82.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="90.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="update">
+            <Button fx:id="updateButton" layoutX="486.0" layoutY="82.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="update">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="removeIdButton" layoutX="228.0" layoutY="205.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="remove by id">
+            <Button fx:id="removeIdButton" layoutX="219.0" layoutY="205.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="remove by id">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="clearButton" layoutX="537.0" layoutY="205.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="90.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="clear">
+            <Button fx:id="clearButton" layoutX="613.0" layoutY="205.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="90.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="clear">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="removePassportButton" layoutX="362.0" layoutY="205.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="remove by passport">
+            <Button fx:id="removePassportButton" layoutX="371.0" layoutY="205.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="198.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="remove by passport">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="infoButton" layoutX="72.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="66.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="info">
+            <Button fx:id="infoButton" layoutX="192.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="info">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="headButton" layoutX="161.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="66.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="head">
+            <Button fx:id="headButton" layoutX="337.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="head">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="weightButton" layoutX="253.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="sum of weight">
+            <Button fx:id="weightButton" layoutX="502.0" layoutY="400.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="222.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="sum of weight">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="countPassportButton" layoutX="492.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="count less than passport">
+            <Button fx:id="countPassportButton" layoutX="205.0" layoutY="400.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="222.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="count less than passport">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="helpButton" layoutX="397.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="73.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="help">
+            <Button fx:id="helpButton" layoutX="486.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="help">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="scriptButton" layoutX="693.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="execute script">
+            <Button fx:id="scriptButton" layoutX="630.0" layoutY="330.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" style="-fx-background-color: #b0bbcf; -fx-border-color: grey;" text="execute script">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>
             </Button>
          </children>
         </AnchorPane>
-        <Label layoutX="331.0" layoutY="14.0" text="People DB" textFill="WHITE">
+        <Label layoutX="359.0" layoutY="14.0" text="People DB" textFill="WHITE">
             <font>
                 <Font name="Modern No. 20" size="47.0" />
             </font>
@@ -95,14 +95,14 @@
                 </Label>
             </children>
         </AnchorPane>
-        <Button fx:id="toTableButton" layoutX="649.0" layoutY="27.0" mnemonicParsing="false" text="К таблице">
+        <Button fx:id="toTableButton" layoutX="614.0" layoutY="23.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="108.0" text="К таблице">
             <font>
-                <Font name="Microsoft YaHei Light" size="12.0" />
+                <Font name="Microsoft YaHei Light" size="15.0" />
             </font>
         </Button>
-        <Button fx:id="mapButton" layoutX="781.0" layoutY="27.0" mnemonicParsing="false" text="Карта">
+        <Button fx:id="mapButton" layoutX="769.0" layoutY="23.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="108.0" text="Карта">
             <font>
-                <Font name="Microsoft YaHei Light" size="12.0" />
+                <Font name="Microsoft YaHei Light" size="15.0" />
             </font>
         </Button>
     </children>

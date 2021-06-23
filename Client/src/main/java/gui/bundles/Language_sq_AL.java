@@ -113,6 +113,7 @@ public class Language_sq_AL extends ListResourceBundle {
             {"coordinates error empty","Të gjitha koordinatat e personave duhet të plotësohen, ju lutemi shkruani numrat."},
             {"coordinates error input","Format i pavlefshëm i hyrjes, futni përsëri koordinatat e personit. Kontrolloni që të mos ketë shkronja në vargun e futur."},
             {"creator error", "Objekti nuk mund të azhurnohet sepse ju nuk jeni krijuesi i saj."},
+            {"success update","Objekti u ifresko me sukses"},
 
             //alerts login and sign in
             {"login error short","Identifikimi është shumë i shkurtër"},
@@ -150,13 +151,13 @@ public class Language_sq_AL extends ListResourceBundle {
 
             //other
             {"passport count answer", "- numri i njerëzve me një vlerë më të ulët të pasaportës"},
-            {"error", ""},
+            {"error", "Gabim"},
             {"weight answer", "- shuma e vlerave të fushës së peshës të të gjithë elementëve të koleksionit"},
             {"clear success", "Artikujt që krijuat u hoqën me sukses nga koleksioni."},
             {"clear error", "Artikujt nuk u fshinë sepse ndodhi një gabim gjatë fshirjes nga baza e të dhënave"},
             {"head empty", "Koleksioni është bosh, elementi i parë nuk mund të shfaqet"},
             {"head answer", "Elementi i parë i koleksionit të renditur të renditur (alfabetik): \n"},
-            {"info answer", "Lloji i artikullit: Person\nLloji i koleksionit: Lista e Linked\nNumri i artikujve:"},
+            {"info answer", "Lloji i artikullit: Person\nLloji i koleksionit: Lista e Linked\nNumri i artikujve: "},
 
             //help
             {"help answer", "Komandat e disponueshme për ju:\n" +
