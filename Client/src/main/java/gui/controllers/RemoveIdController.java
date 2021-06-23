@@ -74,14 +74,14 @@ public class RemoveIdController extends Controller {
                 }
             }
             if (answer.getError() == null) {
-                showAlert(Alert.AlertType.INFORMATION, "Remove person with this id", answer.getMessage(), "");
+                showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("removeID") , clientHandler.getEncodedBundleString(answer.getMessage()) , "");
                 clientHandler.sendCommand("show");
                 try {
                     clientHandler.getPeopleAnswer();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else showAlert(Alert.AlertType.ERROR, "Remove person with this id", answer.getError(), "");
+            } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("removeID"), clientHandler.getEncodedBundleString(answer.getError()),  "");
         });
 
         toMapButton.setOnAction(event->{

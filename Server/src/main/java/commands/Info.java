@@ -31,10 +31,9 @@ public class Info extends Command {
     public ServerResponse execute(List<String> args) {
         if (args.size() == 2) {
             LinkedList<Person> people = dc.getPeople();
-            String response= "Тип коллекции: " + people.getClass()+"\nТип элементов: Person\nКоличество элементов: "+people.size();
-            return ServerResponse.builder().message(response).command("info").build();
+            return ServerResponse.builder().message(Integer.toString(people.size())).command("info").build();
         } else {
-            return ServerResponse.builder().error("У команды info нет аргументов. Введите команду снова.").command("info").build();
+            return ServerResponse.builder().error("error").command("info").build();
         }
     }
 

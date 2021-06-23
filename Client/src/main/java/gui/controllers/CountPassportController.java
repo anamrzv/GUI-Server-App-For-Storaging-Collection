@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
 import newclient.ClientHandler;
 import other.ServerResponse;
 
-public class CountPassportController extends Controller{
+public class CountPassportController extends Controller {
 
     private ClientHandler clientHandler;
 
@@ -57,11 +57,11 @@ public class CountPassportController extends Controller{
         passportIDField.setPromptText(clientHandler.getEncodedBundleString("num of passport"));
         translateButton(readyButton, "ready", clientHandler);
         translateButton(toCommandsButton, "to commands list", clientHandler);
-        translateButton(toMapButton,"map", clientHandler);
+        translateButton(toMapButton, "map", clientHandler);
         inputPassportLabel.setAlignment(Pos.CENTER);
         countPassportLabel.setAlignment(Pos.CENTER);
 
-        readyButton.setOnAction(event->{
+        readyButton.setOnAction(event -> {
             String passportID = passportIDField.getText().trim();
             List<String> args = new LinkedList<>();
             args.add(passportID);
@@ -77,15 +77,16 @@ public class CountPassportController extends Controller{
                 }
             }
             if (answer.getError() == null) {
-                showAlert(Alert.AlertType.INFORMATION, "Count less than passport", answer.getMessage(), "");
-            } else showAlert(Alert.AlertType.ERROR, "Count less than passport", answer.getError(), "");
+                showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("countPass"),answer.getMessage()+clientHandler.getEncodedBundleString("passport count answer"), "");
+            } else
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("countPass"), clientHandler.getEncodedBundleString(answer.getError()), "");
         });
 
-        toMapButton.setOnAction(event->{
+        toMapButton.setOnAction(event -> {
             switchToWindow("/map.fxml", toMapButton);
         });
 
-        toCommandsButton.setOnAction(event->{
+        toCommandsButton.setOnAction(event -> {
             switchToWindow("/commands.fxml", toCommandsButton);
         });
 

@@ -33,15 +33,15 @@ public class RemoveByID extends Command {
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
         if (args.size() != 2) {
             if (args.size() != 3) {
-                return ServerResponse.builder().error("У команды remove_by_id должен быть ровно один аргумент - ID персоны. Введите команду снова.").command("remove_by_id").build();
+                return ServerResponse.builder().error("id error arguments").command("remove_by_id").build();
             }
             long id;
             try {
                 id = Long.parseLong(args.get(2));
                 if (id < 0)
-                    return ServerResponse.builder().error("ID не может быть отрицательным числом. Введите команду снова.").command("remove_by_id").build();
+                    return ServerResponse.builder().error("id error minus").command("remove_by_id").build();
             } catch (Exception e) {
-                return ServerResponse.builder().error("В качестве аргумента должна быть передана строка из цифр. Введите команду снова.").command("remove_by_id").build();
+                return ServerResponse.builder().error("id error validate").command("remove_by_id").build();
             }
             LinkedList<Person> people = dc.getPeople();
             Person person = people.stream()
@@ -50,19 +50,19 @@ public class RemoveByID extends Command {
                     .orElse(null);
             int result;
             if (person == null)
-                return ServerResponse.builder().message("Элемента с таким ID нет в коллекции.").command("remove_by_id").build();
+                return ServerResponse.builder().message("id no id").command("remove_by_id").build();
             else {
                 result = manager.deleteByIdFromBD(person, args);
                 if (result == 1) {
                     people.remove(person);
-                    return ServerResponse.builder().message("Объект с ID " + id + " успешно удален из коллекции.").command("remove_by_id").build();
+                    return ServerResponse.builder().message("id remove success").command("remove_by_id").build();
                 } else if (result == 0) {
-                    return ServerResponse.builder().error("Элемент не удален, т.к. вы не являетесь его владельцем").command("remove_by_id").build();
+                    return ServerResponse.builder().error("id creator error").command("remove_by_id").build();
                 } else
-                    return ServerResponse.builder().error("Элемент не удален, т.к. невозможно удалить его в базе данных.").command("remove_by_id").build();
+                    return ServerResponse.builder().error("id db error").command("remove_by_id").build();
             }
         } else {
-            return ServerResponse.builder().error("У команды remove_by_id должен быть один аргумент - ID персоны. Введите команду снова.").command("remove_by_id").build();
+            return ServerResponse.builder().error("id error arguments.").command("remove_by_id").build();
         }
     }
 

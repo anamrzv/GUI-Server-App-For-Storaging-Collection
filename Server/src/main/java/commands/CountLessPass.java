@@ -31,21 +31,21 @@ public class CountLessPass extends Command {
     public ServerResponse execute(List<String> args) {
         Long id;
         if (args.size() != 3) {
-            return ServerResponse.builder().error("У команды count_less_than_passport_id должен быть один аргумент - ID паспорта. Введите команду снова.").command("count_less_than_passport_id").build();
+            return ServerResponse.builder().error("passport error arguments").command("count_less_than_passport_id").build();
         }
         try {
             id = Long.parseLong(args.get(2));
             if (id < 0) {
-                return ServerResponse.builder().error("ID паспорта не может быть отрицательным числом. Введите команду снова.").command("count_less_than_passport_id").build();
+                return ServerResponse.builder().error("passport error minus").command("count_less_than_passport_id").build();
             }
         } catch (Exception e) {
-            return ServerResponse.builder().error("В качестве аргумента должна быть передана строка из цифр.\n Если строка составлена правильно, то передано слишком большое число. Введите команду снова.").command("count_less_than_passport_id").build();
+            return ServerResponse.builder().error("passport error validate").command("count_less_than_passport_id").build();
         }
         LinkedList<Person> people = dc.getPeople();
         int res = (int) people.stream()
                 .filter(x -> x.getPassportAsLong() < id)
                 .count();
-        return ServerResponse.builder().message(res + " - число элементов, значение поля passportID которых меньше " + id).command("count_less_than_passport_id").build();
+        return ServerResponse.builder().message(Integer.toString(res)).command("count_less_than_passport_id").build();
     }
 
     /**

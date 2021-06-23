@@ -90,13 +90,11 @@ public class DataBaseManager {
             int touchedRows = preparedStatement.executeUpdate();
             preparedStatement.close();
             if (option.equals("update") && touchedRows == 0) {
-                return "Нельзя обновить элемент, т.к. вы не являетесь его создаталем";
-            } else if (option.equals("update")) return "Объект успешно обновлен";
-            else return "Объект успешно добавлен";
+                return "creator error";
+            } else if (option.equals("update")) return "success update";
+            else return "success add";
         } catch (SQLException e) {
-            System.out.println("Error");
-            e.printStackTrace();
-            return "Произошла ошибка при добавлении объекта в базу данных, объект не добавлен в коллекцию";
+            return "add error";
         } finally {
             lock.writeLock().unlock();
         }

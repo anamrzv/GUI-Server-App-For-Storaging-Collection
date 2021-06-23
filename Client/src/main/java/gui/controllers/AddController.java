@@ -1,7 +1,6 @@
 package gui.controllers;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 import javafx.collections.FXCollections;
@@ -11,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import newclient.ClientHandler;
 import newclient.Creation;
-import other.Color;
 import other.Location;
 import other.Person;
 import other.ServerResponse;
@@ -180,7 +178,7 @@ public class AddController extends Controller {
         readyButton.setOnAction(event -> {
             ServerResponse response = readFromWindow();
             if (response.getError() != null)
-                showAlert(Alert.AlertType.ERROR, "Create new person", response.getError(), "");
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(response.getError()), "");
             else {
                 clientHandler.setPerson(response.getPersonList().get(0));
                 String commandName = "";
@@ -203,8 +201,8 @@ public class AddController extends Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    showAlert(Alert.AlertType.INFORMATION, "Create new person", answer.getMessage(), "");
-                } else showAlert(Alert.AlertType.ERROR, "Create new person", answer.getError(), "");
+                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
+                } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(answer.getError()), "");
             }
         });
 
@@ -246,6 +244,6 @@ public class AddController extends Controller {
         for (Location l : readyLocations.values()) {
             locations.add(l.getName());
         }
-        locations.add("Новая локация");
+        locations.add(clientHandler.getEncodedBundleString("new location"));
     }
 }

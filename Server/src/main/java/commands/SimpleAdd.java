@@ -32,11 +32,11 @@ public class SimpleAdd extends Command {
 
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
         String result = manager.addPersonToDB(person, "add", args);
-        if (result.equals("Объект успешно добавлен")) {
+        if (result.equals("success add")) {
             LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
             people.clear();
             people.addAll(newCollection);
-            return ServerResponse.builder().message(result).command("add").build();
+            return ServerResponse.builder().message("success add").command("add").build();
         } else
             return ServerResponse.builder().error(result).command("add").build();
     }

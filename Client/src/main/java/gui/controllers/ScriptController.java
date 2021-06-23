@@ -66,8 +66,8 @@ public class ScriptController extends Controller {
                 }
             }
             if (answer.getError() == null) {
-                showAlert(Alert.AlertType.INFORMATION, "Execute script", answer.getMessage(), "");
-            } else showAlert(Alert.AlertType.ERROR, "Execute script", answer.getError(), "");
+                showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("script"), answer.getMessage(), "");
+            } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("script"), answer.getError(), "");
         });
 
         toMapButton.setOnAction(event -> {

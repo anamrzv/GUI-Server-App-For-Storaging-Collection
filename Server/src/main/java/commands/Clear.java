@@ -35,10 +35,10 @@ public class Clear extends Command {
             List<Person> deletedPeople = manager.deleteByLoginFromDB(args);
             if (deletedPeople != null) {
                 people.removeAll(deletedPeople);
-                return ServerResponse.builder().message("Из коллекции успешно удалены элементы, создателями которых вы являлись.").command("clear").build();
-            } else return ServerResponse.builder().error("Элементы не удалены, т.к. возникла ошибка при удалении из базы данных").build();
+                return ServerResponse.builder().message("clear success").command("clear").build();
+            } else return ServerResponse.builder().error("clear error").build();
         } else {
-            return ServerResponse.builder().error("У команды clear нет аргументов. Введите команду снова.").build();
+            return ServerResponse.builder().error("error").build();
         }
     }
 

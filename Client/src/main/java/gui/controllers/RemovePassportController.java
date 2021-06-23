@@ -80,8 +80,8 @@ public class RemovePassportController extends Controller{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                showAlert(Alert.AlertType.INFORMATION, "Remove all with this passport", answer.getMessage(), "");
-            } else showAlert(Alert.AlertType.ERROR, "Remove all with this passport", answer.getError(), "");
+                showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("removePass") , clientHandler.getEncodedBundleString(answer.getMessage()) , "");
+            } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("removePass"), clientHandler.getEncodedBundleString(answer.getError()) , "");
         });
 
         toMapButton.setOnAction(event->{

@@ -71,11 +71,11 @@ public class SignController extends Controller {
 
     private void registerUser(String login, String password) {
         if (login.length() < 4) {
-            showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе логина", "Слишком короткий логин");
+            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "login error short"), "");
         } else {
             clientHandler.setLogin(login);
             if (password.length() < 3 && password.length() > 0)
-                showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе пароля", "Слишком короткий пароль");
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "password error short"), "");
             else if (password.length() != 0) {
                 Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{3,}");
                 Matcher matcher = pattern.matcher(password);
@@ -83,7 +83,7 @@ public class SignController extends Controller {
                     clientHandler.setPassword(password);
                     clientHandler.sendCommand("register");
                 } else
-                    showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе пароля", "Пароль содержит недопустимые символы");
+                    showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "password error validate"), "");
             } else {
                 clientHandler.setPassword(password);
                 clientHandler.sendCommand("register");
@@ -98,10 +98,10 @@ public class SignController extends Controller {
             }
         }
         if (answer.getError() != null) {
-            showAlert(Alert.AlertType.INFORMATION, "Регистрация", "Регистрация", "Вы успешно зарегестрированы");
+            showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "success register"), "");
             switchToWindow("/start.fxml", newSignButton);
         } else {
-            showAlert(Alert.AlertType.ERROR, "Регистрация", "Регистрация отклонена", answer.getError());
+            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "register error"), "");
         }
     }
 

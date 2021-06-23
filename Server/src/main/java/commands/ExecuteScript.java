@@ -44,7 +44,7 @@ public class ExecuteScript extends Command {
             try {
                 Path path = Paths.get(args.get(2));
                 if (Files.exists(path) && !Files.isRegularFile(path)) {
-                    return ServerResponse.builder().error("Нельзя передать специальный файл в качестве скрипта. Введите команду снова с новым аргументом.").command("execute_script").build();
+                    return ServerResponse.builder().error("script error special file").command("execute_script").build();
                 } else {
                     if (dc.getScriptNames().size() == 0) dc.addScriptName(args.get(2));
                     String dir = path.toString();
@@ -54,7 +54,7 @@ public class ExecuteScript extends Command {
                         while ((line = br.readLine()) != null) {
                             line = line.trim();
                             if (line.equals("execute_script " + args.get(2))) {
-                                return ServerResponse.builder().error("В скрипте обнаружена рекурсия, удалите строку execute_script " + args.get(2)).command("execute_script").build();
+                                return ServerResponse.builder().error("script error recursive 1").command("execute_script").build();
                             } else if (line.startsWith("execute_script")) {
                                 String cmd = getCommandName(line);
                                 List<String> arguments = getArguments(line);
@@ -62,7 +62,7 @@ public class ExecuteScript extends Command {
                                     Command command = commands.get(cmd);
                                     command.execute(arguments);
                                 } else
-                                    return ServerResponse.builder().error("В одном из вызовов команды execute_script в файле обнаружена рекурсия, команда пропущена\nУдалите строку " + arguments.get(2) + "\n").command("execute_script").build();
+                                    return ServerResponse.builder().error("script error recursive 2").command("execute_script").build();
                             } else {
                                 String cmd = getCommandName(line);
                                 List<String> arguments = getArguments(line);
@@ -73,18 +73,18 @@ public class ExecuteScript extends Command {
                         }
                         dc.clearScriptNames();
                     } catch (FileNotFoundException e) {
-                        return ServerResponse.builder().error("Файл не найден. Убедитесь, что вы правильно указали путь к файлу и введите команду снова.").command("execute_script").build();
+                        return ServerResponse.builder().error("script error file").command("execute_script").build();
                     } catch (Exception e) {
-                        return ServerResponse.builder().error("Произошла ошибка при чтении команды скрипта.").command("execute_script").build();
+                        return ServerResponse.builder().error("script error command").command("execute_script").build();
                     }
                 }
             } catch (Exception e) {
-                return ServerResponse.builder().error("Ошибка при обработке файла. Проверьте, что команде не был передан специальный файл.").command("execute_script").build();
+                return ServerResponse.builder().error("script error special file").command("execute_script").build();
             }
         } else {
-            return ServerResponse.builder().error("У команды execute_script должен быть один аргумент - путь к файлу. Введите команду снова.").command("execute_script").build();
+            return ServerResponse.builder().error("script error args").command("execute_script").build();
         }
-        return ServerResponse.builder().message("Скрипт выполнен").command("execute_script").build();
+        return ServerResponse.builder().message("script success").command("execute_script").build();
     }
 
     /**

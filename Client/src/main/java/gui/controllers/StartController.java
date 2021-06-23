@@ -65,9 +65,7 @@ public class StartController extends Controller {
 
         ObservableList<String> languages = FXCollections.observableArrayList("Русский", "English", "Slovenčina", "Shqiptare");
         languageBox.setItems(languages);
-        if (clientHandler.getCurrentBundle() == null) {
-            clientHandler.setCurrentBundle(ResourceBundle.getBundle("gui.bundles.Language", Locale.forLanguageTag("ru-RU")));
-        } else changeLanguage();
+        clientHandler.setCurrentBundle(ResourceBundle.getBundle("gui.bundles.Language", Locale.forLanguageTag("ru-RU")));
 
         languageBox.setOnAction(event -> {
             String language = languageBox.getValue().trim();
@@ -77,7 +75,7 @@ public class StartController extends Controller {
                 clientHandler.setCurrentBundle(ResourceBundle.getBundle("gui.bundles.Language", Locale.forLanguageTag("sl-SL")));
             else if (language.equals("Shqiptare"))
                 clientHandler.setCurrentBundle(ResourceBundle.getBundle("gui.bundles.Language", Locale.forLanguageTag("sq-AL")));
-            else
+            else if (language.equals("Русский"))
                 clientHandler.setCurrentBundle(ResourceBundle.getBundle("gui.bundles.Language", Locale.forLanguageTag("ru-RU")));
             changeLanguage();
         });
@@ -96,11 +94,11 @@ public class StartController extends Controller {
     private void loginUser(String login, String password) {
         boolean noError = false;
         if (login.length() < 4) {
-            showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе логина", "Слишком короткий логин");
+            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString("login error short"), "");
         } else {
             clientHandler.setLogin(login);
             if (password.length() < 3 && password.length() > 0)
-                showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе пароля", "Слишком короткий пароль");
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString("password error short"), "");
             else if (password.length() != 0) {
                 Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{3,}");
                 Matcher matcher = pattern.matcher(password);
@@ -109,7 +107,7 @@ public class StartController extends Controller {
                     clientHandler.sendCommand("login");
                     noError = true;
                 } else
-                    showAlert(Alert.AlertType.ERROR, "Ошибка", "Ошибка при вводе пароля", "Пароль содержит недопустимые символы");
+                    showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString("password error validate"), "");
             } else {
                 clientHandler.setPassword(password);
                 clientHandler.sendCommand("login");
@@ -126,7 +124,6 @@ public class StartController extends Controller {
                 }
             }
             if (answer.getError() == null) {
-                showAlert(Alert.AlertType.INFORMATION, "Вход", "Вход", "Вы успешно вошли в систему");
                 loginButton.getScene().getWindow().hide();
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/main.fxml"));
@@ -139,7 +136,8 @@ public class StartController extends Controller {
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
-            } else showAlert(Alert.AlertType.ERROR, "Вход отклонен", "Вход отклонён", "Повторите вход");
+            } else
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString("log in error"), "");
         }
     }
 }

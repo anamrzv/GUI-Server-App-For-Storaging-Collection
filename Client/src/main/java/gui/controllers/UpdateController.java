@@ -175,7 +175,7 @@ public class UpdateController extends Controller {
         readyButton.setOnAction(event -> {
             ServerResponse response = readFromWindow();
             if (response.getError() != null)
-                showAlert(Alert.AlertType.ERROR, "Update person", response.getError(), "");
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString( "update person"), clientHandler.getEncodedBundleString(response.getError()), "");
             else {
                 Person personWithID = response.getPersonList().get(0);
                 personWithID.setId(Long.parseLong(idField.getText()));
@@ -197,8 +197,8 @@ public class UpdateController extends Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    showAlert(Alert.AlertType.INFORMATION, "Update person", answer.getMessage(), "");
-                } else showAlert(Alert.AlertType.ERROR, "Update person", answer.getError(), "");
+                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString( "update person"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
+                } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString( "update person"), clientHandler.getEncodedBundleString(answer.getError()), "");
             }
         });
 
@@ -268,7 +268,7 @@ public class UpdateController extends Controller {
         for (Location l : readyLocations.values()) {
             locations.add(l.getName());
         }
-        locations.add("Новая локация");
+        locations.add(clientHandler.getEncodedBundleString("new location"));
     }
 
 }

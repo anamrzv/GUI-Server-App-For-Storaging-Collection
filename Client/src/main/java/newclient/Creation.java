@@ -1,5 +1,6 @@
 package newclient;
 
+import gui.GUIMain;
 import other.*;
 
 import java.util.LinkedList;
@@ -25,6 +26,7 @@ public class Creation {
     private ServerResponse answer;
     private Person newPerson;
     private Map<Integer, Location> readyLocations;
+    private ClientHandler clientHandler = ClientHandler.getInstance(GUIMain.port);
 
     public Creation(String name, String height, String weight, String passport, String hair, String x, String y, String location, String nameLoc, String xLoc, String yLoc, String zLoc) {
         this.name = name;
@@ -61,8 +63,6 @@ public class Creation {
         List<Person> toAddPerson = new LinkedList<>();
         toAddPerson.add(newPerson);
         answer = ServerResponse.builder().personList(toAddPerson).build();
-        System.out.println(newPerson);
-        System.out.println(answer);
         return answer;
     }
 
@@ -70,14 +70,14 @@ public class Creation {
         try {
             boolean hasNoDigit = validateName(name);
             if (name.equals(""))
-                answer = ServerResponse.builder().error("Нельзя ввести пустую строку в это поле, пожалуйста, введите данные.").build();
+                answer = ServerResponse.builder().error("name error empty").build();
             else if (!hasNoDigit)
-                answer = ServerResponse.builder().error("В имени не могут содержаться цифры и спец. знаки. Проверьте,что в веденной строке они отсутствуют и введите имя еще раз.").build();
+                answer = ServerResponse.builder().error("name error validate").build();
             else {
                 newPerson.setName(name);
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("Неверный формат ввода, введите имя еще раз.").build();
+            answer = ServerResponse.builder().error("name error input").build();
         }
     }
 
@@ -86,13 +86,13 @@ public class Creation {
             if (!height.isEmpty()) {
                 long hLong = Long.parseLong(height);
                 if (hLong < 0) {
-                    answer = ServerResponse.builder().error("Рост не может быть меньше нуля, пожалуйста, введите рост еще раз.").build();
+                    answer = ServerResponse.builder().error("height error number").build();
                 } else {
                     newPerson.setHeight(hLong);
                 }
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("Неверный формат ввода роста, введите число или ничего нн вводите.").build();
+            answer = ServerResponse.builder().error("height error input").build();
         }
     }
 
@@ -101,13 +101,13 @@ public class Creation {
             if (!weight.isEmpty()) {
                 long wLong = Long.parseLong(weight);
                 if (wLong < 0) {
-                    answer = ServerResponse.builder().error("Вес не может быть меньше нуля, пожалуйста, введите вес еще раз.").build();
+                    answer = ServerResponse.builder().error("weight error number").build();
                 } else {
                     newPerson.setWeight(wLong);
                 }
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("Неверный формат ввода веса, введите число или ничего не вводите.").build();
+            answer = ServerResponse.builder().error("weight error input").build();
         }
     }
 
@@ -115,16 +115,16 @@ public class Creation {
         try {
             boolean hasNoLetter = validatePassport(passport);
             if (passport.equals(""))
-                answer = ServerResponse.builder().error("Паспорт не может быть пустой строкой, пожалуйста, введите данные.").build();
+                answer = ServerResponse.builder().error("passport error empty").build();
             else if (passport.length() > 27 || passport.length() < 10)
-                answer = ServerResponse.builder().error("Паспортные данные не подходят по длине, введите данные снова (10-27 цифр).").build();
+                answer = ServerResponse.builder().error("passport error length").build();
             else if (!hasNoLetter)
-                answer = ServerResponse.builder().error("Паспортные данные должны состоять только из цифр, введите данные снова.").build();
+                answer = ServerResponse.builder().error("passport error validate").build();
             else {
                 newPerson.setPassportID(passport);
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("Неверный формат ввода, введите паспортные данные ещё раз").build();
+            answer = ServerResponse.builder().error("passport error input").build();
         }
     }
 
@@ -132,18 +132,18 @@ public class Creation {
         Color hairColor = null;
         try {
             if (hair.equals(""))
-                answer = ServerResponse.builder().error("Выберете цвет волос, это обязательное поле.").build();
+                answer = ServerResponse.builder().error("hair error empty").build();
             else {
                 hairColor = Color.valueOf(hair);
                 newPerson.setHairColor(hairColor);
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("Попробуйте ввести цвет волос ещё раз.").build();
+            answer = ServerResponse.builder().error("hair error input").build();
         }
     }
 
     private void inputLocation() {
-        if (location.equals("Новая локация")) {
+        if (location.equals(clientHandler.getEncodedBundleString("new location"))) {
             Location newLocation = inputNewLocation();
             if (newLocation != null) {
                 newPerson.setLocation(newLocation);
@@ -165,7 +165,7 @@ public class Creation {
         double z;
         try {
             if (xLoc.isEmpty() || yLoc.isEmpty() || zLoc.isEmpty()) {
-                answer = ServerResponse.builder().error("Все координаты нового места должны быть заполнены, пожалуйста, введите числа.").build();
+                answer = ServerResponse.builder().error("location error empty").build();
                 return null;
             } else {
                 x = Integer.parseInt(xLoc);
@@ -175,7 +175,7 @@ public class Creation {
                 return newLocation;
             }
         } catch (NumberFormatException e) {
-            answer = ServerResponse.builder().error("Неверный формат ввода, введите координаты места еще раз. Проверьте,что в веденной строке отсутствуют буквы.").build();
+            answer = ServerResponse.builder().error("location error input").build();
             return null;
         }
     }
@@ -183,7 +183,7 @@ public class Creation {
     private void inputCoordinates() {
         Coordinates c = new Coordinates();
         if (x.isEmpty() || y.isEmpty()) {
-            answer = ServerResponse.builder().error("Все координаты человека должны быть заполнены, пожалуйста, введите числа.").build();
+            answer = ServerResponse.builder().error("coordinates error empty").build();
         } else {
             try {
                 float newX = Float.parseFloat(x);
@@ -191,7 +191,7 @@ public class Creation {
                 c.setCoordinatesFirst(newX, newY);
                 newPerson.setCoordinates(c);
             } catch (NumberFormatException e) {
-                answer = ServerResponse.builder().error("Неверный формат ввода, введите координаты человека еще раз. Проверьте,что в веденной строке отсутствуют буквы.").build();
+                answer = ServerResponse.builder().error("coordinates error input").build();
             }
         }
     }

@@ -37,12 +37,12 @@ public class Head extends Command {
         if (args.size() == 2) {
             people = dc.getPeople();
             if (people.size() == 0)
-                return ServerResponse.builder().message("Коллекция пуста, нельзя вывести первый элемент").command("head").build();
+                return ServerResponse.builder().message("head empty").command("head").build();
             else {
-                return ServerResponse.builder().message("Первый элемент отсортированной по умолчанию (алфавитный порядок) коллекции: \n" + people.get(0)).command("head").build();
+                return ServerResponse.builder().message(people.get(0).toString()).command("head").build();
             }
         } else {
-            return ServerResponse.builder().error("У команы head нет аргументов. Введите команду снова.").command("head").build();
+            return ServerResponse.builder().error("error").command("head").build();
         }
     }
 

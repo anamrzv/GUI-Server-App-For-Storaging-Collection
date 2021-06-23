@@ -34,9 +34,9 @@ public class SumOfWeight extends Command {
         if (args.size()==2) {
             LinkedList<Person> people = dc.getPeople();
             people.forEach(x-> sum+=x.getWeight());
-            return ServerResponse.builder().message(sum + " - сумма значений поля weight всех элементов коллекции").command("sum_of_weight").build();
+            return ServerResponse.builder().message(Long.toString(sum)).command("sum_of_weight").build();
         } else {
-            return ServerResponse.builder().error("У команды sum_of_weight нет аргументов. Введите команду еще раз.").command("sum_of_weight").build();
+            return ServerResponse.builder().error("error").command("sum_of_weight").build();
         }
     }
 
