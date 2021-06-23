@@ -31,7 +31,7 @@
                       <Font name="Microsoft YaHei Light" size="16.0" />
                   </font>
               </Button>
-            <Label fx:id="rulesLabel" layoutX="121.0" layoutY="60.0" text="Используйте латинские буквы, цифры, точку, нижнее подчеркивание" textFill="#2e3348">
+            <Label fx:id="rulesLabel" layoutX="117.0" layoutY="60.0" prefHeight="19.0" prefWidth="462.0" text="Используйте латинские буквы, цифры, точку, нижнее подчеркивание" textFill="#2e3348">
                <font>
                   <Font name="Microsoft YaHei Light" size="14.0" />
                </font>

@@ -27,7 +27,7 @@
                         <Font name="Microsoft YaHei Light" size="27.0" />
                     </font>
                 </Label>
-                <Button fx:id="loginButton" layoutX="297.0" layoutY="243.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="106.0" text="Войти">
+                <Button fx:id="loginButton" layoutX="267.0" layoutY="242.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="166.0" text="Войти">
                     <font>
                         <Font name="Microsoft YaHei Light" size="16.0" />
                     </font>
@@ -44,6 +44,6 @@
                 <Font name="Microsoft YaHei Light" size="16.0" />
             </font>
         </Button>
-        <ComboBox fx:id="languageBox" layoutX="14.0" layoutY="18.0" prefHeight="26.0" prefWidth="116.0" promptText="Язык" style="-fx-background-color: #fafafa;" />
+        <ComboBox fx:id="languageBox" layoutX="14.0" layoutY="18.0" prefHeight="26.0" prefWidth="116.0" promptText="---" style="-fx-background-color: #fafafa;" />
     </children>
 </AnchorPane>

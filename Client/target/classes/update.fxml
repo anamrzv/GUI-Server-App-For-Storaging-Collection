@@ -16,7 +16,7 @@
                         <Font size="16.0" />
                     </font>
                 </TextField>
-                <Label layoutX="375.0" layoutY="-1.0" prefHeight="51.0" prefWidth="120.0" text="Введите ID. ">
+                <Label fx:id="firstLabel" layoutX="375.0" layoutY="-1.0" prefHeight="51.0" prefWidth="120.0" text="Введите ID. ">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="19.0" />
                     </font>
@@ -71,64 +71,64 @@
                         <Font size="16.0" />
                     </font>
                 </TextField>
-                <Label layoutX="297.0" layoutY="23.0" prefHeight="51.0" prefWidth="287.0" text="Обновите те поля, которые Вам нужны.">
+                <Label fx:id="secondLabel" layoutX="297.0" layoutY="23.0" prefHeight="51.0" prefWidth="287.0" text="Обновите те поля, которые Вам нужны.">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="41.0" layoutY="82.0" prefHeight="51.0" prefWidth="48.0" text="Имя*:">
+                <Label fx:id="nameL" layoutX="14.0" layoutY="81.0" prefHeight="51.0" prefWidth="73.0" text="Имя*:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="41.0" layoutY="141.0" prefHeight="51.0" prefWidth="48.0" text="Рост:">
+                <Label fx:id="heightL" layoutX="14.0" layoutY="141.0" prefHeight="51.0" prefWidth="74.0" text="Рост:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="41.0" layoutY="206.0" prefHeight="51.0" prefWidth="48.0" text="Вес:">
+                <Label fx:id="weightL" layoutX="14.0" layoutY="206.0" prefHeight="51.0" prefWidth="78.0" text="Вес:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="26.0" layoutY="269.0" prefHeight="51.0" prefWidth="77.0" text="Паспорт*:">
+                <Label fx:id="passportL" layoutX="14.0" layoutY="269.0" prefHeight="51.0" prefWidth="77.0" text="Паспорт*:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
                 <ComboBox fx:id="hairField" layoutX="367.0" layoutY="87.0" prefHeight="42.0" prefWidth="147.0" visibleRowCount="4" />
-                <Label layoutX="282.0" layoutY="82.0" prefHeight="51.0" prefWidth="66.0" text="Волосы*:">
+                <Label fx:id="hairL" layoutX="282.0" layoutY="82.0" prefHeight="51.0" prefWidth="66.0" text="Волосы*:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="276.0" layoutY="269.0" prefHeight="51.0" prefWidth="78.0" text="Локация*:">
+                <Label fx:id="locationL" layoutX="276.0" layoutY="269.0" prefHeight="51.0" prefWidth="78.0" text="Локация*:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
                 <ComboBox fx:id="locationField" layoutX="367.0" layoutY="274.0" prefHeight="42.0" prefWidth="147.0" visibleRowCount="4" />
-                <Label layoutX="276.0" layoutY="141.0" prefHeight="51.0" prefWidth="78.0" text="Коорд. Х*:">
+                <Label layoutX="276.0" layoutY="141.0" prefHeight="51.0" prefWidth="78.0" text="Коорд. Х*:" fx:id="xL">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="276.0" layoutY="206.0" prefHeight="51.0" prefWidth="78.0" text="Коорд. Y*:">
+                <Label fx:id="yL" layoutX="276.0" layoutY="206.0" prefHeight="51.0" prefWidth="78.0" text="Коорд. Y*:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="630.0" layoutY="31.0" prefHeight="51.0" prefWidth="177.0" text="Если Вы хотите добавить">
+                <Label fx:id="thirdLabel" layoutX="630.0" layoutY="31.0" prefHeight="51.0" prefWidth="177.0" text="Если Вы хотите добавить">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="12.0" />
                     </font>
                 </Label>
-                <Label layoutX="659.0" layoutY="49.0" prefHeight="51.0" prefWidth="120.0" text="новую локацию:">
+                <Label fx:id="fourthLabel" layoutX="659.0" layoutY="49.0" prefHeight="51.0" prefWidth="120.0" text="новую локацию:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="12.0" />
                     </font>
                 </Label>
-                <Label layoutX="538.0" layoutY="81.0" prefHeight="51.0" prefWidth="78.0" text="Название:">
+                <Label fx:id="locnameL" layoutX="538.0" layoutY="81.0" prefHeight="51.0" prefWidth="78.0" text="Название:">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="15.0" />
                     </font>
@@ -153,7 +153,7 @@
                   <Font size="16.0" />
                </font>
             </TextField>
-            <Label layoutX="34.0" layoutY="341.0" prefHeight="51.0" prefWidth="247.0" text="ID (после ввода нажмитe Enter):">
+            <Label fx:id="fifthLabel" layoutX="34.0" layoutY="341.0" prefHeight="51.0" prefWidth="247.0" text="ID (после ввода нажмитe Enter):">
                <font>
                   <Font name="Microsoft JhengHei Light" size="15.0" />
                </font>
@@ -174,17 +174,17 @@
                 </Label>
             </children>
         </AnchorPane>
-        <Button fx:id="toCommandsButton" layoutX="659.0" layoutY="27.0" mnemonicParsing="false" text="К списку команд">
+        <Button fx:id="toCommandsButton" layoutX="642.0" layoutY="47.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="154.0" text="К списку команд">
             <font>
                 <Font name="Microsoft YaHei Light" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="toMapButton" layoutX="793.0" layoutY="27.0" mnemonicParsing="false" text="Карта">
+        <Button fx:id="toMapButton" layoutX="748.0" layoutY="14.0" mnemonicParsing="false" text="Карта">
             <font>
                 <Font name="Microsoft YaHei Light" size="12.0" />
             </font>
         </Button>
-      <Button fx:id="toTableButton" layoutX="563.0" layoutY="27.0" mnemonicParsing="false" text="К таблице">
+      <Button fx:id="toTableButton" layoutX="642.0" layoutY="13.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" text="К таблице">
          <font>
             <Font name="Microsoft YaHei Light" size="12.0" />
          </font>

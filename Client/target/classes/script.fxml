@@ -10,7 +10,7 @@
     <children>
         <AnchorPane layoutX="-1.0" layoutY="80.0" prefHeight="422.0" prefWidth="869.0" style="-fx-background-color: #fafafa;">
             <children>
-                <Label layoutX="266.0" layoutY="57.0" prefHeight="51.0" prefWidth="320.0" text="Введите путь к файлу со скриптом. ">
+                <Label fx:id="label" layoutX="266.0" layoutY="57.0" prefHeight="51.0" prefWidth="320.0" text="Введите путь к файлу со скриптом. ">
                     <font>
                         <Font name="Microsoft JhengHei Light" size="19.0" />
                     </font>
