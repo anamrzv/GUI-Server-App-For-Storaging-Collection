@@ -1,11 +1,9 @@
 package commands;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import database.DataBaseManager;
+import other.CollectionsKeeper;
 import other.Person;
 import other.ServerResponse;
-import other.CollectionsKeeper;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +35,7 @@ public class AddIfMin extends Command {
         String result;
         if (people.size() == 0) {
             result = manager.addPersonToDB(person, "add", args);
-            if (result.equals("Объект успешно добавлен")){
+            if (result.equals("Объект успешно добавлен")) {
                 LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
                 people.clear();
                 people.addAll(newCollection);
@@ -48,7 +46,7 @@ public class AddIfMin extends Command {
                 return ServerResponse.builder().error("Объект не добавлен в коллекцию, т.к. его длина в формате json больше наименьшей").command("add_if_min").build();
             } else {
                 result = manager.addPersonToDB(person, "add", args);
-                if (result.equals("Объект успешно добавлен")){
+                if (result.equals("Объект успешно добавлен")) {
                     LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
                     people.clear();
                     people.addAll(newCollection);

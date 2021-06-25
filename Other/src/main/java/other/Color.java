@@ -14,7 +14,7 @@ public enum Color {
 
     private String description;
 
-    Color(String description){
+    Color(String description) {
         this.description = description;
     }
 

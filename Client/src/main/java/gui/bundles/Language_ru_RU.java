@@ -25,6 +25,7 @@ public class Language_ru_RU extends ListResourceBundle {
             {"to commands list", "К списку команд"},
             {"user", "Пользователь: "},
             {"map", "Карта"},
+            {"exit", "Выход"},
 
             //commands buttons
             {"add", "Добавить"},

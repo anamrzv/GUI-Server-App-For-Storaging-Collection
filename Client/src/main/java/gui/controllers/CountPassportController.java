@@ -1,12 +1,5 @@
 package gui.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import gui.GUIMain;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -16,15 +9,13 @@ import javafx.scene.control.TextField;
 import newclient.ClientHandler;
 import other.ServerResponse;
 
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 public class CountPassportController extends Controller {
 
     private ClientHandler clientHandler;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField passportIDField;
@@ -77,18 +68,14 @@ public class CountPassportController extends Controller {
                 }
             }
             if (answer.getError() == null) {
-                showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("countPass"),answer.getMessage()+clientHandler.getEncodedBundleString("passport count answer"), "");
+                showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("countPass"), answer.getMessage() + clientHandler.getEncodedBundleString("passport count answer"), "");
             } else
                 showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("countPass"), clientHandler.getEncodedBundleString(answer.getError()), "");
         });
 
-        toMapButton.setOnAction(event -> {
-            switchToWindow("/map.fxml", toMapButton);
-        });
+        toMapButton.setOnAction(event -> switchToWindow("/map.fxml", toMapButton));
 
-        toCommandsButton.setOnAction(event -> {
-            switchToWindow("/commands.fxml", toCommandsButton);
-        });
+        toCommandsButton.setOnAction(event -> switchToWindow("/commands.fxml", toCommandsButton));
 
     }
 

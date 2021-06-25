@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -62,31 +65,36 @@ public class Person implements Comparable<Person>, Serializable {
 
     private String creator;
 
+    public String getCreationDateString(Locale locale) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale);
+        return creationDate.format(formatter);
+    }
+
     public Long getPassportAsLong() {
         return Long.parseLong(passportID);
     }
 
-    public float getCoordinateX(){
+    public float getCoordinateX() {
         return coordinates.getX();
     }
 
-    public double getCoordinateY(){
+    public double getCoordinateY() {
         return coordinates.getY();
     }
 
-    public String getLocationName(){
+    public String getLocationName() {
         return location.getName();
     }
 
-    public int getLocationX(){
+    public int getLocationX() {
         return location.getX();
     }
 
-    public float getLocationY(){
+    public float getLocationY() {
         return location.getY();
     }
 
-    public double getLocationZ(){
+    public double getLocationZ() {
         return location.getZ();
     }
 
@@ -141,16 +149,14 @@ public class Person implements Comparable<Person>, Serializable {
      */
     @Override
     public String toString() {
-        return "Person {" +
+        return "Person :" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", height=" + height +
                 ", weight=" + weight +
                 ", passportID='" + passportID + '\'' +
                 ", hairColor=" + hairColor +
-                ", creationDate=" + creationDate +
                 ", location=" + location +
-                ", coordinates=" + coordinates +
-                '}';
+                ", coordinates=" + coordinates;
     }
 }

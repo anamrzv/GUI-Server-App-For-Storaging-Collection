@@ -24,7 +24,7 @@ public class Controller {
         alert.showAndWait();
     }
 
-    protected void switchToWindow(String fxml, Button button){
+    protected void switchToWindow(String fxml, Button button) {
         button.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
@@ -40,11 +40,11 @@ public class Controller {
         stage.show();
     }
 
-    protected void translateLabel(Label label, String key, ClientHandler ch){
+    protected void translateLabel(Label label, String key, ClientHandler ch) {
         label.setText(ch.getCurrentBundle().getString(key));
     }
 
-    protected void translateButton(Button button, String key, ClientHandler ch){
+    protected void translateButton(Button button, String key, ClientHandler ch) {
         button.setText(ch.getCurrentBundle().getString(key));
     }
 }

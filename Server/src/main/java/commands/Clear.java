@@ -1,9 +1,9 @@
 package commands;
 
 import database.DataBaseManager;
+import other.CollectionsKeeper;
 import other.Person;
 import other.ServerResponse;
-import other.CollectionsKeeper;
 
 import java.util.LinkedList;
 import java.util.List;

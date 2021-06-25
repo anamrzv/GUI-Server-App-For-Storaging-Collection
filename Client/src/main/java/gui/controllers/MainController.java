@@ -1,10 +1,5 @@
 package gui.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,18 +9,17 @@ import newclient.ClientHandler;
 import other.Color;
 import other.Person;
 
+import java.io.IOException;
+import java.time.LocalDate;
+
 public class MainController extends Controller {
 
     private ClientHandler clientHandler;
 
-    private ObservableList<Person> observableList = FXCollections.observableArrayList();
+    private final ObservableList<Person> observableList = FXCollections.observableArrayList();
 
     @FXML
     private TableView<Person> peopleTable;
-    @FXML
-    private ResourceBundle resources;
-    @FXML
-    private URL location;
     @FXML
     private TableColumn<Person, String> nameColumn;
     @FXML
@@ -62,6 +56,8 @@ public class MainController extends Controller {
     private Button resetTableButton;
     @FXML
     private Button toMapButton;
+    @FXML
+    private Button exitButton;
 
     @FXML
     void initialize() {
@@ -71,22 +67,19 @@ public class MainController extends Controller {
         resetTableButton.setText(clientHandler.getCurrentBundle().getString("reset"));
         toMapButton.setText(clientHandler.getCurrentBundle().getString("map"));
         toCommandsButton.setText(clientHandler.getCurrentBundle().getString("to commands list"));
-        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user")+clientHandler.getLogin());
+        exitButton.setText(clientHandler.getEncodedBundleString("exit"));
+        userInfoLable.setText(clientHandler.getCurrentBundle().getString("user") + clientHandler.getLogin());
 
         fillTable();
         peopleTable.setEditable(true);
 
-        toCommandsButton.setOnAction(event -> {
-            switchToWindow("/commands.fxml", toCommandsButton);
-        });
+        exitButton.setOnAction(event -> switchToWindow("/start.fxml", exitButton));
 
-        toFilterButton.setOnAction(event -> {
-            switchToWindow("/filter.fxml", toFilterButton);
-        });
+        toCommandsButton.setOnAction(event -> switchToWindow("/commands.fxml", toCommandsButton));
 
-        toMapButton.setOnAction(event->{
-            switchToWindow("/map.fxml", toMapButton);
-        });
+        toFilterButton.setOnAction(event -> switchToWindow("/filter.fxml", toFilterButton));
+
+        toMapButton.setOnAction(event -> switchToWindow("/map.fxml", toMapButton));
 
         resetTableButton.setOnAction(event -> {
             clientHandler.sendCommand("show");

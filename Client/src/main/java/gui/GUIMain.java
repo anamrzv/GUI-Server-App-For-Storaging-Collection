@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import newclient.ClientHandler;
 
 public class GUIMain extends Application {
 
@@ -17,7 +16,7 @@ public class GUIMain extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/start.fxml"));
         primaryStage.setTitle("Authorisation");
         primaryStage.setResizable(false);

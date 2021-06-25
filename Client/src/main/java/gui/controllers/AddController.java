@@ -1,8 +1,5 @@
 package gui.controllers;
 
-import java.io.IOException;
-import java.util.*;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,8 +8,9 @@ import javafx.scene.control.*;
 import newclient.ClientHandler;
 import newclient.Creation;
 import other.Location;
-import other.Person;
 import other.ServerResponse;
+
+import java.io.IOException;
 
 public class AddController extends Controller {
 
@@ -97,15 +95,6 @@ public class AddController extends Controller {
     private Label locnameL;
 
     @FXML
-    private Label locxL;
-
-    @FXML
-    private Label locyL;
-
-    @FXML
-    private Label locZL;
-
-    @FXML
     private ComboBox<String> kindOfAddBox;
 
     @FXML
@@ -123,10 +112,7 @@ public class AddController extends Controller {
     @FXML
     private Button toTableButton;
 
-
-    private Map<Integer, Location> readyLocations = new HashMap<>();
-
-    private ObservableList<String> locations = FXCollections.observableArrayList();
+    private final ObservableList<String> locations = FXCollections.observableArrayList();
 
     @FXML
     void initialize() throws IOException {
@@ -163,17 +149,11 @@ public class AddController extends Controller {
         createLocationsList();
         locationField.setItems(locations);
 
-        toMapButton.setOnAction(event -> {
-            switchToWindow("/map.fxml", toMapButton);
-        });
+        toMapButton.setOnAction(event -> switchToWindow("/map.fxml", toMapButton));
 
-        toTableButton.setOnAction(event -> {
-            switchToWindow("/main.fxml", toTableButton);
-        });
+        toTableButton.setOnAction(event -> switchToWindow("/main.fxml", toTableButton));
 
-        toCommandsButton.setOnAction(event -> {
-            switchToWindow("/commands.fxml", toCommandsButton);
-        });
+        toCommandsButton.setOnAction(event -> switchToWindow("/commands.fxml", toCommandsButton));
 
         readyButton.setOnAction(event -> {
             ServerResponse response = readFromWindow();
@@ -182,9 +162,12 @@ public class AddController extends Controller {
             else {
                 clientHandler.setPerson(response.getPersonList().get(0));
                 String commandName = "";
-                if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("simple add"))) commandName = "add";
-                else if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("add if max"))) commandName = "add_if_max";
-                else if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("add if min"))) commandName = "add_if_min";
+                if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("simple add")))
+                    commandName = "add";
+                else if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("add if max")))
+                    commandName = "add_if_max";
+                else if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("add if min")))
+                    commandName = "add_if_min";
                 clientHandler.sendCommand(commandName);
                 ServerResponse answer = null;
                 while (answer == null) {
@@ -202,7 +185,8 @@ public class AddController extends Controller {
                         e.printStackTrace();
                     }
                     showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
-                } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(answer.getError()), "");
+                } else
+                    showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(answer.getError()), "");
             }
         });
 
@@ -222,26 +206,12 @@ public class AddController extends Controller {
         String yLoc = yLocationField.getText().trim();
         String zLoc = zLocationY.getText().trim();
         Creation creation = new Creation(name, height, weight, passport, hair, x, y, location, nameLoc, xLoc, yLoc, zLoc);
-        return creation.createNewPerson(readyLocations);
+        return creation.createNewPerson(clientHandler.getReadyLocations());
     }
 
-    private void createLocationsList() throws IOException {
-        List<Person> readyPeople = clientHandler.getPeople();
-        boolean alreadyLocation = false;
-        for (Person p : readyPeople) {
-            Location currentLocation = p.getLocation();
-            for (Location l : readyLocations.values()) {
-                if (currentLocation.equals(l)) {
-                    alreadyLocation = true;
-                    break;
-                }
-            }
-            if (!alreadyLocation) {
-                readyLocations.put(readyLocations.size() + 1, currentLocation);
-                alreadyLocation = false;
-            }
-        }
-        for (Location l : readyLocations.values()) {
+    private void createLocationsList() {
+        locations.clear();
+        for (Location l : clientHandler.getReadyLocations().values()) {
             locations.add(l.getName());
         }
         locations.add(clientHandler.getEncodedBundleString("new location"));

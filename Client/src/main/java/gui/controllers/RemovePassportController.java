@@ -1,10 +1,5 @@
 package gui.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -14,15 +9,13 @@ import javafx.scene.control.TextField;
 import newclient.ClientHandler;
 import other.ServerResponse;
 
-public class RemovePassportController extends Controller{
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
+public class RemovePassportController extends Controller {
 
     private ClientHandler clientHandler;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField passportIDField;
@@ -54,11 +47,11 @@ public class RemovePassportController extends Controller{
         translateLabel(label, "input passport", clientHandler);
         translateLabel(labelTwo, "rules of remove passport", clientHandler);
         passportIDField.setPromptText(clientHandler.getEncodedBundleString("num of passport"));
-        translateButton(readyButton,"ready",clientHandler);
+        translateButton(readyButton, "ready", clientHandler);
         label.setAlignment(Pos.CENTER);
         labelTwo.setAlignment(Pos.CENTER);
 
-        readyButton.setOnAction(event->{
+        readyButton.setOnAction(event -> {
             String passportID = passportIDField.getText().trim();
             List<String> args = new LinkedList<>();
             args.add(passportID);
@@ -80,17 +73,14 @@ public class RemovePassportController extends Controller{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("removePass") , clientHandler.getEncodedBundleString(answer.getMessage()) , "");
-            } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("removePass"), clientHandler.getEncodedBundleString(answer.getError()) , "");
+                showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("removePass"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
+            } else
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("removePass"), clientHandler.getEncodedBundleString(answer.getError()), "");
         });
 
-        toMapButton.setOnAction(event->{
-            switchToWindow("/map.fxml", toMapButton);
-        });
+        toMapButton.setOnAction(event -> switchToWindow("/map.fxml", toMapButton));
 
-        toCommandsButton.setOnAction(event->{
-            switchToWindow("/commands.fxml", toCommandsButton);
-        });
+        toCommandsButton.setOnAction(event -> switchToWindow("/commands.fxml", toCommandsButton));
 
     }
 }

@@ -1,12 +1,12 @@
 package newclient;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 import lombok.Setter;
+import other.Location;
 import other.Message;
 import other.Person;
 import other.ServerResponse;
@@ -19,9 +19,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 @Setter
 @Getter
@@ -40,6 +38,7 @@ public class ClientHandler {
     private List<Person> people;
     private List<String> commandArguments;
     private Person person;
+    private Map<Integer, Location> readyLocations = new HashMap<>();
 
     private long idForUpdate;
     private boolean idIsSet = false;
@@ -95,6 +94,7 @@ public class ClientHandler {
             System.exit(-1);
         } catch (Exception e) {
             System.out.println("Ошибка при создании сокета");
+            e.printStackTrace();
         }
     }
 
@@ -107,7 +107,7 @@ public class ClientHandler {
             commandArguments.add(0, password);
             commandArguments.add(0, login);
             message.setCommandArgs(commandArguments);
-            if (commandName.equals("add")||commandName.equals("add_if_max")||commandName.equals("add_if_min")||commandName.equals("update")){
+            if (commandName.equals("add") || commandName.equals("add_if_max") || commandName.equals("add_if_min") || commandName.equals("update")) {
                 message.setPerson(person);
             }
             try {
@@ -115,10 +115,9 @@ public class ClientHandler {
                 out.flush();
                 commandArguments = null;
                 person = null;
-            } catch (JsonProcessingException e) {
-                System.out.println("Ошибка при обработке запроса");
             } catch (IOException e) {
                 System.out.println("Ошибка при обработке запроса");
+                e.printStackTrace();
             }
 
         }
@@ -129,25 +128,37 @@ public class ClientHandler {
         buffer.clear();
         int serverAnswer = in.read(buffer.array());
         if (serverAnswer > 0) {
-            ServerResponse sr = OBJECT_MAPPER.readValue(buffer.array(), ServerResponse.class);
-            return sr;
+            return OBJECT_MAPPER.readValue(buffer.array(), ServerResponse.class);
         }
         buffer.flip();
         return null;
     }
 
-    public String getPeopleAnswer() throws IOException {
+    public void getPeopleAnswer() throws IOException {
         ByteBuffer buffer = ByteBuffer.allocate(5120);
-        int serverAnswer = 0;
+        int serverAnswer;
         do {
             buffer.clear();
             serverAnswer = in.read(buffer.array());
             if (serverAnswer > 0) {
                 ServerResponse sr = OBJECT_MAPPER.readValue(buffer.array(), ServerResponse.class);
                 people = sr.getPersonList();
+                boolean alreadyLocation = false;
+                for (Person p : people) {
+                    Location currentLocation = p.getLocation();
+                    for (Location l : readyLocations.values()) {
+                        if (currentLocation.equals(l)) {
+                            alreadyLocation = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyLocation) {
+                        readyLocations.put(readyLocations.size() + 1, currentLocation);
+                    }
+                    alreadyLocation = false;
+                }
             }
         } while (serverAnswer <= 0);
-        return null;
     }
 
     public String getEncodedBundleString(String key) {

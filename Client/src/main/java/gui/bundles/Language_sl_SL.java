@@ -23,6 +23,7 @@ public class Language_sl_SL extends ListResourceBundle {
             {"to commands list", "Do zoznamu prikazov"},
             {"user", "Pouzivatel: "},
             {"map", "Mapa"},
+            {"exit", "Edek"},
 
             //commands buttons
             {"add", "Pridať k"},
@@ -42,86 +43,86 @@ public class Language_sl_SL extends ListResourceBundle {
             {"otherLabel", "Ostatné príkazy"},
 
             //add
-            {"firstLabel","Zadajte podrobnosti osoby"},
-            {"secondLabel","Povinné polia sú označené hviezdičkami"},
-            {"thirdLabel","Ak ste sa rozhodli pridať"},
-            {"fourthLabel","nové umiestnenie"},
-            {"fifthLabel","Pridajte typ:"},
-            {"name","Názov*:"},
-            {"height","Výška:"},
-            {"weight","Váha: "},
-            {"passport","Cestovný pas*:"},
-            {"hair","Vlasy*:"},
-            {"x","Koord. X*:"},
-            {"y","Koord. Y*:"},
-            {"location","Poloha*:"},
-            {"title","Názov:"},
-            {"simple add","Jednoduché doplnenie"},
-            {"add if max","Pridajte, ak je maximum"},
+            {"firstLabel", "Zadajte podrobnosti osoby"},
+            {"secondLabel", "Povinné polia sú označené hviezdičkami"},
+            {"thirdLabel", "Ak ste sa rozhodli pridať"},
+            {"fourthLabel", "nové umiestnenie"},
+            {"fifthLabel", "Pridajte typ:"},
+            {"name", "Názov*:"},
+            {"height", "Výška:"},
+            {"weight", "Váha: "},
+            {"passport", "Cestovný pas*:"},
+            {"hair", "Vlasy*:"},
+            {"x", "Koord. X*:"},
+            {"y", "Koord. Y*:"},
+            {"location", "Poloha*:"},
+            {"title", "Názov:"},
+            {"simple add", "Jednoduché doplnenie"},
+            {"add if max", "Pridajte, ak je maximum"},
             {"add if min", "Pridajte, ak je minimum"},
             {"create", "Vytvor"},
 
             //count less than passport
-            {"input passport","Zadajte číslo pasu."},
-            {"rules of count","Počítajú sa všetky osoby s číslom pasu nižším ako je uvedené."},
-            {"num of passport","Číslo pasu"},
-            {"ready","Hotový"},
+            {"input passport", "Zadajte číslo pasu."},
+            {"rules of count", "Počítajú sa všetky osoby s číslom pasu nižším ako je uvedené."},
+            {"num of passport", "Číslo pasu"},
+            {"ready", "Hotový"},
 
             //filter
-            {"set up filter","Nainštalujte filter:"},
-            {"less","Menej"},
-            {"more","Viac"},
-            {"argument","Argument"},
+            {"set up filter", "Nainštalujte filter:"},
+            {"less", "Menej"},
+            {"more", "Viac"},
+            {"argument", "Argument"},
 
             //remove
-            {"input id","Zadajte ID."},
-            {"rules of remove","Osoba s daným ID bude odstránená."},
+            {"input id", "Zadajte ID."},
+            {"rules of remove", "Osoba s daným ID bude odstránená."},
             {"rules of remove passport", "Všetci ľudia s daným číslom pasu budú odstránení."},
 
             //script
-            {"script rules","Zadajte cestu k súboru skriptu."},
-            {"execute","Vykonať"},
+            {"script rules", "Zadajte cestu k súboru skriptu."},
+            {"execute", "Vykonať"},
 
             //update
-            {"update rules","Aktualizujte požadované polia."},
-            {"fifth label update","ID (po zadaní stlačte kláves Enter):"},
+            {"update rules", "Aktualizujte požadované polia."},
+            {"fifth label update", "ID (po zadaní stlačte kláves Enter):"},
 
             //title for alerts
-            {"new location","Nové umiestnenie"},
-            {"create new person","Pridáva sa nová osoba"},
-            {"update person","Aktualizácia objektu"},
-            {"signin","Prihlásiť sa"},
+            {"new location", "Nové umiestnenie"},
+            {"create new person", "Pridáva sa nová osoba"},
+            {"update person", "Aktualizácia objektu"},
+            {"signin", "Prihlásiť sa"},
 
             //alerts add and update
-            {"success add","Objekt bol úspešne pridaný"},
-            {"add error","Chyba pri pridávaní objektu do databázy"},
-            {"name error empty","Do tohto poľa nemôžete zadať prázdny riadok, zadajte podrobnosti."},
-            {"name error validate","Meno nesmie obsahovať čísla a špeciálne znaky. Skontrolujte, či v zadanom riadku chýbajú, a zadajte meno znova."},
-            {"name error input","Neplatný vstupný formát, znova zadajte názov."},
-            {"height error number","Výška nemôže byť menšia ako nula, zadajte výšku znova."},
-            {"height error input","Nesprávny formát na zadanie výšky, zadanie čísla alebo nič."},
-            {"weight error number","Hmotnosť nemôže byť menšia ako nula, zadajte hmotnosť znova."},
-            {"weight error input","Neplatný formát zadávania hmotnosti, zadajte číslo alebo nič nezadávajte."},
-            {"passport error empty","Pas nemôže byť prázdny, zadajte údaje."},
-            {"passport error length","Údaje z pasu sa nezmestia do dĺžky, zadajte údaje znova (10 - 27 číslic)."},
-            {"passport error validate","Údaje z pasu by sa mali skladať iba z čísel, údaje zadajte znova."},
-            {"passport error input","Neplatný vstupný formát, znova zadajte údaje z pasu."},
-            {"hair error empty","Vyberte si farbu vlasov, toto je povinné pole."},
-            {"hair error input","Skúste znova zadať farbu vlasov."},
-            {"location error empty","Musia byť vyplnené všetky súradnice nového miesta, zadajte čísla."},
-            {"location error input","Neplatný vstupný formát. Znova zadajte súradnice miesta. Skontrolujte, či v zadanom reťazci nie sú žiadne písmená."},
-            {"coordinates error empty","Musia byť vyplnené všetky súradnice osôb, zadajte čísla."},
-            {"coordinates error input","Neplatný vstupný formát. Znova zadajte súradnice osoby. Skontrolujte, či v zadanom reťazci nie sú žiadne písmená."},
+            {"success add", "Objekt bol úspešne pridaný"},
+            {"add error", "Chyba pri pridávaní objektu do databázy"},
+            {"name error empty", "Do tohto poľa nemôžete zadať prázdny riadok, zadajte podrobnosti."},
+            {"name error validate", "Meno nesmie obsahovať čísla a špeciálne znaky. Skontrolujte, či v zadanom riadku chýbajú, a zadajte meno znova."},
+            {"name error input", "Neplatný vstupný formát, znova zadajte názov."},
+            {"height error number", "Výška nemôže byť menšia ako nula, zadajte výšku znova."},
+            {"height error input", "Nesprávny formát na zadanie výšky, zadanie čísla alebo nič."},
+            {"weight error number", "Hmotnosť nemôže byť menšia ako nula, zadajte hmotnosť znova."},
+            {"weight error input", "Neplatný formát zadávania hmotnosti, zadajte číslo alebo nič nezadávajte."},
+            {"passport error empty", "Pas nemôže byť prázdny, zadajte údaje."},
+            {"passport error length", "Údaje z pasu sa nezmestia do dĺžky, zadajte údaje znova (10 - 27 číslic)."},
+            {"passport error validate", "Údaje z pasu by sa mali skladať iba z čísel, údaje zadajte znova."},
+            {"passport error input", "Neplatný vstupný formát, znova zadajte údaje z pasu."},
+            {"hair error empty", "Vyberte si farbu vlasov, toto je povinné pole."},
+            {"hair error input", "Skúste znova zadať farbu vlasov."},
+            {"location error empty", "Musia byť vyplnené všetky súradnice nového miesta, zadajte čísla."},
+            {"location error input", "Neplatný vstupný formát. Znova zadajte súradnice miesta. Skontrolujte, či v zadanom reťazci nie sú žiadne písmená."},
+            {"coordinates error empty", "Musia byť vyplnené všetky súradnice osôb, zadajte čísla."},
+            {"coordinates error input", "Neplatný vstupný formát. Znova zadajte súradnice osoby. Skontrolujte, či v zadanom reťazci nie sú žiadne písmená."},
             {"creator error", "Objekt nie je možné aktualizovať, pretože nie ste jeho tvorcom."},
-            {"success update","Objekt bol úspešne obnoviť"},
+            {"success update", "Objekt bol úspešne obnoviť"},
 
             //alerts login and sign in
-            {"login error short","Prihlásenie je príliš krátke"},
-            {"password error short","Zadali ste príliš krátke heslo"},
-            {"password error validate","Heslo obsahuje neplatné znaky"},
-            {"log in error","Zadali ste nesprávne používateľské meno alebo heslo. Opakujte prihlásenie"},
-            {"success register","Ste úspešne zaregistrovaní."},
-            {"register error","Nie je možné vás zaregistrovať, takéto prihlásenie už existuje."},
+            {"login error short", "Prihlásenie je príliš krátke"},
+            {"password error short", "Zadali ste príliš krátke heslo"},
+            {"password error validate", "Heslo obsahuje neplatné znaky"},
+            {"log in error", "Zadali ste nesprávne používateľské meno alebo heslo. Opakujte prihlásenie"},
+            {"success register", "Ste úspešne zaregistrovaní."},
+            {"register error", "Nie je možné vás zaregistrovať, takéto prihlásenie už existuje."},
 
             //alerts script
             {"script error special file", "Špeciálny súbor nie je možné odovzdať ako skript. Zadajte príkaz znova s novým argumentom."},
@@ -160,7 +161,7 @@ public class Language_sl_SL extends ListResourceBundle {
             {"info answer", "Typ položky: Osoba\nTyp zbierky: LinkedList\nPočet položiek: "},
 
             //help
-            {"help answer","Príkazy, ktoré máte k dispozícii:\n" +
+            {"help answer", "Príkazy, ktoré máte k dispozícii:\n" +
                     "Pridať: pridať novú položku do zbierky\n" +
                     "Pridať, ak menej: pridať novú položku do zbierky, ak je jej ID menšie ako najmenšie ID tejto zbierky\n" +
                     "Skript: načíta a vykoná skript zo zadaného súboru (nahraďte názov_súboru cestou k súboru). Skript obsahuje príkazy v rovnakom tvare, v akom sú zadávané v interaktívnom režime.\n" +

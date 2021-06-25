@@ -1,32 +1,18 @@
 package gui.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import gui.GUIMain;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import newclient.ClientHandler;
 import other.ServerResponse;
+
+import java.io.IOException;
 
 public class CommandButtonsController extends Controller {
 
     private ClientHandler clientHandler;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private Button addButton;
@@ -105,57 +91,31 @@ public class CommandButtonsController extends Controller {
         otherLabel.setAlignment(Pos.CENTER);
 
 
-        helpButton.setOnAction(event -> {
-            getResultByClientHandler("help");
-        });
+        helpButton.setOnAction(event -> getResultByClientHandler("help"));
 
-        infoButton.setOnAction(event -> {
-            getResultByClientHandler("info");
-        });
+        infoButton.setOnAction(event -> getResultByClientHandler("info"));
 
-        weightButton.setOnAction(event -> {
-            getResultByClientHandler("sum_of_weight");
-        });
+        weightButton.setOnAction(event -> getResultByClientHandler("sum_of_weight"));
 
-        headButton.setOnAction(event -> {
-            getResultByClientHandler("head");
-        });
+        headButton.setOnAction(event -> getResultByClientHandler("head"));
 
-        removePassportButton.setOnAction(event -> {
-            switchToWindow("/remove_passport.fxml", removePassportButton);
-        });
+        removePassportButton.setOnAction(event -> switchToWindow("/remove_passport.fxml", removePassportButton));
 
-        toTableButton.setOnAction(event -> {
-            switchToWindow("/main.fxml", toTableButton);
-        });
+        toTableButton.setOnAction(event -> switchToWindow("/main.fxml", toTableButton));
 
-        countPassportButton.setOnAction(event -> {
-            switchToWindow("/count_passport.fxml", countPassportButton);
-        });
+        countPassportButton.setOnAction(event -> switchToWindow("/count_passport.fxml", countPassportButton));
 
-        removeIdButton.setOnAction(event -> {
-            switchToWindow("/remove_id.fxml", removeIdButton);
-        });
+        removeIdButton.setOnAction(event -> switchToWindow("/remove_id.fxml", removeIdButton));
 
-        clearButton.setOnAction(event -> {
-            getResultByClientHandler("clear");
-        });
+        clearButton.setOnAction(event -> getResultByClientHandler("clear"));
 
-        addButton.setOnAction(event -> {
-            switchToWindow("/add.fxml", addButton);
-        });
+        addButton.setOnAction(event -> switchToWindow("/add.fxml", addButton));
 
-        updateButton.setOnAction(event -> {
-            switchToWindow("/update.fxml", updateButton);
-        });
+        updateButton.setOnAction(event -> switchToWindow("/update.fxml", updateButton));
 
-        scriptButton.setOnAction(event -> {
-            switchToWindow("/script.fxml", scriptButton);
-        });
+        scriptButton.setOnAction(event -> switchToWindow("/script.fxml", scriptButton));
 
-        mapButton.setOnAction(event -> {
-            switchToWindow("/map.fxml", mapButton);
-        });
+        mapButton.setOnAction(event -> switchToWindow("/map.fxml", mapButton));
     }
 
     private void getResultByClientHandler(String commandName) {
@@ -169,11 +129,24 @@ public class CommandButtonsController extends Controller {
             }
         }
         if (answer.getError() == null) {
-            if (answer.getCommand().equals("sum_of_weight")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("weightSum") , answer.getMessage()+" "+clientHandler.getEncodedBundleString("weight answer"), "");
-            else if (answer.getCommand().equals("head")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , clientHandler.getEncodedBundleString("head answer")+answer.getMessage(), "");
-            else if (answer.getCommand().equals("info")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , clientHandler.getEncodedBundleString("info answer")+answer.getMessage(), "");
-            else if (answer.getCommand().equals("help")) showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , clientHandler.getEncodedBundleString("help answer"), "");
-            else showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName) , answer.getMessage(), "");
-        } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString(commandName), clientHandler.getEncodedBundleString(answer.getError()), "");
+            switch (answer.getCommand()) {
+                case "sum_of_weight":
+                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("weightSum"), answer.getMessage() + " " + clientHandler.getEncodedBundleString("weight answer"), "");
+                    break;
+                case "head":
+                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName), clientHandler.getEncodedBundleString("head answer") + answer.getMessage(), "");
+                    break;
+                case "info":
+                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName), clientHandler.getEncodedBundleString("info answer") + answer.getMessage(), "");
+                    break;
+                case "help":
+                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName), clientHandler.getEncodedBundleString("help answer"), "");
+                    break;
+                default:
+                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName), answer.getMessage(), "");
+                    break;
+            }
+        } else
+            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString(commandName), clientHandler.getEncodedBundleString(answer.getError()), "");
     }
 }

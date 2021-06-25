@@ -1,32 +1,18 @@
 package gui.controllers;
 
+import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import newclient.ClientHandler;
+import other.ServerResponse;
+
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import gui.GUIMain;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
-import newclient.ClientHandler;
-import other.Message;
-import other.ServerResponse;
 
 public class SignController extends Controller {
 
     private ClientHandler clientHandler;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField newLogin;
@@ -64,18 +50,16 @@ public class SignController extends Controller {
             registerUser(login, password);
         });
 
-        toLoginButton.setOnAction(event -> {
-            switchToWindow("/start.fxml", toLoginButton);
-        });
+        toLoginButton.setOnAction(event -> switchToWindow("/start.fxml", toLoginButton));
     }
 
     private void registerUser(String login, String password) {
         if (login.length() < 4) {
-            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "login error short"), "");
+            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString("login error short"), "");
         } else {
             clientHandler.setLogin(login);
             if (password.length() < 3 && password.length() > 0)
-                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "password error short"), "");
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString("password error short"), "");
             else if (password.length() != 0) {
                 Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{3,}");
                 Matcher matcher = pattern.matcher(password);
@@ -83,7 +67,7 @@ public class SignController extends Controller {
                     clientHandler.setPassword(password);
                     clientHandler.sendCommand("register");
                 } else
-                    showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "password error validate"), "");
+                    showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString("password error validate"), "");
             } else {
                 clientHandler.setPassword(password);
                 clientHandler.sendCommand("register");
@@ -98,10 +82,10 @@ public class SignController extends Controller {
             }
         }
         if (answer.getError() == null) {
-            showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "success register"), "");
+            showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString("success register"), "");
             switchToWindow("/start.fxml", newSignButton);
         } else {
-            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString( "register error"), "");
+            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString("register error"), "");
         }
     }
 

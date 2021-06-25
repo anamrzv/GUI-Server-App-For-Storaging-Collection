@@ -31,9 +31,9 @@ public class SumOfWeight extends Command {
      */
     @Override
     public ServerResponse execute(List<String> args) {
-        if (args.size()==2) {
+        if (args.size() == 2) {
             LinkedList<Person> people = dc.getPeople();
-            people.forEach(x-> sum+=x.getWeight());
+            people.forEach(x -> sum += x.getWeight());
             return ServerResponse.builder().message(Long.toString(sum)).command("sum_of_weight").build();
         } else {
             return ServerResponse.builder().error("error").command("sum_of_weight").build();

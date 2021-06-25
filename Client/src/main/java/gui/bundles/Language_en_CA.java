@@ -23,6 +23,7 @@ public class Language_en_CA extends ListResourceBundle {
             {"to commands list", "To commands"},
             {"user", "User: "},
             {"map", "Map"},
+            {"exit", "Exit"},
 
             //commands buttons
             {"add", "Add"},

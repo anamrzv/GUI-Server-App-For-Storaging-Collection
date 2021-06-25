@@ -62,8 +62,7 @@ public class RemoveByPass extends Command {
                     } else if (result == -1) {
                         people.remove(person);
                         unsuccess++;
-                    }
-                    else {
+                    } else {
                         people.remove(person);
                         noAcces++;
                     }
@@ -74,9 +73,9 @@ public class RemoveByPass extends Command {
             people.addAll(newCollection);
             if (count != 0 && unsuccess == 0 && noAcces == 0)
                 return ServerResponse.builder().message("passport remove success").command("remove_by_passport_id").build();
-            else if (count == 0 && unsuccess == 0 && noAcces ==0)
+            else if (count == 0 && unsuccess == 0 && noAcces == 0)
                 return ServerResponse.builder().message("passport no id").command("remove_by_passport_id").build();
-            else if (count!=0 && unsuccess != 0)
+            else if (count != 0 && unsuccess != 0)
                 return ServerResponse.builder().message("passport not remove from db").command("remove_by_passport_id").build();
             else
                 return ServerResponse.builder().error("passport remove error").command("remove_by_passport_id").build();

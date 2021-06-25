@@ -1,7 +1,6 @@
 package database;
 
 import other.*;
-import other.CollectionsKeeper;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,7 +9,6 @@ import java.security.SecureRandom;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.sql.DriverManager;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 

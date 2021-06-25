@@ -169,10 +169,10 @@ public class ServerConnection {
                                 }
                             }
                             log.info("Got {}", OBJECT_MAPPER.readValue(buffer.array(), Message.class));
-                            System.out.println("Got "+OBJECT_MAPPER.readValue(buffer.array(), Message.class));
+                            System.out.println("Got " + OBJECT_MAPPER.readValue(buffer.array(), Message.class));
                             ServerResponse serverResponse = future.get();
                             sChannel.write(ByteBuffer.wrap(OBJECT_MAPPER.writeValueAsBytes(serverResponse)));
-                            log.info("Answer sent {}"+serverResponse);
+                            log.info("Answer sent {}" + serverResponse);
                             if (serverResponse.getMessage() != null && serverResponse.getMessage().equals("Disconnected successfully")) {
                                 log.info("Client {} disconnected", sChannel.getRemoteAddress());
                                 System.out.println("Клиент " + sChannel.getRemoteAddress() + " отсоединен");

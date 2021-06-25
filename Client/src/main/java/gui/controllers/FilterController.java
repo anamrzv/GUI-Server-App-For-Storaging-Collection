@@ -1,14 +1,5 @@
 package gui.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,15 +8,15 @@ import javafx.scene.control.*;
 import newclient.ClientHandler;
 import other.Person;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class FilterController extends Controller {
 
     private ClientHandler clientHandler;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField argumentField;
@@ -70,25 +61,15 @@ public class FilterController extends Controller {
         ObservableList<String> options = FXCollections.observableArrayList("Name", "Height", "Weight", "Passport", "Hair Color", "Location", "Loc. X", "Loc. Y", "Loc. Z", "Coord. X", "Coord. Y", "Date", "ID");
         kindOfFieldBox.setItems(options);
 
-        moreButton.setOnAction(event -> {
-            sort("more");
-        });
+        moreButton.setOnAction(event -> sort("more"));
 
-        lessButton.setOnAction(event -> {
-            sort("less");
-        });
+        lessButton.setOnAction(event -> sort("less"));
 
-        toMapButton.setOnAction(event -> {
-            switchToWindow("/map.fxml", toMapButton);
-        });
+        toMapButton.setOnAction(event -> switchToWindow("/map.fxml", toMapButton));
 
-        toCommandsButton.setOnAction(event -> {
-            switchToWindow("/commands.fxml", toCommandsButton);
-        });
+        toCommandsButton.setOnAction(event -> switchToWindow("/commands.fxml", toCommandsButton));
 
-        toTableButton.setOnAction(event -> {
-            switchToWindow("/main.fxml", toTableButton);
-        });
+        toTableButton.setOnAction(event -> switchToWindow("/main.fxml", toTableButton));
     }
 
     private void sort(String method) {
@@ -99,16 +80,16 @@ public class FilterController extends Controller {
         Long numberArgument = null;
         LocalDate dateArgument = null;
         if (!column.equals("Name") && !column.equals("Hair Color") && !column.equals("Location") && !column.equals("Date")) {
-            try{
+            try {
                 numberArgument = Long.parseLong(argument);
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 showAlert(Alert.AlertType.ERROR, "Filter", "Неправильный ввод числв. Убедитесь, что вы ввели число, а не буквы/слово", "");
             }
         } else if (column.equals("Date")) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
             try {
                 dateArgument = LocalDate.parse(argument, formatter);
-            } catch (DateTimeParseException e){
+            } catch (DateTimeParseException e) {
                 showAlert(Alert.AlertType.ERROR, "Filter", "Неправильный ввод даты. Введите дату в формате dd/mm/yyyy", "");
             }
         }
@@ -125,7 +106,7 @@ public class FilterController extends Controller {
             filteredPeople = toFilterPeople.stream()
                     .filter(x -> x.getLocationName().compareTo(argument) >= 0)
                     .collect(Collectors.toList());
-        } else if (dateArgument != null && column.equals("Date")) {
+        } else if (dateArgument != null) {
             LocalDate finalDateArgument = dateArgument;
             filteredPeople = toFilterPeople.stream()
                     .filter(x -> x.getCreationDate().compareTo(finalDateArgument) >= 0)
@@ -133,13 +114,11 @@ public class FilterController extends Controller {
         } else if (column.equals("Height")) {
             Long finalNumberArgument = numberArgument;
             filteredPeople = toFilterPeople.stream()
-                    .filter(x -> (Long) x.getHeight() != null)
                     .filter(x -> x.getHeight() >= finalNumberArgument)
                     .collect(Collectors.toList());
         } else if (column.equals("Weight")) {
             Long finalNumberArgument = numberArgument;
             filteredPeople = toFilterPeople.stream()
-                    .filter(x -> (Long) x.getWeight() != null)
                     .filter(x -> x.getWeight() >= finalNumberArgument)
                     .collect(Collectors.toList());
         } else if (column.equals("Passport")) {

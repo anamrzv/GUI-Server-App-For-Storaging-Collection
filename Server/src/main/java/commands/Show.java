@@ -2,7 +2,6 @@ package commands;
 
 import other.CollectionsKeeper;
 import other.Person;
-import other.PersonSizeComparator;
 import other.ServerResponse;
 
 import java.util.Comparator;

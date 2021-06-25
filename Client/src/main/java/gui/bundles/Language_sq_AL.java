@@ -23,6 +23,7 @@ public class Language_sq_AL extends ListResourceBundle {
             {"to commands list", "Ne listen e komandave"},
             {"user", "Perdorues: "},
             {"map", "Harta"},
+            {"Exit", "Ejolk"},
 
             //commands buttons
             {"add", "Shtoni në"},
@@ -79,49 +80,49 @@ public class Language_sq_AL extends ListResourceBundle {
             {"rules of remove passport", "Të gjithë njerëzit me numrin e dhënë të pasaportës do të fshihen."},
 
             //script
-            {"script rules","Futni shtegun për te skedari i skriptit."},
-            {"execute","Ekzekutuar"},
+            {"script rules", "Futni shtegun për te skedari i skriptit."},
+            {"execute", "Ekzekutuar"},
 
             //update
-            {"update rules","Përditësoni fushat që ju nevojiten."},
-            {"fifth label update","ID (pasi të futni, shtypni Enter):"},
+            {"update rules", "Përditësoni fushat që ju nevojiten."},
+            {"fifth label update", "ID (pasi të futni, shtypni Enter):"},
 
             //title for alerts
-            {"new location","Vendndodhje e re"},
-            {"create new person","Shtimi i një personi të ri"},
-            {"update person","Azhurnimi i objektit"},
-            {"signin","Kontrolloni"},
+            {"new location", "Vendndodhje e re"},
+            {"create new person", "Shtimi i një personi të ri"},
+            {"update person", "Azhurnimi i objektit"},
+            {"signin", "Kontrolloni"},
 
             //alerts add and update
-            {"success add","Objekti u shtua me sukses"},
-            {"add error","Gabim në shtimin e objektit në bazën e të dhënave"},
-            {"name error empty","Ju nuk mund të vendosni një vijë të zbrazët në këtë fushë, ju lutemi shkruani detajet."},
-            {"name error validate","Emri nuk mund të përmbajë numra ose karaktere speciale. Kontrolloni që ato mungojnë në rreshtin e futur dhe futni përsëri emrin."},
-            {"name error input","Formati i hyrjes është i pavlefshëm, futni emrin përsëri."},
-            {"height error number","Lartësia nuk mund të jetë më pak se zero, ju lutemi shkruani lartësinë përsëri."},
-            {"height error input","Format i gabuar për futjen e lartësisë, futni një numër ose mos futni asgjë."},
-            {"weight error number","Pesha nuk mund të jetë më pak se zero, ju lutemi futni përsëri peshën."},
-            {"weight error input","Format i pavlefshëm i hyrjes në peshë, futni një numër ose mos futni asgjë."},
-            {"passport error empty","Pasaporta nuk mund të jetë bosh, ju lutemi shkruani të dhëna."},
-            {"passport error length","Të dhënat e pasaportës nuk përshtaten në gjatësi, futni përsëri të dhënat (10-27 shifra)."},
-            {"passport error validate","Të dhënat e pasaportës duhet të përbëhen vetëm nga numra, futni përsëri të dhënat."},
-            {"passport error input","Format i pavlefshëm i hyrjes, futni përsëri të dhënat e pasaportës tuaj."},
-            {"hair error empty","Zgjidhni ngjyrën e flokëve, kjo është një fushë e kërkuar."},
-            {"hair error input","Provoni të futni përsëri ngjyrën e flokëve tuaj."},
-            {"location error empty","Të gjitha koordinatat e vendndodhjes së re duhet të plotësohen, ju lutemi shkruani numrat."},
-            {"location error input","Format i pavlefshëm i hyrjes, futni përsëri koordinatat e vendit. Kontrolloni që të mos ketë shkronja në vargun e futur."},
-            {"coordinates error empty","Të gjitha koordinatat e personave duhet të plotësohen, ju lutemi shkruani numrat."},
-            {"coordinates error input","Format i pavlefshëm i hyrjes, futni përsëri koordinatat e personit. Kontrolloni që të mos ketë shkronja në vargun e futur."},
+            {"success add", "Objekti u shtua me sukses"},
+            {"add error", "Gabim në shtimin e objektit në bazën e të dhënave"},
+            {"name error empty", "Ju nuk mund të vendosni një vijë të zbrazët në këtë fushë, ju lutemi shkruani detajet."},
+            {"name error validate", "Emri nuk mund të përmbajë numra ose karaktere speciale. Kontrolloni që ato mungojnë në rreshtin e futur dhe futni përsëri emrin."},
+            {"name error input", "Formati i hyrjes është i pavlefshëm, futni emrin përsëri."},
+            {"height error number", "Lartësia nuk mund të jetë më pak se zero, ju lutemi shkruani lartësinë përsëri."},
+            {"height error input", "Format i gabuar për futjen e lartësisë, futni një numër ose mos futni asgjë."},
+            {"weight error number", "Pesha nuk mund të jetë më pak se zero, ju lutemi futni përsëri peshën."},
+            {"weight error input", "Format i pavlefshëm i hyrjes në peshë, futni një numër ose mos futni asgjë."},
+            {"passport error empty", "Pasaporta nuk mund të jetë bosh, ju lutemi shkruani të dhëna."},
+            {"passport error length", "Të dhënat e pasaportës nuk përshtaten në gjatësi, futni përsëri të dhënat (10-27 shifra)."},
+            {"passport error validate", "Të dhënat e pasaportës duhet të përbëhen vetëm nga numra, futni përsëri të dhënat."},
+            {"passport error input", "Format i pavlefshëm i hyrjes, futni përsëri të dhënat e pasaportës tuaj."},
+            {"hair error empty", "Zgjidhni ngjyrën e flokëve, kjo është një fushë e kërkuar."},
+            {"hair error input", "Provoni të futni përsëri ngjyrën e flokëve tuaj."},
+            {"location error empty", "Të gjitha koordinatat e vendndodhjes së re duhet të plotësohen, ju lutemi shkruani numrat."},
+            {"location error input", "Format i pavlefshëm i hyrjes, futni përsëri koordinatat e vendit. Kontrolloni që të mos ketë shkronja në vargun e futur."},
+            {"coordinates error empty", "Të gjitha koordinatat e personave duhet të plotësohen, ju lutemi shkruani numrat."},
+            {"coordinates error input", "Format i pavlefshëm i hyrjes, futni përsëri koordinatat e personit. Kontrolloni që të mos ketë shkronja në vargun e futur."},
             {"creator error", "Objekti nuk mund të azhurnohet sepse ju nuk jeni krijuesi i saj."},
-            {"success update","Objekti u ifresko me sukses"},
+            {"success update", "Objekti u ifresko me sukses"},
 
             //alerts login and sign in
-            {"login error short","Identifikimi është shumë i shkurtër"},
-            {"password error short","Keni futur një fjalëkalim shumë të shkurtër"},
-            {"password error validate","Fjalëkalimi përmban karaktere të pavlefshëm"},
-            {"log in error","Keni futur një emër përdoruesi dhe / ose fjalëkalim të pasaktë. Përsëritni hyrjen"},
-            {"success register","Ju jeni regjistruar me sukses."},
-            {"register error","Impossibleshtë e pamundur të regjistroheni, një hyrje e tillë tashmë ekziston."},
+            {"login error short", "Identifikimi është shumë i shkurtër"},
+            {"password error short", "Keni futur një fjalëkalim shumë të shkurtër"},
+            {"password error validate", "Fjalëkalimi përmban karaktere të pavlefshëm"},
+            {"log in error", "Keni futur një emër përdoruesi dhe / ose fjalëkalim të pasaktë. Përsëritni hyrjen"},
+            {"success register", "Ju jeni regjistruar me sukses."},
+            {"register error", "Impossibleshtë e pamundur të regjistroheni, një hyrje e tillë tashmë ekziston."},
 
             //alerts script
             {"script error special file", "Skedari special nuk mund të kalohet si skenar. Fut përsëri komandën me një argument të ri."},
@@ -161,7 +162,7 @@ public class Language_sq_AL extends ListResourceBundle {
 
             //help
             {"help answer", "Komandat e disponueshme për ju:\n" +
-                    "Shto: shto një artikull të ri në koleksion\n"  +
+                    "Shto: shto një artikull të ri në koleksion\n" +
                     "Shto nëse më pak: shto një artikull të ri në koleksion nëse ID-ja e tij është më pak se ID-ja më e vogël e këtij koleksioni\n" +
                     "Skript: lexoni dhe ekzekutoni skriptin nga skedari i specifikuar (zëvendësoni emrin e skedarit me rrugën drejt skedarit). Skripti përmban komanda në të njëjtën formë në të cilën ato futen në modalitetin ndërveprues.\n" +
                     "Hiq me pasaportë: hiq nga koleksioni të gjithë artikujt vlera e fushës së pasaportës së të cilave është ekuivalente me atë të specifikuar\n" +

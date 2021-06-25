@@ -1,13 +1,10 @@
 package commands;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import database.DataBaseManager;
+import other.CollectionsKeeper;
 import other.Person;
 import other.ServerResponse;
-import other.CollectionsKeeper;
 
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,21 +32,20 @@ public class AddIfMax extends Command {
     @Override
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
         String result;
-        if (people.size() == 0){
+        if (people.size() == 0) {
             result = manager.addPersonToDB(person, "add", args);
-            if (result.equals("Объект успешно добавлен")){
+            if (result.equals("Объект успешно добавлен")) {
                 LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
                 people.clear();
                 people.addAll(newCollection);
                 return ServerResponse.builder().message("Объект добавлен в коллекцию, т.к. коллекция была пуста.").command("add_if_max").build();
             } else return ServerResponse.builder().error(result).command("add_if_max").build();
-        }
-        else {
+        } else {
             if (person.toString().length() < people.getLast().toString().length()) {
                 return ServerResponse.builder().error("Объект не может быть добавлен в коллекцию, т.к. его длина в формате строки меньше наибольшей").command("add_if_max").build();
             } else {
                 result = manager.addPersonToDB(person, "add", args);
-                if (result.equals("Объект успешно добавлен")){
+                if (result.equals("Объект успешно добавлен")) {
                     LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
                     people.clear();
                     people.addAll(newCollection);

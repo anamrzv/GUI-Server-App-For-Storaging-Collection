@@ -36,11 +36,11 @@ public abstract class Command {
      * @param args Параметры командной строки
      * @return true/false Успешно ли завершилась команда
      */
-    public ServerResponse execute(List<String> args){
+    public ServerResponse execute(List<String> args) {
         return null;
     }
 
-    public ServerResponse execute(DataBaseManager manager, List<String> args){
+    public ServerResponse execute(DataBaseManager manager, List<String> args) {
         return null;
     }
 

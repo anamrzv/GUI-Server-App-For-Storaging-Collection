@@ -1,6 +1,7 @@
 package newclient;
 
 import gui.GUIMain;
+import lombok.Getter;
 import other.*;
 
 import java.util.LinkedList;
@@ -9,24 +10,25 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Getter
 public class Creation {
 
-    private String name;
-    private String height;
-    private String weight;
-    private String passport;
-    private String hair;
-    private String x;
-    private String y;
-    private String location;
-    private String nameLoc;
-    private String xLoc;
-    private String yLoc;
-    private String zLoc;
+    private final String name;
+    private final String height;
+    private final String weight;
+    private final String passport;
+    private final String hair;
+    private final String x;
+    private final String y;
+    private final String location;
+    private final String nameLoc;
+    private final String xLoc;
+    private final String yLoc;
+    private final String zLoc;
     private ServerResponse answer;
     private Person newPerson;
     private Map<Integer, Location> readyLocations;
-    private ClientHandler clientHandler = ClientHandler.getInstance(GUIMain.port);
+    private final ClientHandler clientHandler = ClientHandler.getInstance(GUIMain.port);
 
     public Creation(String name, String height, String weight, String passport, String hair, String x, String y, String location, String nameLoc, String xLoc, String yLoc, String zLoc) {
         this.name = name;
@@ -129,7 +131,7 @@ public class Creation {
     }
 
     private void inputHairColor() {
-        Color hairColor = null;
+        Color hairColor;
         try {
             if (hair.equals(""))
                 answer = ServerResponse.builder().error("hair error empty").build();
@@ -147,9 +149,10 @@ public class Creation {
             Location newLocation = inputNewLocation();
             if (newLocation != null) {
                 newPerson.setLocation(newLocation);
+                readyLocations.put(readyLocations.size() + 1, newLocation);
             }
         } else {
-            for (Location l : readyLocations.values()) {
+            for (Location l : clientHandler.getReadyLocations().values()) {
                 if (location.equals(l.getName())) {
                     newPerson.setLocation(l);
                     break;

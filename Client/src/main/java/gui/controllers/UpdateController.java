@@ -1,12 +1,5 @@
 package gui.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,15 +12,13 @@ import other.Location;
 import other.Person;
 import other.ServerResponse;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class UpdateController extends Controller {
 
     private ClientHandler clientHandler;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField nameFiled;
@@ -125,9 +116,9 @@ public class UpdateController extends Controller {
     @FXML
     private Button toTableButton;
 
-    private Map<Integer, Location> readyLocations = new HashMap<>();
+    private final Map<Integer, Location> readyLocations = new HashMap<>();
 
-    private ObservableList<String> locations = FXCollections.observableArrayList();
+    private final ObservableList<String> locations = FXCollections.observableArrayList();
 
     @FXML
     void initialize() throws IOException {
@@ -154,7 +145,7 @@ public class UpdateController extends Controller {
         firstLabel.setAlignment(Pos.CENTER);
         secondLabel.setAlignment(Pos.CENTER);
 
-        if (clientHandler.isIdIsSet() == true) {
+        if (clientHandler.isIdIsSet()) {
             idField.setText(Long.toString(clientHandler.getIdForUpdate()));
             updateFields();
             clientHandler.setIdIsSet(false);
@@ -175,7 +166,7 @@ public class UpdateController extends Controller {
         readyButton.setOnAction(event -> {
             ServerResponse response = readFromWindow();
             if (response.getError() != null)
-                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString( "update person"), clientHandler.getEncodedBundleString(response.getError()), "");
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("update person"), clientHandler.getEncodedBundleString(response.getError()), "");
             else {
                 Person personWithID = response.getPersonList().get(0);
                 personWithID.setId(Long.parseLong(idField.getText()));
@@ -197,22 +188,17 @@ public class UpdateController extends Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString( "update person"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
-                } else showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString( "update person"), clientHandler.getEncodedBundleString(answer.getError()), "");
+                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("update person"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
+                } else
+                    showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("update person"), clientHandler.getEncodedBundleString(answer.getError()), "");
             }
         });
 
-        toMapButton.setOnAction(event -> {
-            switchToWindow("/map.fxml", toMapButton);
-        });
+        toMapButton.setOnAction(event -> switchToWindow("/map.fxml", toMapButton));
 
-        toCommandsButton.setOnAction(event -> {
-            switchToWindow("/commands.fxml", toCommandsButton);
-        });
+        toCommandsButton.setOnAction(event -> switchToWindow("/commands.fxml", toCommandsButton));
 
-        toTableButton.setOnAction(event -> {
-            switchToWindow("/main.fxml", toTableButton);
-        });
+        toTableButton.setOnAction(event -> switchToWindow("/main.fxml", toTableButton));
 
     }
 
@@ -250,22 +236,8 @@ public class UpdateController extends Controller {
     }
 
     private void createLocationsList() {
-        List<Person> readyPeople = clientHandler.getPeople();
-        boolean alreadyLocation = false;
-        for (Person p : readyPeople) {
-            Location currentLocation = p.getLocation();
-            for (Location l : readyLocations.values()) {
-                if (currentLocation.equals(l)) {
-                    alreadyLocation = true;
-                    break;
-                }
-            }
-            if (!alreadyLocation) {
-                readyLocations.put(readyLocations.size() + 1, currentLocation);
-                alreadyLocation = false;
-            }
-        }
-        for (Location l : readyLocations.values()) {
+        locations.clear();
+        for (Location l : clientHandler.getReadyLocations().values()) {
             locations.add(l.getName());
         }
         locations.add(clientHandler.getEncodedBundleString("new location"));

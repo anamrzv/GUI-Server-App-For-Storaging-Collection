@@ -27,14 +27,14 @@
                 </Label>
             </children>
         </AnchorPane>
-        <Button fx:id="toCommandsButton" layoutX="761.0" layoutY="27.0" mnemonicParsing="false" text="К списку команд">
+        <Button fx:id="toCommandsButton" layoutX="773.0" layoutY="19.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="129.0" text="К списку команд">
             <font>
-                <Font name="Microsoft YaHei Light" size="12.0" />
+                <Font name="Microsoft YaHei Light" size="13.0" />
             </font>
         </Button>
-        <Button fx:id="toTableButton" layoutX="661.0" layoutY="27.0" mnemonicParsing="false" text="К таблице">
+        <Button fx:id="toTableButton" layoutX="622.0" layoutY="19.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" text="К таблице">
             <font>
-                <Font name="Microsoft YaHei Light" size="12.0" />
+                <Font name="Microsoft YaHei Light" size="13.0" />
             </font>
         </Button>
     </children>

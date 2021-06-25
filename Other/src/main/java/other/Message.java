@@ -19,13 +19,13 @@ public class Message implements Serializable {
     private List<String> commandArgs;
     private Person person;
 
-    public Message(String commandName, List<String> commandArgs){
+    public Message(String commandName, List<String> commandArgs) {
         this.commandName = commandName;
         this.commandArgs = commandArgs;
         person = null;
     }
 
-    public Message(String commandName, Person person){
+    public Message(String commandName, Person person) {
         this.commandName = commandName;
         this.person = person;
         commandArgs = null;

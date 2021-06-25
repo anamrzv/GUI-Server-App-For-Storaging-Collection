@@ -32,7 +32,7 @@ public class Update extends Command {
 
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
         String result = manager.addPersonToDB(person, "update", args);
-        if (result.equals("Объект успешно обновлен")) {
+        if (result.equals("success update")) {
             LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
             people.clear();
             people.addAll(newCollection);
