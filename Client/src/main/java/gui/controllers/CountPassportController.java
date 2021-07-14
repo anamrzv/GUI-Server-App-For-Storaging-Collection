@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import newclient.ClientHandler;
 import other.ServerResponse;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,11 +60,7 @@ public class CountPassportController extends Controller {
             clientHandler.sendCommand("count_less_than_passport_id");
             ServerResponse answer = null;
             while (answer == null) {
-                try {
-                    answer = clientHandler.getAnswer();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                answer = clientHandler.getAnswerToCommand();
             }
             if (answer.getError() == null) {
                 showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("countPass"), answer.getMessage() + clientHandler.getEncodedBundleString("passport count answer"), "");

@@ -15,29 +15,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Команда получает текстовый файл со скриптом и выполняет команды оттуда
- */
 public class ExecuteScript extends Command {
 
     private final CommandHandler ch;
 
-    /**
-     * Конструктор - создание нового объекта
-     *
-     * @param dc - обработчик команд
-     */
     public ExecuteScript(CollectionsKeeper dc, CommandHandler ch) {
         super(dc);
         this.ch = ch;
     }
 
-    /**
-     * Главный метод класса, запускает команду
-     *
-     * @param args Параметры командной строки
-     * @return true/false Успешно ли завершилась команда
-     */
     @Override
     public ServerResponse execute(List<String> args) {
         if (args.size() == 3) {
@@ -46,7 +32,7 @@ public class ExecuteScript extends Command {
                 if (Files.exists(path) && !Files.isRegularFile(path)) {
                     return ServerResponse.builder().error("script error special file").command("execute_script").build();
                 } else {
-                    if (dc.getScriptNames().size() == 0) dc.addScriptName(args.get(2));
+                    if (collectionsKeeper.getScriptNames().size() == 0) collectionsKeeper.addScriptName(args.get(2));
                     String dir = path.toString();
                     try (BufferedReader br = new BufferedReader(new FileReader(dir))) {
                         Map<String, Command> commands = ch.getCommands();
@@ -58,7 +44,7 @@ public class ExecuteScript extends Command {
                             } else if (line.startsWith("execute_script")) {
                                 String cmd = getCommandName(line);
                                 List<String> arguments = getArguments(line);
-                                if (dc.addScriptName(arguments.get(2))) {
+                                if (collectionsKeeper.addScriptName(arguments.get(2))) {
                                     Command command = commands.get(cmd);
                                     command.execute(arguments);
                                 } else
@@ -71,7 +57,7 @@ public class ExecuteScript extends Command {
                                 System.out.println();
                             }
                         }
-                        dc.clearScriptNames();
+                        collectionsKeeper.clearScriptNames();
                     } catch (FileNotFoundException e) {
                         return ServerResponse.builder().error("script error file").command("execute_script").build();
                     } catch (Exception e) {
@@ -87,23 +73,11 @@ public class ExecuteScript extends Command {
         return ServerResponse.builder().message("script success").command("execute_script").build();
     }
 
-    /**
-     * Метод - возвращает имя команды
-     *
-     * @param input - строка
-     * @return String - имя команды
-     */
     public String getCommandName(String input) {
         String[] elements = input.split(" +");
         return elements[0].toLowerCase(); //только название команды
     }
 
-    /**
-     * Метод - возвращает аргументы команды
-     *
-     * @param input - строка
-     * @return String[] - аргументы команды
-     */
     public List<String> getArguments(String input) {
         List<String> elements = Arrays.stream(input.split(" +")).collect(Collectors.toList());
         if (elements.size() > 1) {
@@ -111,21 +85,11 @@ public class ExecuteScript extends Command {
         } else return null;
     }
 
-    /**
-     * Возвращает имя команды
-     *
-     * @return имя
-     */
     @Override
     public String getName() {
         return "execute_script";
     }
 
-    /**
-     * Возвращает описание команды
-     *
-     * @return описание
-     */
     @Override
     public String getDescription() {
         return "execute_script file_name : считать и исполнить скрипт из указанного файла (вместо file_name укажите путь к файлу). В скрипте содержатся команды в таком же виде, в котором они вводятся в интерактивном режиме.";

@@ -8,34 +8,16 @@ import other.ServerResponse;
 
 import java.util.List;
 
-/**
- * Абстрактный класс - любая команда
- */
 @Setter
 public abstract class Command {
 
-    /**
-     * Поле - обработчик команд
-     */
-    public CollectionsKeeper dc;
-
+    public CollectionsKeeper collectionsKeeper;
     protected Person person;
 
-    /**
-     * Конструктор - создание нового объекта
-     *
-     * @param dc - обработчик команд
-     */
-    Command(CollectionsKeeper dc) {
-        this.dc = dc;
+    Command(CollectionsKeeper collectionsKeeper) {
+        this.collectionsKeeper = collectionsKeeper;
     }
 
-    /**
-     * Главный метод класса, запускает команду
-     *
-     * @param args Параметры командной строки
-     * @return true/false Успешно ли завершилась команда
-     */
     public ServerResponse execute(List<String> args) {
         return null;
     }
@@ -44,17 +26,7 @@ public abstract class Command {
         return null;
     }
 
-    /**
-     * Возвращает имя команды
-     *
-     * @return имя
-     */
     public abstract String getName();
 
-    /**
-     * Возвращает описание команды
-     *
-     * @return описание
-     */
     public abstract String getDescription();
 }

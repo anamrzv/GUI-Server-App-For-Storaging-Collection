@@ -7,26 +7,12 @@ import other.ServerResponse;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Команда считает кол-во объектов со значением passport id меньше заданного
- */
 public class CountLessPass extends Command {
 
-    /**
-     * Конструктор - создание нового объекта
-     *
-     * @param dc - обработчик команд
-     */
     public CountLessPass(CollectionsKeeper dc) {
         super(dc);
     }
 
-    /**
-     * Главный метод класса, запускает команду
-     *
-     * @param args Параметры командной строки
-     * @return true/false Успешно ли завершилась команда
-     */
     @Override
     public ServerResponse execute(List<String> args) {
         Long id;
@@ -41,28 +27,18 @@ public class CountLessPass extends Command {
         } catch (Exception e) {
             return ServerResponse.builder().error("passport error validate").command("count_less_than_passport_id").build();
         }
-        LinkedList<Person> people = dc.getPeople();
+        LinkedList<Person> people = collectionsKeeper.getPeople();
         int res = (int) people.stream()
                 .filter(x -> x.getPassportAsLong() < id)
                 .count();
         return ServerResponse.builder().message(Integer.toString(res)).command("count_less_than_passport_id").build();
     }
 
-    /**
-     * Возвращает имя команды
-     *
-     * @return имя
-     */
     @Override
     public String getName() {
         return "count_less_than_passport_id";
     }
 
-    /**
-     * Возвращает описание команды
-     *
-     * @return описание
-     */
     @Override
     public String getDescription() {
         return "count_less_than_passport_id passportID : вывести количество элементов, значение поля passportID которых меньше заданного";

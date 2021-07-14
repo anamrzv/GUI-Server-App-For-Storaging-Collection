@@ -53,12 +53,8 @@ public class ScriptController extends Controller {
             clientHandler.sendCommand("execute_script");
             ServerResponse answer = null;
             while (answer == null) {
-                try {
-                    answer = clientHandler.getAnswer();
+                    answer = clientHandler.getAnswerToCommand();
                     System.out.println(answer);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
             if (answer.getError() == null) {
                 showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("script"), answer.getMessage(), "");

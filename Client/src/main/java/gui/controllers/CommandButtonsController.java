@@ -8,8 +8,6 @@ import javafx.scene.control.Label;
 import newclient.ClientHandler;
 import other.ServerResponse;
 
-import java.io.IOException;
-
 public class CommandButtonsController extends Controller {
 
     private ClientHandler clientHandler;
@@ -122,11 +120,8 @@ public class CommandButtonsController extends Controller {
         clientHandler.sendCommand(commandName);
         ServerResponse answer = null;
         while (answer == null) {
-            try {
-                answer = clientHandler.getAnswer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            answer = clientHandler.getAnswerToCommand();
+
         }
         if (answer.getError() == null) {
             switch (answer.getCommand()) {

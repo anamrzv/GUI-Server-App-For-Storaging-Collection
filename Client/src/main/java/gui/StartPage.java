@@ -1,6 +1,6 @@
 package gui;
 
-public class NewMain {
+public class StartPage {
     public static void main(String[] args) {
         GUIMain.main(args);
     }

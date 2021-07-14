@@ -75,11 +75,7 @@ public class SignController extends Controller {
         }
         ServerResponse answer = null;
         while (answer == null) {
-            try {
-                answer = clientHandler.getAnswer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                answer = clientHandler.getAnswerToCommand();
         }
         if (answer.getError() == null) {
             showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString("success register"), "");

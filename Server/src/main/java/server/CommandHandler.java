@@ -10,9 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Класс - ответственный за маппинг команд
- */
 public class CommandHandler {
     private final String commandName;
     private final List<String> commandArgs;

@@ -2,9 +2,6 @@ package other;
 
 import lombok.Getter;
 
-/**
- * Перечисление цветов волос
- */
 @Getter
 public enum Color {
     YELLOW("YELLOW"),

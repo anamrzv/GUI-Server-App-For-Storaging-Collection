@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import newclient.ClientHandler;
 import other.ServerResponse;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,19 +59,11 @@ public class RemovePassportController extends Controller {
             clientHandler.sendCommand("remove_all_by_passport_id");
             ServerResponse answer = null;
             while (answer == null) {
-                try {
-                    answer = clientHandler.getAnswer();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                answer = clientHandler.getAnswerToCommand();
             }
             if (answer.getError() == null) {
                 clientHandler.sendCommand("show");
-                try {
-                    clientHandler.getPeopleAnswer();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                clientHandler.setPeopleAndLocationsLists();
                 showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("removePass"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
             } else
                 showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("removePass"), clientHandler.getEncodedBundleString(answer.getError()), "");

@@ -170,24 +170,16 @@ public class UpdateController extends Controller {
             else {
                 Person personWithID = response.getPersonList().get(0);
                 personWithID.setId(Long.parseLong(idField.getText()));
-                clientHandler.setPerson(personWithID);
+                clientHandler.setPersonForCommand(personWithID);
                 clientHandler.sendCommand("update");
                 ServerResponse answer = null;
                 while (answer == null) {
-                    try {
-                        answer = clientHandler.getAnswer();
-                        System.out.println(answer);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    answer = clientHandler.getAnswerToCommand();
+                    System.out.println(answer);
                 }
                 if (answer.getError() == null) {
                     clientHandler.sendCommand("show");
-                    try {
-                        clientHandler.getPeopleAnswer();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    clientHandler.setPeopleAndLocationsLists();
                     showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("update person"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
                 } else
                     showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("update person"), clientHandler.getEncodedBundleString(answer.getError()), "");

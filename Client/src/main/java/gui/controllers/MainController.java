@@ -9,7 +9,6 @@ import newclient.ClientHandler;
 import other.Color;
 import other.Person;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class MainController extends Controller {
@@ -83,11 +82,7 @@ public class MainController extends Controller {
 
         resetTableButton.setOnAction(event -> {
             clientHandler.sendCommand("show");
-            try {
-                clientHandler.getPeopleAnswer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            clientHandler.setPeopleAndLocationsLists();
             observableList.addAll(clientHandler.getPeople());
             switchToWindow("/main.fxml", resetTableButton);
         });

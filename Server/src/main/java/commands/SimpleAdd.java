@@ -8,37 +8,27 @@ import other.ServerResponse;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Команда добавляет элемент в коллекцию либо через меню выбора, либо интерпретируя строку json
- */
 public class SimpleAdd extends Command {
 
-    private final LinkedList<Person> people = dc.getPeople();
+    private final LinkedList<Person> people = collectionsKeeper.getPeople();
 
-    /**
-     * Конструктор - создание нового объекта
-     *
-     * @param dc - обработчик команд
-     */
     public SimpleAdd(CollectionsKeeper dc) {
         super(dc);
     }
 
-    /**
-     * Главный метод класса, запускает команду
-     *
-     * @return true/false Успешно ли завершилась команда
-     */
-
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
         String result = manager.addPersonToDB(person, "add", args);
         if (result.equals("success add")) {
-            LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
-            people.clear();
-            people.addAll(newCollection);
+            updatePeopleList(manager, people);
             return ServerResponse.builder().message("success add").command("add").build();
         } else
             return ServerResponse.builder().error(result).command("add").build();
+    }
+
+    public static void updatePeopleList(DataBaseManager manager, LinkedList<Person> people){
+        LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
+        people.clear();
+        people.addAll(newCollection);
     }
 
     @Override

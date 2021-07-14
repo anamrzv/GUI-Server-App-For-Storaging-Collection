@@ -17,7 +17,6 @@ import newclient.ClientHandler;
 import other.Person;
 import other.ServerResponse;
 
-import java.io.IOException;
 import java.util.*;
 
 public class MapController extends Controller {
@@ -155,11 +154,7 @@ public class MapController extends Controller {
                 clientHandler.sendCommand("remove_by_id");
                 ServerResponse answer = null;
                 while (answer == null) {
-                    try {
-                        answer = clientHandler.getAnswer();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    answer = clientHandler.getAnswerToCommand();
                 }
                 if (answer.getError() == null) {
                     ScaleTransition scaleTransition = new ScaleTransition();
@@ -175,11 +170,7 @@ public class MapController extends Controller {
                     });
 
                     clientHandler.sendCommand("show");
-                    try {
-                        clientHandler.getPeopleAnswer();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    clientHandler.setPeopleAndLocationsLists();
                 } else showAlert(Alert.AlertType.ERROR, "Remove person this id", answer.getError(), "");
             }
         } else {

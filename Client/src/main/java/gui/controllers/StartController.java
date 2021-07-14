@@ -117,11 +117,7 @@ public class StartController extends Controller {
         if (noError) {
             ServerResponse answer = null;
             while (answer == null) {
-                try {
-                    answer = clientHandler.getAnswer();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    answer = clientHandler.getAnswerToCommand();
             }
             if (answer.getError() == null) {
                 loginButton.getScene().getWindow().hide();

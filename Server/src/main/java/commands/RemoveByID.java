@@ -8,27 +8,12 @@ import other.ServerResponse;
 import java.util.LinkedList;
 import java.util.List;
 
-
-/**
- * Команда удаляет объект с данным значением id
- */
 public class RemoveByID extends Command {
 
-    /**
-     * Конструктор - создание нового объекта
-     *
-     * @param dc - обработчик команд
-     */
     public RemoveByID(CollectionsKeeper dc) {
         super(dc);
     }
 
-    /**
-     * Главный метод класса, запускает команду
-     *
-     * @param args Параметры командной строки
-     * @return true/false Успешно ли завершилась команда
-     */
     @Override
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
         if (args.size() != 2) {
@@ -43,7 +28,7 @@ public class RemoveByID extends Command {
             } catch (Exception e) {
                 return ServerResponse.builder().error("id error validate").command("remove_by_id").build();
             }
-            LinkedList<Person> people = dc.getPeople();
+            LinkedList<Person> people = collectionsKeeper.getPeople();
             Person person = people.stream()
                     .filter(x -> x.getId().equals(id))
                     .findFirst()
@@ -66,21 +51,11 @@ public class RemoveByID extends Command {
         }
     }
 
-    /**
-     * Возвращает имя команды
-     *
-     * @return имя
-     */
     @Override
     public String getName() {
         return "remove_by_id";
     }
 
-    /**
-     * Возвращает описание команды
-     *
-     * @return описание
-     */
     @Override
     public String getDescription() {
         return "remove_by_id id : удалить элемент из коллекции по его id";

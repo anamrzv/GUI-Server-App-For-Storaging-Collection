@@ -79,7 +79,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>gui.NewMain</mainClass>
+                            <mainClass>gui.StartPage</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Class-Path>.</Class-Path>
@@ -94,7 +94,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>gui.NewMain</mainClass>
+                            <mainClass>gui.StartPage</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

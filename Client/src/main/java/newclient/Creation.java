@@ -25,7 +25,7 @@ public class Creation {
     private final String xLoc;
     private final String yLoc;
     private final String zLoc;
-    private ServerResponse answer;
+    private ServerResponse responseWithError;
     private Person newPerson;
     private Map<Integer, Location> readyLocations;
     private final ClientHandler clientHandler = ClientHandler.getInstance(GUIMain.port);
@@ -49,37 +49,36 @@ public class Creation {
         this.readyLocations = readyLocations;
         newPerson = new Person();
         inputName();
-        if (answer != null) return answer;
+        if (responseWithError != null) return responseWithError;
         inputHeight();
-        if (answer != null) return answer;
+        if (responseWithError != null) return responseWithError;
         inputWeight();
-        if (answer != null) return answer;
+        if (responseWithError != null) return responseWithError;
         inputPassport();
-        if (answer != null) return answer;
+        if (responseWithError != null) return responseWithError;
         inputHairColor();
-        if (answer != null) return answer;
+        if (responseWithError != null) return responseWithError;
         inputLocation();
-        if (answer != null) return answer;
+        if (responseWithError != null) return responseWithError;
         inputCoordinates();
-        if (answer != null) return answer;
+        if (responseWithError != null) return responseWithError;
         List<Person> toAddPerson = new LinkedList<>();
         toAddPerson.add(newPerson);
-        answer = ServerResponse.builder().personList(toAddPerson).build();
-        return answer;
+        return ServerResponse.builder().personList(toAddPerson).build();
     }
 
     private void inputName() {
         try {
             boolean hasNoDigit = validateName(name);
             if (name.equals(""))
-                answer = ServerResponse.builder().error("name error empty").build();
+                responseWithError = ServerResponse.builder().error("name error empty").build();
             else if (!hasNoDigit)
-                answer = ServerResponse.builder().error("name error validate").build();
+                responseWithError = ServerResponse.builder().error("name error validate").build();
             else {
                 newPerson.setName(name);
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("name error input").build();
+            responseWithError = ServerResponse.builder().error("name error input").build();
         }
     }
 
@@ -88,13 +87,13 @@ public class Creation {
             if (!height.isEmpty()) {
                 long hLong = Long.parseLong(height);
                 if (hLong < 0) {
-                    answer = ServerResponse.builder().error("height error number").build();
+                    responseWithError = ServerResponse.builder().error("height error number").build();
                 } else {
                     newPerson.setHeight(hLong);
                 }
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("height error input").build();
+            responseWithError = ServerResponse.builder().error("height error input").build();
         }
     }
 
@@ -103,13 +102,13 @@ public class Creation {
             if (!weight.isEmpty()) {
                 long wLong = Long.parseLong(weight);
                 if (wLong < 0) {
-                    answer = ServerResponse.builder().error("weight error number").build();
+                    responseWithError = ServerResponse.builder().error("weight error number").build();
                 } else {
                     newPerson.setWeight(wLong);
                 }
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("weight error input").build();
+            responseWithError = ServerResponse.builder().error("weight error input").build();
         }
     }
 
@@ -117,16 +116,16 @@ public class Creation {
         try {
             boolean hasNoLetter = validatePassport(passport);
             if (passport.equals(""))
-                answer = ServerResponse.builder().error("passport error empty").build();
+                responseWithError = ServerResponse.builder().error("passport error empty").build();
             else if (passport.length() > 27 || passport.length() < 10)
-                answer = ServerResponse.builder().error("passport error length").build();
+                responseWithError = ServerResponse.builder().error("passport error length").build();
             else if (!hasNoLetter)
-                answer = ServerResponse.builder().error("passport error validate").build();
+                responseWithError = ServerResponse.builder().error("passport error validate").build();
             else {
                 newPerson.setPassportID(passport);
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("passport error input").build();
+            responseWithError = ServerResponse.builder().error("passport error input").build();
         }
     }
 
@@ -134,13 +133,13 @@ public class Creation {
         Color hairColor;
         try {
             if (hair.equals(""))
-                answer = ServerResponse.builder().error("hair error empty").build();
+                responseWithError = ServerResponse.builder().error("hair error empty").build();
             else {
                 hairColor = Color.valueOf(hair);
                 newPerson.setHairColor(hairColor);
             }
         } catch (Exception e) {
-            answer = ServerResponse.builder().error("hair error input").build();
+            responseWithError = ServerResponse.builder().error("hair error input").build();
         }
     }
 
@@ -168,7 +167,7 @@ public class Creation {
         double z;
         try {
             if (xLoc.isEmpty() || yLoc.isEmpty() || zLoc.isEmpty()) {
-                answer = ServerResponse.builder().error("location error empty").build();
+                responseWithError = ServerResponse.builder().error("location error empty").build();
                 return null;
             } else {
                 x = Integer.parseInt(xLoc);
@@ -178,7 +177,7 @@ public class Creation {
                 return newLocation;
             }
         } catch (NumberFormatException e) {
-            answer = ServerResponse.builder().error("location error input").build();
+            responseWithError = ServerResponse.builder().error("location error input").build();
             return null;
         }
     }
@@ -186,7 +185,7 @@ public class Creation {
     private void inputCoordinates() {
         Coordinates c = new Coordinates();
         if (x.isEmpty() || y.isEmpty()) {
-            answer = ServerResponse.builder().error("coordinates error empty").build();
+            responseWithError = ServerResponse.builder().error("coordinates error empty").build();
         } else {
             try {
                 float newX = Float.parseFloat(x);
@@ -194,28 +193,17 @@ public class Creation {
                 c.setCoordinatesFirst(newX, newY);
                 newPerson.setCoordinates(c);
             } catch (NumberFormatException e) {
-                answer = ServerResponse.builder().error("coordinates error input").build();
+                responseWithError = ServerResponse.builder().error("coordinates error input").build();
             }
         }
     }
 
-
-    /**
-     * Метод - валидация на отсутствие цифр и спец символов в строке
-     *
-     * @return boolean true/false
-     */
     private boolean validateName(String name) {
         Pattern pattern = Pattern.compile("^[\\p{L} ]+$");
         Matcher m = pattern.matcher(name);
         return m.matches();
     }
 
-    /**
-     * Метод - валидация на отсутствие букв в строке
-     *
-     * @return boolean true/false
-     */
     private boolean validatePassport(String pass) {
         Pattern pattern = Pattern.compile("^[0-9]+$");
         Matcher m = pattern.matcher(pass);

@@ -8,28 +8,14 @@ import other.ServerResponse;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Команда удаляет из коллекции все объекты с passport id меньше заданного
- */
 public class RemoveByPass extends Command {
 
-    DataBaseManager manager;
+    private DataBaseManager manager;
 
-    /**
-     * Конструктор - создание нового объекта
-     *
-     * @param dc - обработчик команд
-     */
     public RemoveByPass(CollectionsKeeper dc) {
         super(dc);
     }
 
-    /**
-     * Главный метод класса, запускает команду
-     *
-     * @param args Параметры командной строки
-     * @return true/false Успешно ли завершилась команда
-     */
     @Override
     public ServerResponse execute(DataBaseManager manager, List<String> args) {
         this.manager = manager;
@@ -45,7 +31,7 @@ public class RemoveByPass extends Command {
             } catch (Exception e) {
                 return ServerResponse.builder().error("passport error validate").command("remove_by_passport_id").build();
             }
-            LinkedList<Person> people = dc.getPeople();
+            LinkedList<Person> people = collectionsKeeper.getPeople();
             int count = 0;
             int unsuccess = 0;
             int noAcces = 0;
@@ -84,22 +70,11 @@ public class RemoveByPass extends Command {
         }
     }
 
-
-    /**
-     * Возвращает имя команды
-     *
-     * @return имя
-     */
     @Override
     public String getName() {
         return "remove_all_by_passport_id";
     }
 
-    /**
-     * Возвращает описание команды
-     *
-     * @return описание
-     */
     @Override
     public String getDescription() {
         return "remove_all_by_passport_id passportID : удалить из коллекции все элементы, значение поля passportID которого эквивалентно заданному";

@@ -160,7 +160,7 @@ public class AddController extends Controller {
             if (response.getError() != null)
                 showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(response.getError()), "");
             else {
-                clientHandler.setPerson(response.getPersonList().get(0));
+                clientHandler.setPersonForCommand(response.getPersonList().get(0));
                 String commandName = "";
                 if (kindOfAddBox.getValue().equals(clientHandler.getEncodedBundleString("simple add")))
                     commandName = "add";
@@ -171,19 +171,12 @@ public class AddController extends Controller {
                 clientHandler.sendCommand(commandName);
                 ServerResponse answer = null;
                 while (answer == null) {
-                    try {
-                        answer = clientHandler.getAnswer();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    answer = clientHandler.getAnswerToCommand();
+
                 }
                 if (answer.getError() == null) {
                     clientHandler.sendCommand("show");
-                    try {
-                        clientHandler.getPeopleAnswer();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    clientHandler.setPeopleAndLocationsLists();
                     showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
                 } else
                     showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("create new person"), clientHandler.getEncodedBundleString(answer.getError()), "");
