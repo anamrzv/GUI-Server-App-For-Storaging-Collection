@@ -7,6 +7,7 @@ import other.ServerResponse;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class Show extends Command {
@@ -16,7 +17,7 @@ public class Show extends Command {
     }
 
     @Override
-    public ServerResponse execute(List<String> args) {
+    public ServerResponse execute(List<String> userDataAndOtherArgs) {
         List<Person> sortedPeople;
         LinkedList<Person> people = collectionsKeeper.getPeople();
         if (people.size() == 0)
@@ -35,7 +36,7 @@ public class Show extends Command {
     }
 
     @Override
-    public String getDescription() {
-        return "show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("empty");
     }
 }

@@ -7,6 +7,7 @@ import other.ServerResponse;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class SimpleAdd extends Command {
 
@@ -16,8 +17,8 @@ public class SimpleAdd extends Command {
         super(dc);
     }
 
-    public ServerResponse execute(DataBaseManager manager, List<String> args) {
-        String result = manager.addPersonToDB(person, "add", args);
+    public ServerResponse execute(DataBaseManager manager, List<String> userDataAndOtherArgs) {
+        String result = manager.addPersonToDB(toDeletePerson, "add", userDataAndOtherArgs);
         if (result.equals("success add")) {
             updatePeopleList(manager, people);
             return ServerResponse.builder().message("success add").command("add").build();
@@ -25,10 +26,18 @@ public class SimpleAdd extends Command {
             return ServerResponse.builder().error(result).command("add").build();
     }
 
-    public static void updatePeopleList(DataBaseManager manager, LinkedList<Person> people){
+    protected void updatePeopleList(DataBaseManager manager, LinkedList<Person> people){
         LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
         people.clear();
         people.addAll(newCollection);
+    }
+
+    protected ServerResponse addPersonToDBAndGetServerResponse(DataBaseManager manager, List<String> args){
+        String result = manager.addPersonToDB(toDeletePerson, "add", args);
+        if (result.equals("success add")) {
+            updatePeopleList(manager, people);
+            return ServerResponse.builder().message(result).command(getName()).build();
+        } else return ServerResponse.builder().error(result).command(getName()).build();
     }
 
     @Override
@@ -37,7 +46,7 @@ public class SimpleAdd extends Command {
     }
 
     @Override
-    public String getDescription() {
-        return "add person: добавить новый элемент в коллекцию, ввод вручную\nadd json_element : добавить новый элемент в коллекцию, автоматическая обработка строки json";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("add description");
     }
 }

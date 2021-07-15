@@ -161,20 +161,20 @@ public class Language_sl_SL extends ListResourceBundle {
             {"info answer", "Typ položky: Osoba\nTyp zbierky: LinkedList\nPočet položiek: "},
 
             //help
-            {"help answer", "Príkazy, ktoré máte k dispozícii:\n" +
-                    "Pridať: pridať novú položku do zbierky\n" +
-                    "Pridať, ak menej: pridať novú položku do zbierky, ak je jej ID menšie ako najmenšie ID tejto zbierky\n" +
-                    "Skript: načíta a vykoná skript zo zadaného súboru (nahraďte názov_súboru cestou k súboru). Skript obsahuje príkazy v rovnakom tvare, v akom sú zadávané v interaktívnom režime.\n" +
-                    "Odstrániť pomocou pasu: odstráni z kolekcie všetky položky, ktorých hodnota poľa passportID je ekvivalentná zadanej hodnote\n" +
-                    "Vymazať: vymazať zbierku\n" +
-                    "Odstrániť: odstrániť položku zo zbierky podľa jej\n" +
-                    "Aktualizácia: aktualizuje hodnotu položky zbierky, ktorej id sa rovná dane\n" +
-                    "Pridať, ak je väčšie: pridať novú položku do kolekcie, ak je jej ID väčšie ako ID najväčšej položky v tejto zbierke\n" +
-                    "Ľudia s menším pasom: vytlačiť počet položiek, ktorých hodnota poľa passportID je menšia ako zadan\n" +
-                    "Prvý: zobrazí prvý prvok kolekcie\n" +
-                    "Pomoc: zobrazí pomoc pre dostupné príka\n" +
-                    "Súčet hmotnosti: vypíše súčet hodnôt poľa hmotnosti pre všetky prvky kolekcie\n" +
-                    "Info: tlač informácií o kolekcii (typ, dátum inicializácie, počet prvkov atď.) Do štandardného výstupného toku“"}
+            {"add description", "Pridať: pridať novú položku do zbierky\n"},
+            {"add_if_min description", "Pridať, ak menej: pridať novú položku do kolekcie, ak je jej dĺžka vo formáte reťazca menšia alebo rovnaká ako minimálna\n"},
+            {"add_if_max description", "Pridať, ak je väčšie: pridať novú položku do kolekcie, ak je jej dĺžka vo formáte reťazca väčšia alebo rovná maximu\n"},
+            {"execute_script description", "Skript: čítanie a vykonávanie skriptov zo zadaného súboru (nahraďte súbor_name cestou k súboru). Skript obsahuje príkazy v rovnakom tvare, v akom sú zadávané v interaktívnom režime.\n"},
+            {"description description", "Update: aktualizuje hodnotu položky kolekcie, ktorej ID sa rovná danému\n"},
+            {"remove_by_id description", "Odstrániť: odstrániť položku zo zbierky podľa jej ID\n"},
+            {"remove_all_by_passport_id description", "Odstrániť pomocou pasu: odstrániť z kolekcie všetky položky, ktorých hodnota poľa passportID je ekvivalentná zadanej hodnote\n"},
+            {"clear description", "Vymazať: vyčistiť zbierku\n"},
+            {"count_less_than_passport_id description", "Ľudia s menšími pasmi: zobrazujú počet položiek, ktorých hodnota poľa passportID je menšia ako zadaná\n"},
+            {"sum_of_weight description", "Váhový súčet: zobrazí súčet hodnôt poľa hmotnosti pre všetky prvky kolekcie\n"},
+            {"description help", "Help: zobraziť pomocníka s dostupnými príkazmi\n"},
+            {"head description", "Prvý: zobrazí prvý prvok zbierky\n"},
+            {"info description", "Info: tlač informácií o zbierke (typ, dátum inicializácie, počet prvkov atď.) do štandardného výstupného toku"},
+            {"empty", ""}
     };
 
     protected Object[][] getContents() {

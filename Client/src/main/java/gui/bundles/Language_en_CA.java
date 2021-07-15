@@ -161,20 +161,20 @@ public class Language_en_CA extends ListResourceBundle {
             {"info answer", "Item type: Person\nCollection type: LinkedList\nNumber of items: "},
 
             //help
-            {"help answer", "Commands available to you:\n" +
-                    "Add: add a new item to the collection\n" +
-                    "Add if less: add a new item to the collection if its id is less than the smallest id of this collection\n" +
-                    "Script: read and execute the script from the specified file (replace file_name with the path to the file). The script contains commands in the same form in which they are entered interactively.\n" +
-                    "Remove by passport: remove from the collection all items whose passportID field value is equivalent to the specified on\n" +
-                    "Clear: clear the collection\n" +
-                    "Remove: remove an item from the collection by its id\n" +
-                    "Update: update the value of the collection item whose id is equal to the given one\n" +
-                    "Add if greater: add a new item to the collection if its id is greater than the id of the largest item in this collection\n" +
-                    "People with smaller passports: print the number of items whose passportID field value is less than the specified one\n" +
-                    "First: display the first element of the collection\n" +
-                    "Help: display help for available commands\n" +
-                    "Sum of weight: print the sum of the values of the weight field for all elements of the collection\n" +
-                    "Info: print information about the collection (type, date of initialization, number of elements, etc.) to the standard output stream"}
+            {"add description", "Add: add a new item to the collection\n"},
+            {"add_if_min description", "Add if less: add a new item to the collection if its id is less than the smallest id of this collection\n"},
+            {"add_if_max description", "Add if greater: add a new item to the collection if its id is greater than the id of the largest item in this collection\n"},
+            {"execute_script description", "Script: read and execute the script from the specified file (replace file_name with the path to the file). The script contains commands in the same form in which they are entered interactively.\n"},
+            {"update description", "Update: update the value of the collection item whose id is equal to the given one\n"},
+            {"remove_by_id description", "Remove: remove an item from the collection by its id\n"},
+            {"remove_all_by_passport_id description", "Remove by passport: remove from the collection all items whose passportID field value is equivalent to the specified on\n"},
+            {"clear description", "Clear: clear the collection\n"},
+            {"count_less_than_passport_id description", "People with smaller passports: print the number of items whose passportID field value is less than the specified one\n"},
+            {"sum_of_weight description", "Sum of weight: print the sum of the values of the weight field for all elements of the collection\n"},
+            {"help description", "Help: display help for available commands\n"},
+            {"head description", "First: display the first element of the collection\n"},
+            {"info description", "Info: print information about the collection (type, date of initialization, number of elements, etc.) to the standard output stream"},
+            {"empty", ""}
 
     };
 

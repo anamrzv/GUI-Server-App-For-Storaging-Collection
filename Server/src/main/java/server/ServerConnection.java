@@ -216,9 +216,7 @@ public class ServerConnection {
             if (message.getCommandName().equalsIgnoreCase("exit")) {
                 connectionCount -= 1;
                 return ServerResponse.builder().message("Отключение от сервера проведено успешно").build();
-            } else if (message.getCommandName().equals("add") || message.getCommandName().equals("add_if_max") || message.getCommandName().equals("add_if_min")) {
-                command = new CommandHandler(message.getCommandName(), message.getPerson(), message.getCommandArgs(), collectionsKeeper);
-            } else if (message.getCommandName().equals("update")) {
+            } else if (message.getCommandName().contains("add") || message.getCommandName().equals("update")) {
                 command = new CommandHandler(message.getCommandName(), message.getPerson(), message.getCommandArgs(), collectionsKeeper);
             } else {
                 command = new CommandHandler(message.getCommandName(), message.getCommandArgs(), collectionsKeeper);

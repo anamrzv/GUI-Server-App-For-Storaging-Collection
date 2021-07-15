@@ -7,6 +7,7 @@ import other.ServerResponse;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class Update extends Command {
 
@@ -16,8 +17,8 @@ public class Update extends Command {
         super(dc);
     }
 
-    public ServerResponse execute(DataBaseManager manager, List<String> args) {
-        String result = manager.addPersonToDB(person, "update", args);
+    public ServerResponse execute(DataBaseManager manager, List<String> userDataAndOtherArgs) {
+        String result = manager.addPersonToDB(toDeletePerson, "update", userDataAndOtherArgs);
         if (result.equals("success update")) {
             LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
             people.clear();
@@ -33,7 +34,7 @@ public class Update extends Command {
     }
 
     @Override
-    public String getDescription() {
-        return "update id {element} : обновить значение элемента коллекции, id которого равен заданному";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("update description");
     }
 }

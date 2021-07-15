@@ -130,10 +130,12 @@ public class ClientHandler {
         Message message = Message.builder().commandName(commandName).build();
         commandArguments.add(0, password);
         commandArguments.add(0, login);
-        message.setCommandArgs(commandArguments);
         if (commandName.contains("add") || commandName.equals("update")) {
             message.setPerson(personForCommand);
+        } else if (commandName.equals("help")) {
+            commandArguments.add(getCurrentBundle().getLocale().toString());
         }
+        message.setCommandArgs(commandArguments);
         return message;
     }
 

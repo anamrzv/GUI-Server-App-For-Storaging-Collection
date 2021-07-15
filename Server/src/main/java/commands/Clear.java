@@ -7,6 +7,7 @@ import other.ServerResponse;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class Clear extends Command {
 
@@ -15,13 +16,13 @@ public class Clear extends Command {
     }
 
     @Override
-    public ServerResponse execute(DataBaseManager manager, List<String> args) {
+    public ServerResponse execute(DataBaseManager manager, List<String> userDataAndOtherArgs) {
         LinkedList<Person> people = collectionsKeeper.getPeople();
-        if (args.size() == 2) {
-            List<Person> toBeDeletedPeople = manager.deleteByLoginFromDB(args);
+        if (userDataAndOtherArgs.size() == LENGTH_WITH_ONLY_USER_DATA) {
+            List<Person> toBeDeletedPeople = manager.deleteByLoginFromDB(userDataAndOtherArgs);
             if (toBeDeletedPeople != null) {
                 people.removeAll(toBeDeletedPeople);
-                return ServerResponse.builder().message("clear success").command("clear").build();
+                return ServerResponse.builder().message("clear success").command(getName()).build();
             } else return ServerResponse.builder().error("clear error").build();
         } else {
             return ServerResponse.builder().error("error").build();
@@ -33,8 +34,7 @@ public class Clear extends Command {
         return "clear";
     }
 
-    @Override
-    public String getDescription() {
-        return "clear : очистить коллекцию";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("clear description");
     }
 }

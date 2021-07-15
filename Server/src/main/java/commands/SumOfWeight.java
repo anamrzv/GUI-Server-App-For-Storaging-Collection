@@ -6,6 +6,7 @@ import other.ServerResponse;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class SumOfWeight extends Command {
 
@@ -16,8 +17,8 @@ public class SumOfWeight extends Command {
     }
 
     @Override
-    public ServerResponse execute(List<String> args) {
-        if (args.size() == 2) {
+    public ServerResponse execute(List<String> userDataAndOtherArgs) {
+        if (userDataAndOtherArgs.size() == 2) {
             LinkedList<Person> people = collectionsKeeper.getPeople();
             people.forEach(x -> sum += x.getWeight());
             return ServerResponse.builder().message(Long.toString(sum)).command("sum_of_weight").build();
@@ -32,7 +33,7 @@ public class SumOfWeight extends Command {
     }
 
     @Override
-    public String getDescription() {
-        return "sum_of_weight : вывести сумму значений поля weight для всех элементов коллекции";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("sum_of_weight description");
     }
 }

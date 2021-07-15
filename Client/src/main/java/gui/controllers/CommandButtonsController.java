@@ -134,9 +134,6 @@ public class CommandButtonsController extends Controller {
                 case "info":
                     showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName), clientHandler.getEncodedBundleString("info answer") + answer.getMessage(), "");
                     break;
-                case "help":
-                    showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName), clientHandler.getEncodedBundleString("help answer"), "");
-                    break;
                 default:
                     showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString(commandName), answer.getMessage(), "");
                     break;

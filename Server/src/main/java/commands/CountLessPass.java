@@ -6,32 +6,39 @@ import other.ServerResponse;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class CountLessPass extends Command {
+
+    private Long passportId;
 
     public CountLessPass(CollectionsKeeper dc) {
         super(dc);
     }
 
     @Override
-    public ServerResponse execute(List<String> args) {
-        Long id;
-        if (args.size() != 3) {
-            return ServerResponse.builder().error("passport error arguments").command("count_less_than_passport_id").build();
+    public ServerResponse execute(List<String> userDataAndOtherArgs) {
+        if (userDataAndOtherArgs.size() != LENGTH_WITH_ONLY_USER_DATA + 1) {
+            return ServerResponse.builder().error("passport error arguments").command(getName()).build();
         }
         try {
-            id = Long.parseLong(args.get(2));
-            if (id < 0) {
-                return ServerResponse.builder().error("passport error minus").command("count_less_than_passport_id").build();
+            String idAsString = userDataAndOtherArgs.get(2);
+            passportId = Long.parseLong(idAsString);
+            if (passportId < 0) {
+                return ServerResponse.builder().error("passport error minus").command(getName()).build();
             }
         } catch (Exception e) {
-            return ServerResponse.builder().error("passport error validate").command("count_less_than_passport_id").build();
+            return ServerResponse.builder().error("passport error validate").command(getName()).build();
         }
+        return doCount();
+    }
+
+    private ServerResponse doCount(){
         LinkedList<Person> people = collectionsKeeper.getPeople();
         int res = (int) people.stream()
-                .filter(x -> x.getPassportAsLong() < id)
+                .filter(x -> x.getPassportAsLong() < passportId)
                 .count();
-        return ServerResponse.builder().message(Integer.toString(res)).command("count_less_than_passport_id").build();
+        return ServerResponse.builder().message(Integer.toString(res)).command(getName()).build();
     }
 
     @Override
@@ -39,8 +46,7 @@ public class CountLessPass extends Command {
         return "count_less_than_passport_id";
     }
 
-    @Override
-    public String getDescription() {
-        return "count_less_than_passport_id passportID : вывести количество элементов, значение поля passportID которых меньше заданного";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("count_less_than_passport_id description");
     }
 }

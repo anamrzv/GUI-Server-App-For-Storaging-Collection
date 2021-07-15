@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class ExecuteScript extends Command {
@@ -25,21 +26,21 @@ public class ExecuteScript extends Command {
     }
 
     @Override
-    public ServerResponse execute(List<String> args) {
-        if (args.size() == 3) {
+    public ServerResponse execute(List<String> userDataAndOtherArgs) {
+        if (userDataAndOtherArgs.size() == 3) {
             try {
-                Path path = Paths.get(args.get(2));
+                Path path = Paths.get(userDataAndOtherArgs.get(2));
                 if (Files.exists(path) && !Files.isRegularFile(path)) {
                     return ServerResponse.builder().error("script error special file").command("execute_script").build();
                 } else {
-                    if (collectionsKeeper.getScriptNames().size() == 0) collectionsKeeper.addScriptName(args.get(2));
+                    if (collectionsKeeper.getScriptNames().size() == 0) collectionsKeeper.addScriptName(userDataAndOtherArgs.get(2));
                     String dir = path.toString();
                     try (BufferedReader br = new BufferedReader(new FileReader(dir))) {
                         Map<String, Command> commands = ch.getCommands();
                         String line;
                         while ((line = br.readLine()) != null) {
                             line = line.trim();
-                            if (line.equals("execute_script " + args.get(2))) {
+                            if (line.equals("execute_script " + userDataAndOtherArgs.get(2))) {
                                 return ServerResponse.builder().error("script error recursive 1").command("execute_script").build();
                             } else if (line.startsWith("execute_script")) {
                                 String cmd = getCommandName(line);
@@ -90,8 +91,7 @@ public class ExecuteScript extends Command {
         return "execute_script";
     }
 
-    @Override
-    public String getDescription() {
-        return "execute_script file_name : считать и исполнить скрипт из указанного файла (вместо file_name укажите путь к файлу). В скрипте содержатся команды в таком же виде, в котором они вводятся в интерактивном режиме.";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("execute_script description");
     }
 }

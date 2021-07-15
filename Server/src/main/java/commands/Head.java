@@ -6,26 +6,27 @@ import other.ServerResponse;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class Head extends Command {
 
-    LinkedList<Person> people;
+    private LinkedList<Person> people;
 
     public Head(CollectionsKeeper dc) {
         super(dc);
     }
 
     @Override
-    public ServerResponse execute(List<String> args) {
-        if (args.size() == 2) {
+    public ServerResponse execute(List<String> userDataAndOtherArgs) {
+        if (userDataAndOtherArgs.size() == LENGTH_WITH_ONLY_USER_DATA) {
             people = collectionsKeeper.getPeople();
             if (people.size() == 0)
-                return ServerResponse.builder().message("head empty").command("head").build();
+                return ServerResponse.builder().message("head empty").command(getName()).build();
             else {
-                return ServerResponse.builder().message(people.get(0).toString()).command("head").build();
+                return ServerResponse.builder().message(people.get(0).toString()).command(getName()).build();
             }
         } else {
-            return ServerResponse.builder().error("error").command("head").build();
+            return ServerResponse.builder().error("error").command(getName()).build();
         }
     }
 
@@ -34,8 +35,7 @@ public class Head extends Command {
         return "head";
     }
 
-    @Override
-    public String getDescription() {
-        return "head : вывести первый элемент коллекции";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("head description");
     }
 }

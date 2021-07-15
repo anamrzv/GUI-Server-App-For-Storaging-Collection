@@ -80,11 +80,11 @@ public class CommandHandler {
                 return manager.checkUserInDB(commandArgs);
             case "add_if_max":
                 c = commands.get("add_if_max");
-                c.setPerson(person);
+                c.setToDeletePerson(person);
                 return c.execute(manager, commandArgs);
             case "add_if_min":
                 c = commands.get("add_if_min");
-                c.setPerson(person);
+                c.setToDeletePerson(person);
                 return c.execute(manager, commandArgs);
             case "remove_all_by_passport_id":
                 c = commands.get("remove_all_by_passport_id");
@@ -118,11 +118,11 @@ public class CommandHandler {
                 return c.execute(commandArgs);
             case "update":
                 c = commands.get("update");
-                c.setPerson(person);
+                c.setToDeletePerson(person);
                 return c.execute(manager, commandArgs);
             case "add":
                 c = commands.get("add");
-                c.setPerson(person);
+                c.setToDeletePerson(person);
                 return c.execute(manager, commandArgs);
             default:
                 return ServerResponse.builder().error("Команды не существует.").build();

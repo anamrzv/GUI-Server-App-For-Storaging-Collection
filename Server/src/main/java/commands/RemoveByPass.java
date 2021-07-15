@@ -7,6 +7,7 @@ import other.ServerResponse;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class RemoveByPass extends Command {
 
@@ -17,15 +18,15 @@ public class RemoveByPass extends Command {
     }
 
     @Override
-    public ServerResponse execute(DataBaseManager manager, List<String> args) {
+    public ServerResponse execute(DataBaseManager manager, List<String> userDataAndOtherArgs) {
         this.manager = manager;
-        if (args.size() != 2) {
-            if (args.size() != 3) {
+        if (userDataAndOtherArgs.size() != 2) {
+            if (userDataAndOtherArgs.size() != 3) {
                 return ServerResponse.builder().error("passport error arguments").command("remove_by_passport_id").build();
             }
             long id;
             try {
-                id = Long.parseLong(args.get(2));
+                id = Long.parseLong(userDataAndOtherArgs.get(2));
                 if (id < 0)
                     return ServerResponse.builder().error("passport error minus").command("remove_by_passport_id").build();
             } catch (Exception e) {
@@ -41,7 +42,7 @@ public class RemoveByPass extends Command {
                         .findFirst()
                         .orElse(null);
                 if (person != null) {
-                    int result = manager.deleteByIdFromBD(person, args);
+                    int result = manager.deleteByIdFromBD(person, userDataAndOtherArgs);
                     if (result == 1) {
                         people.remove(person);
                         count++;
@@ -75,8 +76,7 @@ public class RemoveByPass extends Command {
         return "remove_all_by_passport_id";
     }
 
-    @Override
-    public String getDescription() {
-        return "remove_all_by_passport_id passportID : удалить из коллекции все элементы, значение поля passportID которого эквивалентно заданному";
+    public String getDescription(ResourceBundle bundle) {
+        return bundle.getString("remove_all_by_passport_id description");
     }
 }
