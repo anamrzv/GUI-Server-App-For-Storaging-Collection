@@ -18,7 +18,7 @@ public class Update extends Command {
     }
 
     public ServerResponse execute(DataBaseManager manager, List<String> userDataAndOtherArgs) {
-        String result = manager.addPersonToDB(toDeletePerson, "update", userDataAndOtherArgs);
+        String result = manager.addPersonToDB(person, "update", userDataAndOtherArgs);
         if (result.equals("success update")) {
             SimpleAdd.updatePeopleList(manager, people);
             return ServerResponse.builder().message(result).command("update").build();

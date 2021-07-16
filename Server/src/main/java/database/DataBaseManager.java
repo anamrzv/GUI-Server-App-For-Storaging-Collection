@@ -37,7 +37,7 @@ public class DataBaseManager {
         }
     }
 
-    private void connectScannerToFile(){
+    private void connectScannerToFile() {
         try {
             String dir = System.getenv("start7");
             if (dir == null) {
@@ -50,7 +50,7 @@ public class DataBaseManager {
         }
     }
 
-    private void readUserDataFromFile(){
+    private void readUserDataFromFile() {
         try {
             this.LOGIN = scanner.nextLine().trim();
             this.PASSWORD = scanner.nextLine().trim();
@@ -164,7 +164,7 @@ public class DataBaseManager {
             coordinates.setCoordinatesFirst(coordX, coordY);
             return new Person(id, name, height, weight, passportID, hairColor, location, coordinates, creationDate, creator);
         } catch (SQLException e) {
-            System.out.println("Ошибка при чтении коллекции с базы данных people.");
+            log.error("Ошибка при чтении коллекции с базы данных people.");
             return null;
         } finally {
             lock.readLock().unlock();
@@ -256,12 +256,12 @@ public class DataBaseManager {
                 }
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
-                return ServerResponse.builder().command("register").message("Пользователь успешно зарегестрирован").build();
+                return ServerResponse.builder().command("register").message("success register").build();
             } else {
-                return ServerResponse.builder().command("register").error("Пользователь с таким логином уже существует. Повторите попытку регистрации с другим логинм.").build();
+                return ServerResponse.builder().command("register").error("register error").build();
             }
         } catch (SQLException e) {
-            return ServerResponse.builder().command("register").error("Ошибка при добавлении пользователя в базу данных.").build();
+            return ServerResponse.builder().command("register").error("error").build();
         } finally {
             lock.writeLock().unlock();
         }
@@ -274,33 +274,36 @@ public class DataBaseManager {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE login = ?");
             preparedStatement.setString(1, loginAndPassword.get(0));
             ResultSet result = preparedStatement.executeQuery();
+            preparedStatement.close();
             if (result.next()) {
-                String encodedPassword = result.getString("password");
-                String saltString = result.getString("salt");
-                if (encodedPassword == null && saltString == null) {
-                    preparedStatement.close();
-                    return ServerResponse.builder().command("login").message("Вы успешно вошли в систему").build();
-                } else {
-                    String toBeCheckedPassword = PasswordHasher.encryptStringSHA(pepper + loginAndPassword.get(1) + saltString);
-                    if (toBeCheckedPassword != null && toBeCheckedPassword.equals(encodedPassword)) {
-                        preparedStatement.close();
-                        return ServerResponse.builder().command("login").message("Вы успешно вошли в систему").build();
-                    } else {
-                        preparedStatement.close();
-                        return ServerResponse.builder().command("login").error("Неверный пароль, вход в систему отклонен").build();
-                    }
-                }
+                return checkPassword(result, loginAndPassword.get(1));
             } else {
-                preparedStatement.close();
-                return ServerResponse.builder().command("login").error("Пользователь с таким логином отсутствует").build();
+                return ServerResponse.builder().command("login").error("log in error").build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            return ServerResponse.builder().command("register").error("Ошибка при аутентификации пользователя").build();
+            return ServerResponse.builder().command("login").error("error").build();
         } finally {
             lock.readLock().unlock();
         }
     }
 
+    private ServerResponse checkPassword(ResultSet result, String password) {
+        try {
+            String encodedPassword = result.getString("password");
+            String saltString = result.getString("salt");
+            if (encodedPassword == null && saltString == null) {
+                return ServerResponse.builder().command("login").build();
+            } else {
+                String toBeCheckedPassword = PasswordHasher.encryptStringSHA(pepper + password + saltString);
+                if (toBeCheckedPassword != null && toBeCheckedPassword.equals(encodedPassword)) {
+                    return ServerResponse.builder().command("login").build();
+                } else {
+                    return ServerResponse.builder().command("login").error("log in error").build();
+                }
+            }
+        } catch (SQLException e) {
+            return ServerResponse.builder().command("login").error("error").build();
+        }
+    }
 
 }

@@ -22,7 +22,7 @@ public class AddIfMin extends SimpleAdd {
         if (people.size() == 0) {
             return addPersonToDBAndGetServerResponse(manager, userDataAndOtherArgs);
         } else {
-            if (toDeletePerson.toString().length() > people.getFirst().toString().length()) {
+            if (person.toString().length() > people.getFirst().toString().length()) {
                 return ServerResponse.builder().error("add error").command(getName()).build();
             } else {
                 return addPersonToDBAndGetServerResponse(manager, userDataAndOtherArgs);

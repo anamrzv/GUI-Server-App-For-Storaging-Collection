@@ -78,10 +78,10 @@ public class SignController extends Controller {
                 answer = clientHandler.getAnswerToCommand();
         }
         if (answer.getError() == null) {
-            showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString("success register"), "");
+            showAlert(Alert.AlertType.INFORMATION, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString(answer.getMessage()), "");
             switchToWindow("/start.fxml", newSignButton);
         } else {
-            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString("register error"), "");
+            showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("signin"), clientHandler.getEncodedBundleString(answer.getError()), "");
         }
     }
 

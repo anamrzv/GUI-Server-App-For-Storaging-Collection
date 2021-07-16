@@ -17,7 +17,7 @@ public class SimpleAdd extends Command {
     }
 
     public ServerResponse execute(DataBaseManager manager, List<String> userDataAndOtherArgs) {
-        String result = manager.addPersonToDB(toDeletePerson, "add", userDataAndOtherArgs);
+        String result = manager.addPersonToDB(person, "add", userDataAndOtherArgs);
         if (result.equals("success add")) {
             updatePeopleList(manager, people);
             return ServerResponse.builder().message("success add").command("add").build();
@@ -32,7 +32,7 @@ public class SimpleAdd extends Command {
     }
 
     protected ServerResponse addPersonToDBAndGetServerResponse(DataBaseManager manager, List<String> args){
-        String result = manager.addPersonToDB(toDeletePerson, "add", args);
+        String result = manager.addPersonToDB(person, "add", args);
         if (result.equals("success add")) {
             updatePeopleList(manager, people);
             return ServerResponse.builder().message(result).command(getName()).build();

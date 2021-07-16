@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 public abstract class Command {
 
     public CollectionsKeeper collectionsKeeper;
-    protected Person toDeletePerson;
+    protected Person person;
 
     protected final int LENGTH_WITH_ONLY_USER_DATA = 2;
 

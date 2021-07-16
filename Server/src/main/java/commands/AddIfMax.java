@@ -22,7 +22,7 @@ public class AddIfMax extends SimpleAdd {
         if (people.size() == 0) {
             return addPersonToDBAndGetServerResponse(manager, userDataAndOtherArgs);
         } else {
-            if (toDeletePerson.toString().length() < people.getLast().toString().length()) {
+            if (person.toString().length() < people.getLast().toString().length()) {
                 return ServerResponse.builder().error("add error").command(getName()).build();
             } else {
                 return addPersonToDBAndGetServerResponse(manager, userDataAndOtherArgs);

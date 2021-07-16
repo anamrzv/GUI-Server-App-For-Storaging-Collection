@@ -119,7 +119,7 @@ public class Language_ru_RU extends ListResourceBundle {
             {"password error short", "Вы ввели слишком короткий пароль"},
             {"password error validate", "Пароль содержит недопустимые символы"},
             {"log in error", "Вы ввели неверный логин и/или пароль. Повторите вход"},
-            {"success register", "Вы успешно зарегестрированы."},
+            {"success register", "Вы успешно зарегестрированы"},
             {"register error", "Невозможно Вас зарегестрировать, такой логин уже существует."},
 
             //alerts script
@@ -172,8 +172,6 @@ public class Language_ru_RU extends ListResourceBundle {
             {"help description", "Помощь : вывести справку по доступным командам\n"},
             {"head description", "Первый : вывести первый элемент коллекции\n"},
             {"info description", "Инфо : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)"},
-            {"empty", ""}
-
     };
 
     protected Object[][] getContents() {

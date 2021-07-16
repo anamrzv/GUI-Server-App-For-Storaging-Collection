@@ -60,9 +60,9 @@ public class RemoveByID extends Command {
     }
 
     private ServerResponse deleteFromDB() {
-        int result = manager.deleteByIdFromBD(toDeletePerson, userDataAndOtherArgs);
+        int result = manager.deleteByIdFromBD(person, userDataAndOtherArgs);
         if (result == ONE_DELETED_PERSON) {
-            collectionsKeeper.getPeople().remove(this.toDeletePerson);
+            collectionsKeeper.getPeople().remove(this.person);
             return ServerResponse.builder().message("id remove success").command("remove_by_id").build();
         } else if (result == NOBODY_DELETED) {
             return ServerResponse.builder().error("id creator error").command("remove_by_id").build();

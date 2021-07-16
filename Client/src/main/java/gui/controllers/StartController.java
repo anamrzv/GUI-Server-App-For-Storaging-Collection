@@ -21,7 +21,8 @@ import java.util.regex.Pattern;
 public class StartController extends Controller {
 
     private ClientHandler clientHandler;
-
+    private final int MIN_LENGTH_OF_LOGIN = 4;
+    private final int MIN_LENGTH_OF_PASSWORD =3;
 
     @FXML
     private TextField loginField;
@@ -45,14 +46,12 @@ public class StartController extends Controller {
     void initialize() {
         clientHandler = ClientHandler.getInstance(args);
 
-        //Get login and password
         loginButton.setOnAction(event -> {
             String login = loginField.getText().trim();
             String password = passwordField.getText().trim();
             loginUser(login, password);
         });
 
-        //If registration button is clicked, switch to registration window
         signinButton.setOnAction(event -> switchToWindow("/signin.fxml", signinButton));
 
         ObservableList<String> languages = FXCollections.observableArrayList("Русский", "English", "Slovenčina", "Shqiptare");
@@ -93,11 +92,11 @@ public class StartController extends Controller {
 
     private void loginUser(String login, String password) {
         boolean noError = false;
-        if (login.length() < 4) {
+        if (login.length() < MIN_LENGTH_OF_LOGIN) {
             showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString("login error short"), "");
         } else {
             clientHandler.setLogin(login);
-            if (password.length() < 3 && password.length() > 0)
+            if (password.length() < MIN_LENGTH_OF_PASSWORD && password.length() > 0)
                 showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString("password error short"), "");
             else if (password.length() != 0) {
                 Pattern pattern = Pattern.compile("[a-zA-z.\\d_]{3,}");
@@ -117,7 +116,7 @@ public class StartController extends Controller {
         if (noError) {
             ServerResponse answer = null;
             while (answer == null) {
-                    answer = clientHandler.getAnswerToCommand();
+                answer = clientHandler.getAnswerToCommand();
             }
             if (answer.getError() == null) {
                 loginButton.getScene().getWindow().hide();
@@ -134,7 +133,7 @@ public class StartController extends Controller {
                 stage.setResizable(false);
                 stage.showAndWait();
             } else
-                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString("log in error"), "");
+                showAlert(Alert.AlertType.ERROR, clientHandler.getEncodedBundleString("login"), clientHandler.getEncodedBundleString(answer.getError()), "");
         }
     }
 }
