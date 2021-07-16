@@ -36,9 +36,7 @@ public class RemoveByID extends Command {
             Person toDeletePerson = findPersonWithId();
             if (toDeletePerson == null)
                 return ServerResponse.builder().message("id no id").command("remove_by_id").build();
-            else {
-                return deleteFromDB();
-            }
+            else return deleteFromDB();
         } else return responseWithIdError;
     }
 
@@ -55,11 +53,10 @@ public class RemoveByID extends Command {
 
     private Person findPersonWithId() {
         LinkedList<Person> people = collectionsKeeper.getPeople();
-        Person person = people.stream()
+        return people.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst()
                 .orElse(null);
-        return person;
     }
 
     private ServerResponse deleteFromDB() {

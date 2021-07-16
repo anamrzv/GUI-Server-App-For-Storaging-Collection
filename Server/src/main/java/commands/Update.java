@@ -20,9 +20,7 @@ public class Update extends Command {
     public ServerResponse execute(DataBaseManager manager, List<String> userDataAndOtherArgs) {
         String result = manager.addPersonToDB(toDeletePerson, "update", userDataAndOtherArgs);
         if (result.equals("success update")) {
-            LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
-            people.clear();
-            people.addAll(newCollection);
+            SimpleAdd.updatePeopleList(manager, people);
             return ServerResponse.builder().message(result).command("update").build();
         } else
             return ServerResponse.builder().error(result).command("update").build();

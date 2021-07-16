@@ -1,5 +1,6 @@
 package database;
 
+import lombok.extern.slf4j.Slf4j;
 import other.*;
 
 import java.io.FileNotFoundException;
@@ -12,51 +13,60 @@ import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+@Slf4j
 public class DataBaseManager {
-    private static final String pepper = "7Hv@*!1rdSQ9";
-    private static final Random RANDOM = new SecureRandom();
-    private Scanner scanner;
     private String URL;
     private String LOGIN;
     private String PASSWORD;
     private Connection connection;
+    private Scanner scanner;
+
+    private static final String pepper = "7Hv@*!1rdSQ9";
+    private static final Random RANDOM = new SecureRandom();
 
     public DataBaseManager() {
         try {
             String DB_DRIVER = "org.postgresql.Driver";
             Class.forName(DB_DRIVER);
-            System.out.println("PostgreSQL JDBC Driver успешно поключен");
-            try {
-                String dir = System.getenv("start7");
-                if (dir == null) {
-                    dir = "C:/Users/Ana/Programming/lab-work-7/src/main/resources/info.txt";
-                }
-                scanner = new Scanner(new FileReader(dir));
-            } catch (FileNotFoundException e) {
-                System.out.println("Файл с данными для входа в базу данных не найден");
-                System.exit(-1);
-            }
-            try {
-                this.LOGIN = scanner.nextLine().trim();
-                this.PASSWORD = scanner.nextLine().trim();
-                this.URL = scanner.nextLine().trim();
-            } catch (NoSuchElementException e) {
-                System.out.println("В файле не найдены данные для входа. Обновите файл.");
-                System.exit(-1);
-            }
+            log.info("PostgreSQL JDBC Driver успешно поключен");
+            connectScannerToFile();
+            readUserDataFromFile();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("PostgreSQL JDBC Driver не найден. Включите его в свой library path ");
+            log.error("PostgreSQL JDBC Driver не найден. Включите его в свой library path ");
+            System.exit(-1);
+        }
+    }
+
+    private void connectScannerToFile(){
+        try {
+            String dir = System.getenv("start7");
+            if (dir == null) {
+                dir = "C:/Users/Ana/Programming/lab-work-7/src/main/resources/info.txt";
+            }
+            scanner = new Scanner(new FileReader(dir));
+        } catch (FileNotFoundException e) {
+            log.error("Файл с данными для входа в базу данных не найден");
+            System.exit(-1);
+        }
+    }
+
+    private void readUserDataFromFile(){
+        try {
+            this.LOGIN = scanner.nextLine().trim();
+            this.PASSWORD = scanner.nextLine().trim();
+            this.URL = scanner.nextLine().trim();
+        } catch (NoSuchElementException e) {
+            log.error("В файле не найдены данные для входа. Обновите файл.");
+            System.exit(-1);
         }
     }
 
     public void connectToDB() {
         try {
             connection = DriverManager.getConnection(URL, LOGIN, PASSWORD);
-            System.out.println("Подключение к базе данных установлено");
+            log.info("Подключение к базе данных установлено");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Не удалось подключиться к базе данных");
+            log.error("Не удалось подключиться к базе данных по указанным данным пользователя");
             System.exit(-1);
         }
     }
@@ -108,7 +118,7 @@ public class DataBaseManager {
             ResultSet result = preparedStatement.executeQuery();
             if (result != null) {
                 while (result.next()) {
-                    Person person = handleDBResult(result);
+                    Person person = getPersonFromResultSet(result);
                     people.add(person);
                     boolean alreadyLocation = false;
                     for (Location loc : collectionsKeeper.getReadyLocations().values()) {
@@ -123,14 +133,14 @@ public class DataBaseManager {
                 return collectionsKeeper;
             } else return null;
         } catch (SQLException e) {
-            System.out.println("Error while accessing DB");
+            log.error("Error while accessing DB");
             return null;
         } finally {
             lock.writeLock().unlock();
         }
     }
 
-    private Person handleDBResult(ResultSet result) {
+    private Person getPersonFromResultSet(ResultSet result) {
         ReadWriteLock lock = new ReentrantReadWriteLock();
         lock.readLock().lock();
         try {
@@ -190,7 +200,7 @@ public class DataBaseManager {
             ResultSet result = selectByLoginFromDB(loginAndPassword);
             if (result != null) {
                 while (result.next()) {
-                    Person person = handleDBResult(result);
+                    Person person = getPersonFromResultSet(result);
                     deletedPeople.add(person);
                 }
                 PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM people WHERE owner=?");
@@ -220,7 +230,7 @@ public class DataBaseManager {
         }
     }
 
-    public ServerResponse addUserToDB(List<String> loginAndPassword) {
+    public ServerResponse tryToAddUserToDB(List<String> loginAndPassword) {
         ReadWriteLock lock = new ReentrantReadWriteLock();
         lock.writeLock().lock();
         try {
@@ -228,10 +238,10 @@ public class DataBaseManager {
             checkLogin.setString(1, loginAndPassword.get(0));
             ResultSet result = checkLogin.executeQuery();
             result.next();
-            int count = result.getInt(1);
+            int userWithThisLogin = result.getInt(1);
             checkLogin.close();
             PreparedStatement preparedStatement;
-            if (count == 0) {
+            if (userWithThisLogin == 0) {
                 preparedStatement = connection.prepareStatement("INSERT INTO users (login, password, salt) VALUES (?, ?, ?)");
                 preparedStatement.setString(1, loginAndPassword.get(0));
                 if (!loginAndPassword.get(1).equals("")) {
@@ -251,7 +261,6 @@ public class DataBaseManager {
                 return ServerResponse.builder().command("register").error("Пользователь с таким логином уже существует. Повторите попытку регистрации с другим логинм.").build();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             return ServerResponse.builder().command("register").error("Ошибка при добавлении пользователя в базу данных.").build();
         } finally {
             lock.writeLock().unlock();

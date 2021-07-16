@@ -51,13 +51,6 @@ public class ClientHandler {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().findAndRegisterModules().registerModule(new JavaTimeModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-    private ClientHandler(String[] commandLineArgs) {
-        this.commandLineArgs = commandLineArgs;
-        checkPort();
-        createStreamsAndSocket();
-        initializeCollection();
-    }
-
     public static ClientHandler getInstance(String[] args) {
         if (instance == null) {
             instance = new ClientHandler(args);
@@ -65,9 +58,11 @@ public class ClientHandler {
         return instance;
     }
 
-    private void initializeCollection() {
-        sendCommand("show");
-        setPeopleAndLocationsLists();
+    private ClientHandler(String[] commandLineArgs) {
+        this.commandLineArgs = commandLineArgs;
+        checkPort();
+        createStreamsAndSocket();
+        initializeCollection();
     }
 
     private void checkPort() {
@@ -109,6 +104,11 @@ public class ClientHandler {
         }
     }
 
+    private void initializeCollection() {
+        sendCommand("show");
+        setPeopleAndLocationsLists();
+    }
+
     public void sendCommand(String commandName) {
         if (clientSocket.isConnected()) {
             try {
@@ -121,9 +121,15 @@ public class ClientHandler {
         }
     }
 
-    private void clearFieldsAfterMessage() {
-        commandArguments = new LinkedList<>();
-        personForCommand = null;
+    public void setPeopleAndLocationsLists() {
+        ServerResponse response;
+        do {
+            response = getAnswerToCommand();
+        } while (response == null);
+        people = response.getPersonList();
+        log.info("People list is set first time");
+        updateReadyLocations();
+        log.info("Locations are updated");
     }
 
     private Message createMessageForServer(String commandName) {
@@ -139,6 +145,11 @@ public class ClientHandler {
         return message;
     }
 
+    private void clearFieldsAfterMessage() {
+        commandArguments = new LinkedList<>();
+        personForCommand = null;
+    }
+
     public ServerResponse getAnswerToCommand() {
         try {
             buffer.clear();
@@ -152,17 +163,6 @@ public class ClientHandler {
             log.error("IOException while reading info from input stream in block 'getAnswerToCommand'");
             return null;
         }
-    }
-
-    public void setPeopleAndLocationsLists() {
-        ServerResponse response;
-        do {
-            response = getAnswerToCommand();
-        } while (response == null);
-        people = response.getPersonList();
-        log.info("People list is set first time");
-        updateReadyLocations();
-        log.info("Locations are updated");
     }
 
     private void updateReadyLocations() {

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class SumOfWeight extends Command {
-
     private long sum = 0;
 
     public SumOfWeight(CollectionsKeeper dc) {

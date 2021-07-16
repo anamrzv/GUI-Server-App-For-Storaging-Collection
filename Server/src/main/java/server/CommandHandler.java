@@ -16,66 +16,62 @@ public class CommandHandler {
     private final Person person;
 
     private final Map<String, Command> commands = new HashMap<>();
-    private final CollectionsKeeper ck;
+    private final CollectionsKeeper collectionsKeeper;
 
     private DataBaseManager manager = null;
 
     public CommandHandler(String commandName, List<String> commandArgs, CollectionsKeeper collectionsKeeper) {
-        ck = collectionsKeeper;
+        this.collectionsKeeper = collectionsKeeper;
         this.commandArgs = commandArgs;
         this.commandName = commandName;
         this.person = null;
-        createCommandCollection();
+        fullCommandCollection();
     }
 
     public CommandHandler(String commandName, Person newPerson, List<String> commandArgs, CollectionsKeeper collectionsKeeper) {
-        ck = collectionsKeeper;
+        this.collectionsKeeper = collectionsKeeper;
         this.commandArgs = commandArgs;
         this.commandName = commandName;
         this.person = newPerson;
-        createCommandCollection();
+        fullCommandCollection();
     }
 
-    private void createCommandCollection() {
-        Command c = new AddIfMax(ck);
+    private void fullCommandCollection() {
+        Command c = new AddIfMax(collectionsKeeper);
         commands.put("add_if_max", c);
-        c = new AddIfMin(ck);
+        c = new AddIfMin(collectionsKeeper);
         commands.put("add_if_min", c);
-        c = new Clear(ck);
+        c = new Clear(collectionsKeeper);
         commands.put("clear", c);
-        c = new CountLessPass(ck);
+        c = new CountLessPass(collectionsKeeper);
         commands.put("count_less_than_passport_id", c);
-        c = new ExecuteScript(ck, this);
+        c = new ExecuteScript(collectionsKeeper, this);
         commands.put("execute_script", c);
-        c = new Head(ck);
+        c = new Head(collectionsKeeper);
         commands.put("head", c);
-        c = new Help(ck, this);
+        c = new Help(collectionsKeeper, this);
         commands.put("help", c);
-        c = new Info(ck);
+        c = new Info(collectionsKeeper);
         commands.put("info", c);
-        c = new RemoveByID(ck);
+        c = new RemoveByID(collectionsKeeper);
         commands.put("remove_by_id", c);
-        c = new RemoveByPass(ck);
+        c = new RemoveByPass(collectionsKeeper);
         commands.put("remove_all_by_passport_id", c);
-        c = new Show(ck);
+        c = new Show(collectionsKeeper);
         commands.put("show", c);
-        c = new SumOfWeight(ck);
+        c = new SumOfWeight(collectionsKeeper);
         commands.put("sum_of_weight", c);
-        c = new SimpleAdd(ck);
+        c = new SimpleAdd(collectionsKeeper);
         commands.put("add", c);
-        c = new Update(ck);
+        c = new Update(collectionsKeeper);
         commands.put("update", c);
-    }
-
-    public Map<String, Command> getCommands() {
-        return commands;
     }
 
     private ServerResponse run() {
         Command c;
         switch (commandName) {
             case "register":
-                return manager.addUserToDB(commandArgs);
+                return manager.tryToAddUserToDB(commandArgs);
             case "login":
                 return manager.checkUserInDB(commandArgs);
             case "add_if_max":
@@ -127,6 +123,10 @@ public class CommandHandler {
             default:
                 return ServerResponse.builder().error("Команды не существует.").build();
         }
+    }
+
+    public Map<String, Command> getCommands() {
+        return commands;
     }
 
     public ServerResponse setRun() {

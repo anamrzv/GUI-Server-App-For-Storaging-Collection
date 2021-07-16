@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class SimpleAdd extends Command {
-
     private final LinkedList<Person> people = collectionsKeeper.getPeople();
 
     public SimpleAdd(CollectionsKeeper dc) {
@@ -26,7 +25,7 @@ public class SimpleAdd extends Command {
             return ServerResponse.builder().error(result).command("add").build();
     }
 
-    protected void updatePeopleList(DataBaseManager manager, LinkedList<Person> people){
+    public static void updatePeopleList(DataBaseManager manager, LinkedList<Person> people){
         LinkedList<Person> newCollection = manager.loadCollectionFromDB().getPeople();
         people.clear();
         people.addAll(newCollection);

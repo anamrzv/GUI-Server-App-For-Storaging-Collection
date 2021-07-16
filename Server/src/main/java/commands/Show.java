@@ -37,6 +37,6 @@ public class Show extends Command {
 
     @Override
     public String getDescription(ResourceBundle bundle) {
-        return bundle.getString("empty");
+        return null;
     }
 }
