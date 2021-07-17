@@ -36,7 +36,7 @@ public class RemoveByID extends Command {
             Person toDeletePerson = findPersonWithId();
             if (toDeletePerson == null)
                 return ServerResponse.builder().message("id no id").command("remove_by_id").build();
-            else return deleteFromDB();
+            else return deleteFromDB(toDeletePerson);
         } else return responseWithIdError;
     }
 
@@ -59,8 +59,8 @@ public class RemoveByID extends Command {
                 .orElse(null);
     }
 
-    private ServerResponse deleteFromDB() {
-        int result = manager.deleteByIdFromBD(person, userDataAndOtherArgs);
+    private ServerResponse deleteFromDB(Person toDeletePerson) {
+        int result = manager.deleteByIdFromBD(toDeletePerson, userDataAndOtherArgs);
         if (result == ONE_DELETED_PERSON) {
             collectionsKeeper.getPeople().remove(this.person);
             return ServerResponse.builder().message("id remove success").command("remove_by_id").build();

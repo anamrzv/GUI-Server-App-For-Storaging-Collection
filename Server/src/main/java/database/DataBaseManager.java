@@ -274,35 +274,31 @@ public class DataBaseManager {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE login = ?");
             preparedStatement.setString(1, loginAndPassword.get(0));
             ResultSet result = preparedStatement.executeQuery();
-            preparedStatement.close();
             if (result.next()) {
-                return checkPassword(result, loginAndPassword.get(1));
+                String encodedPassword = result.getString("password");
+                String saltString = result.getString("salt");
+                if (encodedPassword == null && saltString == null) {
+                    preparedStatement.close();
+                    return ServerResponse.builder().command("login").build();
+                } else {
+                    String toBeCheckedPassword = PasswordHasher.encryptStringSHA(pepper + loginAndPassword.get(1) + saltString);
+                    if (toBeCheckedPassword != null && toBeCheckedPassword.equals(encodedPassword)) {
+                        preparedStatement.close();
+                        return ServerResponse.builder().command("login").build();
+                    } else {
+                        preparedStatement.close();
+                        return ServerResponse.builder().command("login").error("log in error").build();
+                    }
+                }
             } else {
+                preparedStatement.close();
                 return ServerResponse.builder().command("login").error("log in error").build();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             return ServerResponse.builder().command("login").error("error").build();
         } finally {
             lock.readLock().unlock();
-        }
-    }
-
-    private ServerResponse checkPassword(ResultSet result, String password) {
-        try {
-            String encodedPassword = result.getString("password");
-            String saltString = result.getString("salt");
-            if (encodedPassword == null && saltString == null) {
-                return ServerResponse.builder().command("login").build();
-            } else {
-                String toBeCheckedPassword = PasswordHasher.encryptStringSHA(pepper + password + saltString);
-                if (toBeCheckedPassword != null && toBeCheckedPassword.equals(encodedPassword)) {
-                    return ServerResponse.builder().command("login").build();
-                } else {
-                    return ServerResponse.builder().command("login").error("log in error").build();
-                }
-            }
-        } catch (SQLException e) {
-            return ServerResponse.builder().command("login").error("error").build();
         }
     }
 
