@@ -12,7 +12,7 @@
 
 **The server module executes collection management commands.** TCP protocol is used.
 
-*The collection is stored in a PostgresQL.
+*The collection is stored in a PostgreSQL.
 
 *Implemented multithreaded request processing.
 
