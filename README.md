@@ -11,5 +11,6 @@
 * The collection is stored in a PostgreSQL.
 * Multithreaded request processing is implemented.
 
-
+![](https://github.com/anamrzv/GUI-Server-App-For-Storaging-Collection/blob/images/Screenshot_1.png)
+![](https://github.com/anamrzv/GUI-Server-App-For-Storaging-Collection/blob/images/image.png)
 
